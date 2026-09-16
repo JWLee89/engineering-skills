@@ -10,6 +10,9 @@ JIRA (or Linear / GitHub Issues) project.
 | **`/handle-task`**       | `handle-task-skill/`                   | Work a ticket: spec, plan, code, verify |
 | **`/make-pull-request`** | `handle-task-skill/make-pull-request/` | Open draft PR, run CI, mark ready       |
 
+Large tickets: split into **real JIRA subtasks** (branch = ticket key) — see
+[jira-subtask-template.md](jira-subtask-template.md).
+
 There is **only one** task-handling skill name: **`handle-task`**.
 
 ## Install (once per machine)

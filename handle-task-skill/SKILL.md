@@ -111,9 +111,16 @@ ______________________________________________________________________
 
 **Read [pr-splitting.md](pr-splitting.md)** when diff or scope exceeds reviewable size.
 
-When splitting: create **tracker subtasks** (each with Background, Scope, DoD, Verification plan),
-update the parent description, link with **Work item split** + **Blocks** (JIRA) — then implement
-`/handle-task` on each **subtask key** (e.g. `PROJ-101`), not synthetic branch suffixes (`PROJ-100-a`).
+When splitting:
+
+1. **Read [jira-subtask-template.md](jira-subtask-template.md)** — required subtask format
+2. Create **real tracker subtasks** (JIRA Subtask or sibling Task under Epic) — each description
+   **must** include: **Background**, **Description**, **Scope**, **DoD**, plus links to
+   **Parent**, **Depends on**, **Blocks** when applicable
+3. **Never** use synthetic branch names (`PROJ-100-a`, `PARENT-1`) — branch must equal the
+   child ticket key (`PROJ-101`)
+4. Link **Work item split** + **Blocks** chain; update parent description with subtask table
+5. Implement `/handle-task` on each **child key** only — one PR per subtask
 
 ______________________________________________________________________
 
@@ -182,6 +189,8 @@ ______________________________________________________________________
 - [verification.md](verification.md) — verify commands
 - [make-pull-request.md](make-pull-request.md) — PR phase pointer
 - [issue-transitions.md](issue-transitions.md) — JIRA/status workflow
+- [jira-subtask-template.md](jira-subtask-template.md) — split subtask format (Background, Description, Scope, DoD)
+- [pr-splitting.md](pr-splitting.md) — split heuristics + stacked PRs
 - **Delegates:** [spec-driven-development.md](spec-driven-development.md),
   [planning-and-task-breakdown.md](planning-and-task-breakdown.md),
   [incremental-implementation.md](incremental-implementation.md),
