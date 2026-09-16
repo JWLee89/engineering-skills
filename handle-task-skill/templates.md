@@ -12,6 +12,19 @@ from `.handle-task/project.yaml`. Expand `{key}` in URLs (e.g. `PROJ-123`).
 | Plan + todo + approval gate  | [plan-and-tasks.md](plan-and-tasks.md)                         |
 | Draft PR → merge-ready       | [make-pull-request/workflow.md](make-pull-request/workflow.md) |
 | Project settings             | [project-config.md](project-config.md)                         |
+| JIRA subtask (split work)    | [jira-subtask-template.md](jira-subtask-template.md)           |
+
+______________________________________________________________________
+
+## JIRA subtask description (tracker — not a local file)
+
+When splitting a parent ticket, create **real subtasks** in JIRA (or your tracker). Each
+description must include **Background**, **Description**, **Scope**, and **DoD**, plus links
+to Parent / Depends on / Blocks.
+
+**Do not** use synthetic branch names — branch must equal the child ticket key.
+
+Full template: [jira-subtask-template.md](jira-subtask-template.md)
 
 ______________________________________________________________________
 

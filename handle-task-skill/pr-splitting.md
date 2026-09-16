@@ -45,8 +45,13 @@ Each child should:
 
 - Have **one primary acceptance outcome**
 - Map to **exactly one PR** on branch matching `ticket.id_pattern` (e.g. `PROJ-101`)
-- Include **Background, Description, Scope, DoD, Verification plan** in the JIRA description
+- Use the **four required sections** in the JIRA description — see
+  [jira-subtask-template.md](jira-subtask-template.md): **Background**, **Description**,
+  **Scope**, **DoD (Definition of Done)**
+- Header links: **Parent**, **Epic** (if any), **Depends on**, **Blocks** (when ordered)
 - Leave the repo **green** when merged
+
+**Canonical template:** [jira-subtask-template.md](jira-subtask-template.md)
 
 ## Tracker operations (JIRA via Atlassian MCP)
 
@@ -62,35 +67,22 @@ Wait for human approval unless the user delegated split authority.
 
 ### 2. Create subtasks
 
-Use `jira_create_issue` per slice. Substitute `{prefix}` and keys from config:
+Use `jira_create_issue` per slice. Copy the full template from
+[jira-subtask-template.md](jira-subtask-template.md) — all four sections are **required**.
+
+Minimal API sketch (fill from template):
 
 ```text
 project_key: <ticket.prefix from config>
 issue_type: Subtask          # when parent is a Task; use Task under Epic otherwise
-summary: <feature area> (PROJ-100 / 1)
+summary: [{area}] {title} ({PARENT-KEY} / {n})
 assignee: <current user>
 description: |
-  **Parent:** PROJ-100
-  **Depends on:** PROJ-101 (if applicable)
-
-  ## Background
-  …
-
-  ## Description
-  …
-
-  ## Scope
-  | In scope | Out of scope |
-  …
-
-  ## DoD (Definition of Done)
-  - [ ] …
-
-  ## Verification plan
-  **Author (local):** …
-  **Reviewer / CI:** …
-additional_fields: {"parent": "PROJ-100", "labels": ["<team-label>"]}
+  <paste Background, Description, Scope, DoD from jira-subtask-template.md>
+additional_fields: {"parent": "<PARENT-KEY>", "labels": ["<team-label>"]}
 ```
+
+**Branch after create:** `git checkout -b <CHILD-KEY>` — e.g. `PROJ-101`, never `PROJ-100-1`.
 
 **Link subtasks to parent:**
 

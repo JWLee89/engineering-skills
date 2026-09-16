@@ -72,6 +72,14 @@ Then, when implementation is verified locally:
 
 See [handle-task-skill/QUICKSTART.md](handle-task-skill/QUICKSTART.md) for the full workflow.
 
+### Splitting large tickets
+
+When a ticket exceeds reviewable size, create **real JIRA subtasks** (one PR each). Each
+subtask description must include **Background**, **Description**, **Scope**, and **DoD**.
+Git branch must match the subtask key (`PROJ-101`) — never synthetic suffixes (`PROJ-100-1`).
+
+Template: [handle-task-skill/jira-subtask-template.md](handle-task-skill/jira-subtask-template.md)
+
 ## Vendor into a monorepo (optional)
 
 Copy or submodule `handle-task-skill/` into your project and run project-scoped install:

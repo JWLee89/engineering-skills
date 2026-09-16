@@ -71,6 +71,8 @@ Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-
 | [verification.md](verification.md)                             | Local test/lint commands      |
 | [make-pull-request/workflow.md](make-pull-request/workflow.md) | PR workflow                   |
 | [project-config.md](project-config.md)                         | Config schema                 |
+| [jira-subtask-template.md](jira-subtask-template.md)           | Split work → JIRA subtasks    |
+| [pr-splitting.md](pr-splitting.md)                             | When/how to split + stacked PRs |
 
 ### Standalone delegates (self-contained — no external agent-skills bundle)
 
