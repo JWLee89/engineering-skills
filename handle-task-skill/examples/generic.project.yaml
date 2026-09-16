@@ -1,0 +1,51 @@
+# Copy to .handle-task/project.yaml and edit.
+name: my-project
+
+ticket:
+  prefix: PROJ
+  id_pattern: "{prefix}-{number}"
+
+git:
+  default_base: main
+  pr_target: main
+
+memory:
+  committed_tasks: null
+  local_specs: tasks/
+  status: null
+  decisions: null
+  agent_guide: AGENTS.md
+
+commit:
+  message_format: "[{prefix}-{number}]({tag}) {summary}"
+  tags: [feat, fix, chore, refactor, docs, test, build, feedback, revert]
+
+verify:
+  commands:
+    - npm test
+    - npm run lint
+  hooks: null
+  by_path: {}
+  ci_only_notes: []
+  ci_workflows:
+    - name: CI
+      required: true
+
+integrations:
+  issue_tracker:
+    type: none
+    url_template: null
+
+pr:
+  title_format: "[{prefix}-{number}]({tag}): {summary}"
+  draft_until_ready: true
+  required_body_sections:
+    - Background
+    - Purpose
+    - Review guide
+    - Changes made
+    - Verification
+  labels:
+    always: []
+    by_commit_tag: {}
+    by_path: {}

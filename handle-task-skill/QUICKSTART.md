@@ -1,0 +1,84 @@
+# Quick start (agents)
+
+## How to invoke
+
+| Skill                 | Command              | When                                              |
+| --------------------- | -------------------- | ------------------------------------------------- |
+| **Handle task**       | `/handle-task`       | Ticket assigned → spec → implement → verify       |
+| **Make pull request** | `/make-pull-request` | Implementation done → draft PR → CI green → ready |
+
+**One name, one folder:** the skill directory is `handle-task-skill/`. Cursor invokes it as
+**`/handle-task`** (from `SKILL.md` → `name: handle-task`).
+
+## First step (every session)
+
+1. Read **`.handle-task/project.yaml`** in the workspace root.
+2. If missing, copy `handle-task-skill/examples/generic.project.yaml` → `.handle-task/project.yaml`
+   and ask the user to confirm settings.
+
+## Two-skill split
+
+```
+/handle-task          Phases 1–8: intake → spec → plan → implement → local verify
+/make-pull-request    Phases 0–7: draft PR → CI → review → merge-ready
+```
+
+Install both once (global):
+
+```bash
+./handle-task-skill/scripts/install-skills.sh
+# optional: ./handle-task-skill/scripts/install-skills.sh --install-hook
+```
+
+Global install symlinks into `~/.cursor/skills/` (Cursor) and `~/.claude/skills/`
+(Claude Code). Skill edits apply in all projects. Reload Cursor or restart Claude Code
+after `SKILL.md` frontmatter changes.
+
+## Issue status transitions
+
+When `status_transitions` is set in config (JIRA):
+
+| When                                     | Transition (example) | Target status (example) |
+| ---------------------------------------- | -------------------- | ----------------------- |
+| Start implement (`/handle-task` Phase 7) | `Assign`             | In Progress             |
+| PR ready (`/make-pull-request` Phase 7)  | `Review`             | Ready for Review        |
+
+**Unassigned tickets:** at intake (Phase 1), if the issue has no assignee, assign it to
+the authenticated JIRA user running the skill before continuing.
+
+Details: [issue-transitions.md](issue-transitions.md)
+
+## Issue trackers (not JIRA-only)
+
+Use whatever the project configures in `integrations.issue_tracker.type`:
+
+| Type     | How agents fetch tickets               |
+| -------- | -------------------------------------- |
+| `jira`   | Atlassian MCP (`jira_get_issue`, etc.) |
+| `linear` | Linear MCP or user-pasted ticket       |
+| `github` | `gh issue view`                        |
+| `none`   | User describes the task in chat        |
+
+Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-456`).
+
+## File map
+
+| File                                                           | Purpose                       |
+| -------------------------------------------------------------- | ----------------------------- |
+| [SKILL.md](SKILL.md)                                           | Full handle-task orchestrator |
+| [specify.md](specify.md)                                       | Spec + approval gate          |
+| [plan-and-tasks.md](plan-and-tasks.md)                         | Plan + approval gate          |
+| [verification.md](verification.md)                             | Local test/lint commands      |
+| [make-pull-request/workflow.md](make-pull-request/workflow.md) | PR workflow                   |
+| [project-config.md](project-config.md)                         | Config schema                 |
+
+### Standalone delegates (self-contained — no external agent-skills bundle)
+
+| Delegate                                                         | Purpose                                     |
+| ---------------------------------------------------------------- | ------------------------------------------- |
+| [spec-driven-development.md](spec-driven-development.md)         | Spec process, assumptions, capability maps  |
+| [planning-and-task-breakdown.md](planning-and-task-breakdown.md) | Vertical slices, reuse discovery            |
+| [incremental-implementation.md](incremental-implementation.md)   | Reuse-before-add, minimal diff, slice cycle |
+| [documentation-and-adrs.md](documentation-and-adrs.md)           | ADRs, wire formats, design decisions        |
+| [code-review.md](code-review.md)                                 | Five-axis review + test robustness          |
+| [performance-optimization.md](performance-optimization.md)       | Measure-first perf workflow                 |

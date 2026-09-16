@@ -1,0 +1,73 @@
+# Example: JIRA-backed project — copy to .handle-task/project.yaml and edit.
+name: my-service
+
+ticket:
+  prefix: PROJ
+  id_pattern: "{prefix}-{number}"
+
+git:
+  default_base: main
+  pr_target: main
+
+memory:
+  committed_tasks: .agent/tasks/
+  local_specs: tasks/
+  status: .agent/status.md
+  decisions: .agent/decisions.md
+  agent_guide: AGENTS.md
+
+commit:
+  message_format: "[{prefix}-{number}]({tag}) {summary}"
+  tags: [feat, fix, chore, refactor, docs, test, build, feedback, revert]
+
+verify:
+  commands:
+    - npm test
+    - npm run lint
+  hooks: null
+  by_path: {}
+  ci_only_notes: []
+  ci_workflows:
+    - name: CI
+      required: true
+
+integrations:
+  issue_tracker:
+    type: jira
+    url_template: "https://your-org.atlassian.net/browse/{key}"
+    status_transitions:
+      implementation_start:
+        enabled: true
+        transition: Assign
+        skip_if_status_in:
+          - In Progress
+          - "Ready for Review"
+          - Done
+        comment: false
+      pr_ready:
+        enabled: true
+        transition: Review
+        skip_if_status_in:
+          - "Ready for Review"
+          - Done
+        comment: true
+
+pr:
+  title_format: "[{prefix}-{number}]({tag}): {summary}"
+  draft_until_ready: true
+  required_body_sections:
+    - Background
+    - Purpose
+    - Review guide
+    - Changes made
+    - Verification
+  labels:
+    always: []
+    by_commit_tag:
+      feat: enhancement
+      fix: bug
+      refactor: refactor
+      test: tests
+      docs: documentation
+      chore: chore
+    by_path: {}
