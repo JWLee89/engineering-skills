@@ -21,8 +21,8 @@ After each slice: project builds, existing tests pass, slice acceptance criteria
 ## DRY — reuse before you add (required)
 
 **Do not reinvent the wheel.** Before writing new code, search the codebase for existing
-helpers, types, tasks, protocols, and tests that already solve part of the problem — or
-the whole problem.
+functions, classes, modules, and tests that already solve part of the problem — or the
+whole problem.
 
 | Situation | Do this |
 | --------- | ------- |
@@ -39,8 +39,8 @@ Rules:
 3. **Abstract only when earned** — introduce a shared helper or type when it removes
    duplication *and* stays easier to read than two straightforward copies. Three similar
    lines beat a premature abstraction.
-4. **Match conventions** — naming, module boundaries, registry patterns, and test layout
-   should match surrounding code (read before writing).
+4. **Match conventions** — naming, module boundaries, and test layout should match
+   surrounding code (read before writing).
 
 When you choose reuse vs new code vs new abstraction, log the choice in
 `memory.decisions` if non-obvious ([documentation-and-adrs.md](documentation-and-adrs.md)).
@@ -53,24 +53,25 @@ REUSE CHECK (state before coding):
 
 ## SOLID — maintainable, testable, extensible code
 
-Follow [SOLID](https://en.wikipedia.org/wiki/SOLID) as practical guardrails, not ceremony.
-Each slice should leave code that is easy to **maintain**, **test**, and **extend**.
+Follow the five [SOLID principles of object-oriented design](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+(Robert C. Martin) as practical guardrails, not ceremony. Each slice should leave code
+that is easy to **maintain**, **test**, and **extend**.
 
-| Principle | In practice (handle-task) |
-| --------- | ------------------------- |
-| **S** — Single responsibility | One task/function/module reason to change. Split when a slice mixes I/O, wire format, and business rules. |
-| **O** — Open/closed | Extend via parameters, registries, or new subclasses — avoid editing stable shared code for every product variant. |
-| **L** — Liskov substitution | Subtypes and protocol implementations must honor the same contracts; tests should not need special cases per variant. |
-| **I** — Interface segregation | Narrow public surfaces — typed entities and small protocol methods; don't force callers to depend on unused fields. |
-| **D** — Dependency inversion | Depend on abstractions (protocols, registries, interfaces) at boundaries; keep concrete I/O and framework details at the edges. |
+| Principle | Definition (DigitalOcean) | In practice (each slice) |
+| --------- | ------------------------- | ------------------------ |
+| **S** — Single-responsibility | A class should have one and only one reason to change — one job. | Split when a unit mixes unrelated jobs (e.g. compute + format + persist). |
+| **O** — Open-closed | Open for extension, closed for modification. | Add behavior via new types, parameters, or composition — avoid editing stable shared code for every variant. |
+| **L** — Liskov substitution | Subtypes must be replaceable for their base type without breaking correctness. | Subclasses and interface implementations honor the same contract; tests need no special cases per variant. |
+| **I** — Interface segregation | Clients must not depend on methods or interfaces they do not use. | Keep public APIs narrow; split bloated interfaces rather than forcing unused methods on callers. |
+| **D** — Dependency inversion | High-level modules must not depend on low-level modules; both depend on abstractions. | Inject or pass abstractions (interfaces, ports) at boundaries; keep concrete I/O and framework details at the edges. |
 
 Applied habits:
 
 - **Minimal diff** — touch only what the task requires; note unrelated smells, don't fix them.
-- **Explicit boundaries** — typed entities, clear module ownership; avoid leaking feature logic into shared layers.
-- **Single source of truth** — wire keys from models (`fields()`, `asdict()`); config in one file when humans edit path lists or constants.
+- **Explicit boundaries** — clear module ownership; avoid leaking feature logic into shared utilities.
+- **Single source of truth** — derive schema or field names from models/types; avoid duplicated constant lists.
 - **Test with the production path** — reuse fixtures and helpers; parametrize instead of copy-paste tests ([code-review.md](code-review.md)).
-- **Inject or pass dependencies** — prefer constructor/task inputs over hidden globals so unit tests can substitute fakes.
+- **Inject or pass dependencies** — prefer constructor or function parameters over hidden globals so unit tests can substitute fakes (DIP).
 
 ## Slicing strategies
 
@@ -100,9 +101,9 @@ After each slice:
 ## Anti-patterns
 
 - 100+ lines before running tests
-- New module for logic that belongs in an existing product package
+- New module for logic that belongs in an existing package
 - Copy-paste with renamed variables instead of calling or extending existing code
 - Reimplementing a helper that already exists one import away
-- God tasks/functions that mix gather, transform, validate, and I/O in one place
+- God classes/functions that mix unrelated responsibilities (I/O, formatting, business rules) in one place
 - Drive-by refactors outside task scope
-- Leaking product-specific rules into shared layers "for convenience"
+- Leaking feature-specific rules into shared layers "for convenience"

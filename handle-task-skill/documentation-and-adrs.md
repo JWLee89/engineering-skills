@@ -38,17 +38,19 @@ Optimize for **clean, maintainable, testable, extensible** code — the same bar
 
 Before adding code:
 
-1. **Search** for existing helpers, types, tasks, protocols, and tests
+1. **Search** for existing helpers, types, modules, and tests
 2. **Reuse as-is** when an existing function already does what you need
 3. **Extend or parameterize** when it almost fits and both cases stay readable
 4. **Add new code only** when reuse fails — record what you searched and why
 
 ### SOLID — practical guardrails
 
+Reference: [SOLID principles (DigitalOcean)](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+
 | Capture in ADR when it affects maintenance | Example |
 | ------------------------------------------ | ------- |
-| Why extend vs fork | Added YAML `parameters` to shared task instead of NGIQ-only duplicate |
-| Boundary choice | Feature logic stays in product package; shared layer stays generic |
+| Why extend vs fork | Added optional parameter to shared module instead of a feature-specific duplicate |
+| Boundary choice | Feature logic stays in its module; shared utilities stay generic |
 | Abstraction timing | Shared helper extracted after second identical copy, not speculatively |
 
 When the fork matters for long-term maintenance, record briefly:
@@ -71,10 +73,10 @@ the user-level `documentation-and-adrs` skill; this file is the handle-task dele
 **Consequences:** …
 ```
 
-## Schema and wire formats
+## Schema and external formats
 
-- Prefer model field names as wire keys; use `asdict()` / `fields(Model)` in tests
-- Named mapping dicts only when internal and external names intentionally differ
+- Prefer model or type field names as the canonical key list; derive serializers and tests from them
+- Named mapping tables only when internal and external names intentionally differ
 - One canonical list for path rules, constants, or enums — generate consumers when needed
 
 ## Anti-patterns

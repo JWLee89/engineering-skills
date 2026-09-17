@@ -152,9 +152,10 @@ ______________________________________________________________________
 - **DRY** — search the codebase first. If an existing function already does what you need,
   use it. If it is close, extend or parameterize it. Do not reimplement the same logic
   under a new name.
-- **Maintainable / testable / extensible** — follow SOLID as practical guardrails: single
-  responsibility per slice, extend via registries/parameters instead of editing stable
-  shared code, narrow public surfaces, depend on abstractions at module boundaries.
+- **Maintainable / testable / extensible** — follow [SOLID](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+  as practical guardrails: one reason to change per unit (SRP), extend without modifying
+  stable code (OCP), honor substitutability (LSP), narrow interfaces (ISP), depend on
+  abstractions at boundaries (DIP).
 - **REUSE CHECK** — before each slice, state what existing code you considered and whether
   you reuse, extend, or add new code (log non-obvious forks in `memory.decisions`).
 
@@ -190,7 +191,7 @@ ______________________________________________________________________
 | Code before spec/plan approval | Stop at gates in specify.md / plan-and-tasks.md |
 | Opening PR without user OK     | Ask; use `/make-pull-request`                   |
 | Reimplementing existing helpers | Search first; reuse or extend ([incremental-implementation.md](incremental-implementation.md)) |
-| Monolithic tasks mixing concerns | Split by responsibility; one reason to change per module |
+| Monolithic classes/functions mixing concerns | Split by responsibility; one reason to change per unit (SRP) |
 
 ______________________________________________________________________
 
