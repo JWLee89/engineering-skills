@@ -147,6 +147,17 @@ ______________________________________________________________________
 3. Execute local todo via [incremental-implementation.md](incremental-implementation.md)
 4. Test after each slice; log decisions and session notes
 
+**Implementation rules** (required — see delegate for detail):
+
+- **DRY** — search the codebase first. If an existing function already does what you need,
+  use it. If it is close, extend or parameterize it. Do not reimplement the same logic
+  under a new name.
+- **Maintainable / testable / extensible** — follow SOLID as practical guardrails: single
+  responsibility per slice, extend via registries/parameters instead of editing stable
+  shared code, narrow public surfaces, depend on abstractions at module boundaries.
+- **REUSE CHECK** — before each slice, state what existing code you considered and whether
+  you reuse, extend, or add new code (log non-obvious forks in `memory.decisions`).
+
 **Commits:** code, tests, committed memory, docs — never local specs. Commit when user asks
 or when preparing PR. Never commit secrets.
 
@@ -178,6 +189,8 @@ ______________________________________________________________________
 | Committing local specs         | Keep under `memory.local_specs` only            |
 | Code before spec/plan approval | Stop at gates in specify.md / plan-and-tasks.md |
 | Opening PR without user OK     | Ask; use `/make-pull-request`                   |
+| Reimplementing existing helpers | Search first; reuse or extend ([incremental-implementation.md](incremental-implementation.md)) |
+| Monolithic tasks mixing concerns | Split by responsibility; one reason to change per module |
 
 ______________________________________________________________________
 
