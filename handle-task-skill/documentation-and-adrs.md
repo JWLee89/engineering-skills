@@ -31,16 +31,32 @@ When `memory.decisions` is set in config, append there (typically newest-first).
 
 ## Implementation design (document when non-obvious)
 
-Optimize for **clean, maintainable, testable** code. Before adding:
+Optimize for **clean, maintainable, testable, extensible** code — the same bar as
+[incremental-implementation.md](incremental-implementation.md) Phase 7.
 
-1. Search for existing helpers, types, and tests to reuse
-2. Prefer extending existing code over parallel implementations
-3. Introduce abstractions only when they reduce duplication *and* improve clarity
+### DRY — don't reinvent
+
+Before adding code:
+
+1. **Search** for existing helpers, types, modules, and tests
+2. **Reuse as-is** when an existing function already does what you need
+3. **Extend or parameterize** when it almost fits and both cases stay readable
+4. **Add new code only** when reuse fails — record what you searched and why
+
+### SOLID — practical guardrails
+
+Reference: [SOLID principles (DigitalOcean)](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+
+| Capture in ADR when it affects maintenance | Example |
+| ------------------------------------------ | ------- |
+| Why extend vs fork | Added optional parameter to shared module instead of a feature-specific duplicate |
+| Boundary choice | Feature logic stays in its module; shared utilities stay generic |
+| Abstraction timing | Shared helper extracted after second identical copy, not speculatively |
 
 When the fork matters for long-term maintenance, record briefly:
 
 - What existing code was considered
-- Why extend / reuse / abstract / rewrite
+- Why reuse / extend / abstract / rewrite
 - Trade-off (maintenance, test surface, coupling)
 
 This prevents the next agent from re-debating the same fork. Full principles also live in
@@ -57,10 +73,10 @@ the user-level `documentation-and-adrs` skill; this file is the handle-task dele
 **Consequences:** …
 ```
 
-## Schema and wire formats
+## Schema and external formats
 
-- Prefer model field names as wire keys; use `asdict()` / `fields(Model)` in tests
-- Named mapping dicts only when internal and external names intentionally differ
+- Prefer model or type field names as the canonical key list; derive serializers and tests from them
+- Named mapping tables only when internal and external names intentionally differ
 - One canonical list for path rules, constants, or enums — generate consumers when needed
 
 ## Anti-patterns
@@ -69,3 +85,5 @@ the user-level `documentation-and-adrs` skill; this file is the handle-task dele
 - Duplicated field lists in model, serializer, and tests
 - Retroactive task files for completed work
 - Committing local `tasks/` specs
+- New modules when extending existing code would suffice
+- Duplicate logic without documenting why reuse was rejected
