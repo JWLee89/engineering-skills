@@ -11,6 +11,7 @@ it matches your personal style perfectly.
 
 - Matches spec / acceptance criteria
 - Behavioral changes have tests that **precede or co-evolve** with production code ([test-driven-development.md](test-driven-development.md))
+- Spec success criteria mapped to tests — no silent gaps ([spec-adherence.md](spec-adherence.md))
 - Edge cases and error paths covered
 - Tests assert the right behavior (not implementation details)
 

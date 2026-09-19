@@ -52,8 +52,9 @@ Follow [planning-and-task-breakdown.md](planning-and-task-breakdown.md):
 Per task:
 
 - Acceptance criteria (testable)
-- **TDD order** — list **test file(s) first**, then production file(s) ([test-driven-development.md](test-driven-development.md))
-- Verify command (from `verify.commands` or scoped test/lint — run after RED→GREEN)
+- **TDD order** — test file(s) first, then production ([test-driven-development.md](test-driven-development.md))
+- **Spec link** — which success criterion / spec scenario this slice satisfies ([spec-adherence.md](spec-adherence.md))
+- Verify command (after RED→GREEN→spec adhere)
 - Files expected to touch (tests before implementation for behavioral slices)
 - Phase grouping aligned with [incremental-implementation.md](incremental-implementation.md) slices
 

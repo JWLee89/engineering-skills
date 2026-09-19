@@ -141,7 +141,8 @@ Example:
 ### Verification plan (generate before opening PR)
 
 Sources: `verify.commands`, `verify.by_path` (match changed paths),
-`verify.hooks`, touched test files, `verify.ci_workflows`, spec testing strategy.
+`verify.hooks`, touched test files, `verify.ci_workflows`, spec testing strategy,
+and the spec traceability matrix from [../spec-adherence.md](../spec-adherence.md).
 
 Structure **three subsections** — every item starts unchecked `- [ ]`:
 

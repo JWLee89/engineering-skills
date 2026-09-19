@@ -1,120 +1,71 @@
 # Incremental implementation
 
-Standalone delegate for `/handle-task` Phase 7. Implements approved plan slices with
-**simple, maintainable, testable, extensible** code.
+Delegate for `/handle-task` Phase 7. **Orchestrates** slice execution; TDD detail in
+[test-driven-development.md](test-driven-development.md); spec proof in
+[spec-adherence.md](spec-adherence.md).
 
-## When to use
-
-- Any multi-file change
-- Executing items from `{local_specs}/todo-<ticket_key_lower>.md`
-
-**Skip:** trivial single-file edits.
-
-## Increment cycle (TDD per slice)
-
-Every behavioral slice follows **[test-driven-development.md](test-driven-development.md)** —
-**tests first**, then production code:
+## Slice cycle (canonical)
 
 ```
-REUSE CHECK → RED (failing test) → GREEN (minimal code) → REFACTOR → Verify → Commit (when asked) → Next slice
+REUSE CHECK → RED → GREEN → REFACTOR → SPEC ADHERE → Verify → (commit) → next slice
 ```
 
-After each slice: new/changed behavior is covered by tests that failed before GREEN; project
-builds; existing tests pass; slice acceptance criteria met.
+| Step | Delegate |
+| ---- | -------- |
+| REUSE CHECK | Below |
+| RED / GREEN / REFACTOR | [test-driven-development.md](test-driven-development.md) |
+| SPEC ADHERE | [spec-adherence.md](spec-adherence.md) — slice acceptance criteria → tests |
+| Verify | Scoped command from todo / [verification.md](verification.md) |
 
-**Do not** write production code for new behavior before the RED test exists. Docs-only and
-non-behavioral slices skip RED — see [test-driven-development.md](test-driven-development.md#when-tdd-applies-to-a-slice).
+After each slice: behavior tested (failed before GREEN), spec items for slice covered or gaps reported, build green.
 
-## DRY — reuse before you add (required)
+## REUSE CHECK (before RED)
 
-**Do not reinvent the wheel.** Before writing new code, search the codebase for existing
-functions, classes, modules, and tests that already solve part of the problem — or the
-whole problem.
+Search codebase first — **do not reinvent the wheel.**
 
-| Situation | Do this |
-| --------- | ------- |
-| Existing function does exactly what you need | **Call it** — do not copy or reimplement |
-| Existing function is close | **Extend or parameterize** it when both old and new cases stay clear |
-| No existing code fits | **Add new code** — but state what you searched and why reuse failed |
-| Same logic would appear twice | **Extract once** — only when the shared form is easier to read than two copies |
-
-Rules:
-
-1. **Search first** — grep, jump to definitions, read neighboring modules and tests.
-2. **Prefer tweak over duplicate** — a small, focused change to existing code beats a
-   parallel implementation with renamed variables.
-3. **Abstract only when earned** — introduce a shared helper or type when it removes
-   duplication *and* stays easier to read than two straightforward copies. Three similar
-   lines beat a premature abstraction.
-4. **Match conventions** — naming, module boundaries, and test layout should match
-   surrounding code (read before writing).
-
-When you choose reuse vs new code vs new abstraction, log the choice in
-`memory.decisions` if non-obvious ([documentation-and-adrs.md](documentation-and-adrs.md)).
+| Situation | Action |
+| --------- | ------ |
+| Existing code fits | Call it |
+| Close fit | Extend or parameterize |
+| Nothing fits | Add new — log what you searched |
+| Duplicate logic emerging | Extract only if clearer than two copies |
 
 ```
-REUSE CHECK (state before coding):
-- Existing code considered: [paths or "none found"]
-- Approach: reuse as-is | extend | new abstraction | new code (justify)
+REUSE CHECK: considered [paths]; approach: reuse | extend | new (why)
 ```
 
-## SOLID — maintainable, testable, extensible code
+Log non-obvious choices in `memory.decisions`.
 
-Follow the five [SOLID principles of object-oriented design](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
-(Robert C. Martin) as practical guardrails, not ceremony. Each slice should leave code
-that is easy to **maintain**, **test**, and **extend**.
+## SOLID (guardrails)
 
-| Principle | Definition (DigitalOcean) | In practice (each slice) |
-| --------- | ------------------------- | ------------------------ |
-| **S** — Single-responsibility | A class should have one and only one reason to change — one job. | Split when a unit mixes unrelated jobs (e.g. compute + format + persist). |
-| **O** — Open-closed | Open for extension, closed for modification. | Add behavior via new types, parameters, or composition — avoid editing stable shared code for every variant. |
-| **L** — Liskov substitution | Subtypes must be replaceable for their base type without breaking correctness. | Subclasses and interface implementations honor the same contract; tests need no special cases per variant. |
-| **I** — Interface segregation | Clients must not depend on methods or interfaces they do not use. | Keep public APIs narrow; split bloated interfaces rather than forcing unused methods on callers. |
-| **D** — Dependency inversion | High-level modules must not depend on low-level modules; both depend on abstractions. | Inject or pass abstractions (interfaces, ports) at boundaries; keep concrete I/O and framework details at the edges. |
+| Principle | Practice |
+| --------- | -------- |
+| **S** | One reason to change per unit |
+| **O** | Extend via types/composition, not editing stable core for every variant |
+| **L** | Subtypes honor contracts |
+| **I** | Narrow public APIs |
+| **D** | Inject abstractions at boundaries; test with fakes |
 
-Applied habits:
+Also: minimal diff, explicit module ownership, single source of truth for constants/keys.
 
-- **Minimal diff** — touch only what the task requires; note unrelated smells, don't fix them.
-- **Explicit boundaries** — clear module ownership; avoid leaking feature logic into shared utilities.
-- **Single source of truth** — derive schema or field names from models/types; avoid duplicated constant lists.
-- **Test with the production path** — reuse fixtures and helpers; parametrize instead of copy-paste tests ([code-review.md](code-review.md)).
-- **Inject or pass dependencies** — prefer constructor or function parameters over hidden globals so unit tests can substitute fakes (DIP).
+## Slicing
 
-## Slicing strategies
+Prefer **vertical slices** (end-to-end path per todo item). ≤ ~5 files per slice.
+See [planning-and-task-breakdown.md](planning-and-task-breakdown.md).
 
-| Strategy       | Use when                                           |
-| -------------- | -------------------------------------------------- |
-| Vertical slice | Default — one user-visible path per slice          |
-| Contract-first | Parallel backend/frontend — define types/API first |
-| Risk-first     | Highest uncertainty first — fail fast              |
+## Slice checklist
 
-## Simplicity check (after each slice)
-
-- Can this be done in fewer lines without losing clarity?
-- Are abstractions earning their complexity?
-- Would a staff engineer ask "why didn't you just use X?" — if X exists in repo, use it.
-- Does each new type/function have one clear job (SRP)?
-- Can the next ticket extend this without editing unrelated modules (OCP)?
-
-## Increment checklist
-
-After each slice:
-
-- [ ] REUSE CHECK completed — existing code searched; approach recorded if non-obvious
-- [ ] RED — failing test written (or extended) **before** production code for new behavior
-- [ ] GREEN — minimal code passes the new test(s)
-- [ ] REFACTOR — duplication removed via reuse/extend; tests still green
-- [ ] Slice does one thing; builds and full scoped verify command pass
-- [ ] New behavior covered by reusing or extending existing tests/fixtures where possible
-- [ ] No duplicate logic introduced without justification in `memory.decisions`
+- [ ] REUSE CHECK stated
+- [ ] RED → GREEN → REFACTOR ([test-driven-development.md](test-driven-development.md))
+- [ ] Spec adherence for slice — no Blocker gaps ([spec-adherence.md](spec-adherence.md))
+- [ ] Scoped verify command passed
+- [ ] User notified if spec gaps found and fixed or deferred
 
 ## Anti-patterns
 
-- Production code before a failing test (skips TDD)
-- 100+ lines before running tests
-- New module for logic that belongs in an existing package
-- Copy-paste with renamed variables instead of calling or extending existing code
-- Reimplementing a helper that already exists one import away
-- God classes/functions that mix unrelated responsibilities (I/O, formatting, business rules) in one place
-- Drive-by refactors outside task scope
-- Leaking feature-specific rules into shared layers "for convenience"
+- Production before failing test
+- 100+ lines without running tests
+- Copy-paste instead of reuse
+- God modules mixing I/O + rules + formatting
+- "Tests green" without spec traceability
+- Drive-by refactors outside scope
