@@ -215,8 +215,9 @@ Written with the plan, before **plan approval** — see [plan-and-tasks.md](plan
 
 - [ ] **Task N: <name>**
   - Acceptance: ...
+  - TDD: RED test in `<test file>` → GREEN in `<production file(s)>`
   - Verify: `<scoped test command>`
-  - Files: ...
+  - Files (order): tests first, then production
 
 ---
 

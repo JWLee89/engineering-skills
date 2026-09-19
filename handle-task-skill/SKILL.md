@@ -23,7 +23,7 @@ Load **`.handle-task/project.yaml`** first ([project-config.md](project-config.m
 | -------------------- | --------------------------------------------------------------------------------------------------------- |
 | Scope + spec         | [specify.md](specify.md) → [spec-driven-development.md](spec-driven-development.md)                       |
 | Plan + tasks         | [plan-and-tasks.md](plan-and-tasks.md) → [planning-and-task-breakdown.md](planning-and-task-breakdown.md) |
-| Coding slices        | [incremental-implementation.md](incremental-implementation.md)                                            |
+| Coding slices        | [test-driven-development.md](test-driven-development.md) → [incremental-implementation.md](incremental-implementation.md) |
 | Significant choices  | [documentation-and-adrs.md](documentation-and-adrs.md) → `memory.decisions` from config                   |
 | Performance in scope | [performance-optimization.md](performance-optimization.md)                                                |
 | Code review          | [code-review.md](code-review.md)                                                                          |
@@ -74,6 +74,7 @@ Checklist:
 - [ ] Branch matches ticket.id_pattern from config
 - [ ] Unassigned JIRA ticket assigned to current user (when applicable)
 - [ ] Issue moved to in-progress (when status_transitions configured)
+- [ ] Each behavioral slice: RED test → GREEN code → REFACTOR ([test-driven-development.md](test-driven-development.md))
 - [ ] Implementation complete; local verify green
 - [ ] User prompted for /make-pull-request
 ```
@@ -144,20 +145,24 @@ ______________________________________________________________________
 1. Branch: `{ticket.id_pattern}` from config (e.g. `PROJ-123`)
 2. **Issue transition:** apply `status_transitions.implementation_start` when configured
    ([issue-transitions.md](issue-transitions.md)) — e.g. JIRA `Assign` → In Progress
-3. Execute local todo via [incremental-implementation.md](incremental-implementation.md)
-4. Test after each slice; log decisions and session notes
+3. Execute each todo slice via [test-driven-development.md](test-driven-development.md) and
+   [incremental-implementation.md](incremental-implementation.md)
+4. Log decisions and session notes after each slice
 
-**Implementation rules** (required — see delegate for detail):
+**Implementation rules** (required — see delegates for detail):
 
-- **DRY** — search the codebase first. If an existing function already does what you need,
-  use it. If it is close, extend or parameterize it. Do not reimplement the same logic
-  under a new name.
-- **Maintainable / testable / extensible** — follow [SOLID](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+- **TDD per slice** — for any behavior change: **write the failing test first (RED)**, then
+  minimal code (GREEN), then refactor. Production code must be easy to **test, maintain,
+  extend**, and **scale** — tests prove each slice before moving on.
+- **DRY / reuse** — search the codebase first. If an existing function already does what
+  you need, use it. If it is close, extend or parameterize it. **Do not reinvent the wheel**
+  — when another module already implements the same functionality, call or extend it.
+- **SOLID** — follow [SOLID](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
   as practical guardrails: one reason to change per unit (SRP), extend without modifying
   stable code (OCP), honor substitutability (LSP), narrow interfaces (ISP), depend on
   abstractions at boundaries (DIP).
-- **REUSE CHECK** — before each slice, state what existing code you considered and whether
-  you reuse, extend, or add new code (log non-obvious forks in `memory.decisions`).
+- **REUSE CHECK** — before each slice (before RED), state what existing code you considered
+  and whether you reuse, extend, or add new code (log non-obvious forks in `memory.decisions`).
 
 **Commits:** code, tests, committed memory, docs — never local specs. Commit when user asks
 or when preparing PR. Never commit secrets.
@@ -191,6 +196,7 @@ ______________________________________________________________________
 | Code before spec/plan approval | Stop at gates in specify.md / plan-and-tasks.md |
 | Opening PR without user OK     | Ask; use `/make-pull-request`                   |
 | Reimplementing existing helpers | Search first; reuse or extend ([incremental-implementation.md](incremental-implementation.md)) |
+| Production code before tests | TDD: RED → GREEN per slice ([test-driven-development.md](test-driven-development.md)) |
 | Monolithic classes/functions mixing concerns | Split by responsibility; one reason to change per unit (SRP) |
 
 ______________________________________________________________________
@@ -207,6 +213,7 @@ ______________________________________________________________________
 - [pr-splitting.md](pr-splitting.md) — split heuristics + stacked PRs
 - **Delegates:** [spec-driven-development.md](spec-driven-development.md),
   [planning-and-task-breakdown.md](planning-and-task-breakdown.md),
+  [test-driven-development.md](test-driven-development.md),
   [incremental-implementation.md](incremental-implementation.md),
   [documentation-and-adrs.md](documentation-and-adrs.md),
   [code-review.md](code-review.md),

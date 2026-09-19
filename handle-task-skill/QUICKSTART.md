@@ -80,7 +80,8 @@ Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-
 | ---------------------------------------------------------------- | ------------------------------------------- |
 | [spec-driven-development.md](spec-driven-development.md)         | Spec process, assumptions, capability maps  |
 | [planning-and-task-breakdown.md](planning-and-task-breakdown.md) | Vertical slices, reuse discovery            |
-| [incremental-implementation.md](incremental-implementation.md)   | Reuse-before-add, minimal diff, slice cycle |
+| [test-driven-development.md](test-driven-development.md)       | RED → GREEN → REFACTOR per slice            |
+| [incremental-implementation.md](incremental-implementation.md)   | Reuse-before-add, DRY, SOLID, slice cycle |
 | [documentation-and-adrs.md](documentation-and-adrs.md)           | ADRs, wire formats, design decisions        |
 | [code-review.md](code-review.md)                                 | Five-axis review + test robustness          |
 | [performance-optimization.md](performance-optimization.md)       | Measure-first perf workflow                 |

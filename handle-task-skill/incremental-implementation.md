@@ -10,13 +10,20 @@ Standalone delegate for `/handle-task` Phase 7. Implements approved plan slices 
 
 **Skip:** trivial single-file edits.
 
-## Increment cycle
+## Increment cycle (TDD per slice)
+
+Every behavioral slice follows **[test-driven-development.md](test-driven-development.md)** —
+**tests first**, then production code:
 
 ```
-Implement → Test → Verify → Commit (when asked) → Next slice
+REUSE CHECK → RED (failing test) → GREEN (minimal code) → REFACTOR → Verify → Commit (when asked) → Next slice
 ```
 
-After each slice: project builds, existing tests pass, slice acceptance criteria met.
+After each slice: new/changed behavior is covered by tests that failed before GREEN; project
+builds; existing tests pass; slice acceptance criteria met.
+
+**Do not** write production code for new behavior before the RED test exists. Docs-only and
+non-behavioral slices skip RED — see [test-driven-development.md](test-driven-development.md#when-tdd-applies-to-a-slice).
 
 ## DRY — reuse before you add (required)
 
@@ -94,12 +101,16 @@ Applied habits:
 After each slice:
 
 - [ ] REUSE CHECK completed — existing code searched; approach recorded if non-obvious
-- [ ] Slice does one thing; builds and existing tests pass
+- [ ] RED — failing test written (or extended) **before** production code for new behavior
+- [ ] GREEN — minimal code passes the new test(s)
+- [ ] REFACTOR — duplication removed via reuse/extend; tests still green
+- [ ] Slice does one thing; builds and full scoped verify command pass
 - [ ] New behavior covered by reusing or extending existing tests/fixtures where possible
 - [ ] No duplicate logic introduced without justification in `memory.decisions`
 
 ## Anti-patterns
 
+- Production code before a failing test (skips TDD)
 - 100+ lines before running tests
 - New module for logic that belongs in an existing package
 - Copy-paste with renamed variables instead of calling or extending existing code

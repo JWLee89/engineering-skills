@@ -10,6 +10,7 @@ it matches your personal style perfectly.
 ### 1. Correctness
 
 - Matches spec / acceptance criteria
+- Behavioral changes have tests that **precede or co-evolve** with production code ([test-driven-development.md](test-driven-development.md))
 - Edge cases and error paths covered
 - Tests assert the right behavior (not implementation details)
 
@@ -71,8 +72,10 @@ def test_derives_image_info_from_array(slice_height, slice_width):
 
 ## Red flags
 
+- Production logic added without corresponding tests for new behavior
 - Magic numbers duplicated across setup and assertions
 - New code when an existing helper could be extended
+- Reinvented functionality that already exists elsewhere in the repo
 - Abstraction used once or twice without clear payoff
 - Drive-by refactors outside PR scope
 
