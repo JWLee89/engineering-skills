@@ -74,6 +74,9 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 │   ├── spec-driven-development.md      ┐
 │   ├── planning-and-task-breakdown.md  │ standalone delegates
 │   ├── incremental-implementation.md   │ (no external agent-skills)
+│   ├── test-driven-development.md      │
+│   ├── spec-adherence.md               │
+│   ├── self-improvement.md             │
 │   ├── documentation-and-adrs.md       │
 │   ├── code-review.md                  │
 │   ├── performance-optimization.md     ┘

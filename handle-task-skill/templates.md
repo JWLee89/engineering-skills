@@ -215,8 +215,10 @@ Written with the plan, before **plan approval** — see [plan-and-tasks.md](plan
 
 - [ ] **Task N: <name>**
   - Acceptance: ...
+  - Spec: satisfies `<success criterion # or scenario>`
+  - TDD: RED in `<test file>` → GREEN in `<production file(s)>`
+  - Spec adhere: matrix row ✅ for this slice
   - Verify: `<scoped test command>`
-  - Files: ...
 
 ---
 

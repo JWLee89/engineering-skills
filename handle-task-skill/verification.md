@@ -1,51 +1,35 @@
-# Verification commands
+# Verification
 
-Run the **smallest** set covering touched code. Load **`.handle-task/project.yaml`**
-first → `verify.commands`, `verify.by_path`, `verify.hooks`.
+Delegate for `/handle-task` Phase 8. Run **after** [spec-adherence.md](spec-adherence.md) matrix is clean or gaps acknowledged.
 
-If config is empty, discover from the repo:
+## Commands
 
-| Signal    | Look in                        |
-| --------- | ------------------------------ |
-| Make      | `Makefile`, `make help`        |
-| Python    | `pyproject.toml`, `pytest.ini` |
-| Node      | `package.json` scripts         |
-| CI parity | `.github/workflows/`           |
+Load `.handle-task/project.yaml` → `verify.commands`, `verify.by_path`, `verify.hooks`.
+If empty, discover from `Makefile`, `pyproject.toml`, `package.json`, CI workflows.
 
-## Pre-PR checklist
+Run the **smallest** set covering touched code; full suite before `/make-pull-request`.
+
+## Phase 8 checklist
 
 ```
-- [ ] .handle-task/project.yaml loaded
+- [ ] Spec traceability matrix — all in-scope success criteria have evidence ([spec-adherence.md](spec-adherence.md))
 - [ ] Scoped tests pass
-- [ ] Lint / typecheck (when project uses them)
-- [ ] Hooks pass (prek, pre-commit, etc.)
+- [ ] Lint / typecheck / hooks (verify.hooks)
 - [ ] No local spec files staged
-- [ ] Committed task memory updated if configured
+- [ ] Task memory updated
+- [ ] CI-only scenarios listed for PR skill
 ```
-
-## CI-only tests
-
-Document in PR test plan with workflow names from `verify.ci_workflows`. Never skip
-tests to green a PR without approval.
 
 ## Test robustness
 
-When writing or reviewing unit tests:
+- **Constants once** — shapes, keys, profiles at module top; fixtures and asserts use same names
+- **Parametrize** variant behavior
+- **Wire keys** — derive from `fields(Model)` / shared enums, not duplicated literals
 
-- **Name dimensions and fixtures once** — define shape/size constants (e.g. `DICOM_IMAGE_ROWS`,
-  `DEFAULT_SLICE_SHAPE`) at module top; build metadata dicts and assertions from those names.
-  Avoid magic numbers duplicated in `shape=(10, 20)` and `assert rows == 10`.
-- **Parameterize behavior that varies on inputs** — use `@pytest.mark.parametrize` for multiple
-  shapes, key aliases (`columns` vs `cols`), present/absent metadata, or enum variants instead
-  of copy-pasted test methods.
-- **Single source for wire keys** — derive expected key sets from `fields(Model)` or shared key
-  instances; do not re-list the same string literals in fixtures and assertions.
-- **Assert through the same constants** — if a fixture embeds a value, the test should reference
-  the constant, not a second literal.
+Details: [code-review.md](code-review.md).
 
-See also [code-review.md](code-review.md) (five-axis review + test robustness).
+## CI-only
 
-## Project reference
+Never skip failing tests to green a PR without user approval. Document workflow names in PR verification.
 
-Example verify blocks: [examples/generic.project.yaml](examples/generic.project.yaml),
-[examples/jira-project.project.yaml](examples/jira-project.project.yaml)
+Examples: [examples/generic.project.yaml](examples/generic.project.yaml), [examples/jira-project.project.yaml](examples/jira-project.project.yaml).
