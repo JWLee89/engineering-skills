@@ -2,10 +2,12 @@
 
 ## How to invoke
 
-| Skill                 | Command              | When                                              |
-| --------------------- | -------------------- | ------------------------------------------------- |
-| **Handle task**       | `/handle-task`       | Ticket assigned → spec → implement → verify       |
-| **Make pull request** | `/make-pull-request` | Implementation done → draft PR → CI green → ready |
+| Skill                 | Command               | When                                              |
+| --------------------- | --------------------- | ------------------------------------------------- |
+| **Handle task**       | `/handle-task`        | Ticket assigned → spec → implement → verify       |
+| **Make pull request** | `/make-pull-request`  | Implementation done → draft PR → CI green → ready |
+| **Create ticket**     | `/create-ticket`      | Brief/context → draft + create well-documented ticket |
+| **Review ticket**     | `/review-ticket`      | Quality gate, backfill, scope check on existing ticket |
 
 **One name, one folder:** the skill directory is `handle-task-skill/`. Cursor invokes it as
 **`/handle-task`** (from `SKILL.md` → `name: handle-task`).
@@ -21,9 +23,11 @@
 ```
 /handle-task          Phases 1–8: intake → spec → plan → implement → local verify
 /make-pull-request    Phases 0–7: draft PR → CI → review → merge-ready
+/create-ticket        Intake context → draft → create → /review-ticket → split/backfill
+/review-ticket        Fetch → four-point quality review → backfill / split proposal
 ```
 
-Install both once (global):
+Install all entry skills once (global):
 
 ```bash
 ./handle-task-skill/scripts/install-skills.sh
@@ -70,8 +74,12 @@ Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-
 | [plan-and-tasks.md](plan-and-tasks.md)                         | Plan + approval gate          |
 | [verification.md](verification.md)                             | Local test/lint commands      |
 | [make-pull-request/workflow.md](make-pull-request/workflow.md) | PR workflow                   |
+| [create-ticket/workflow.md](create-ticket/workflow.md) | Create well-documented tickets |
+| [review-ticket/workflow.md](review-ticket/workflow.md) | Review and backfill tickets |
+| [review-ticket/quality-gate.md](review-ticket/quality-gate.md) | Four-point ticket review |
+| [issue-tracker-adapters.md](issue-tracker-adapters.md) | Fetch/create/update by tracker type |
 | [project-config.md](project-config.md)                         | Config schema                 |
-| [jira-subtask-template.md](jira-subtask-template.md)           | Split work → JIRA subtasks    |
+| [subtask-template.md](subtask-template.md)                       | Split work → subtasks         |
 | [pr-splitting.md](pr-splitting.md)                             | When/how to split + stacked PRs |
 
 ### Standalone delegates (self-contained — no external agent-skills bundle)

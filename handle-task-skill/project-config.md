@@ -1,7 +1,7 @@
 # Project configuration
 
-Both **`/handle-task`** and **`/make-pull-request`** read **`.handle-task/project.yaml`**
-at the workspace root.
+**`/handle-task`**, **`/make-pull-request`**, **`/create-ticket`**, and **`/review-ticket`**
+read **`.handle-task/project.yaml`** at the workspace root.
 
 **Discovery:** if the file is missing, copy
 [examples/generic.project.yaml](examples/generic.project.yaml) (or
@@ -71,7 +71,7 @@ Applied in Phase 3 via `gh pr edit --add-label`. Labels must **exist on the repo
 | --------------- | ------------------------------------------------------------------------- |
 | `always`        | List of labels appended to every PR                                       |
 | `by_commit_tag` | Map PR/commit `{tag}` → one label or comma-separated list                 |
-| `by_path`       | Glob of changed paths → extra labels (e.g. context_interface → python:uv) |
+| `by_path`       | Glob of changed paths → extra labels (e.g. `src/api/**` → api)          |
 
 Resolve `{tag}` from the PR title (same as `commit.tags` vocabulary).
 

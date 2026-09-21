@@ -12,19 +12,19 @@ from `.handle-task/project.yaml`. Expand `{key}` in URLs (e.g. `PROJ-123`).
 | Plan + todo + approval gate  | [plan-and-tasks.md](plan-and-tasks.md)                         |
 | Draft PR → merge-ready       | [make-pull-request/workflow.md](make-pull-request/workflow.md) |
 | Project settings             | [project-config.md](project-config.md)                         |
-| JIRA subtask (split work)    | [jira-subtask-template.md](jira-subtask-template.md)           |
+| Subtask (split work)         | [subtask-template.md](subtask-template.md)                       |
 
 ______________________________________________________________________
 
-## JIRA subtask description (tracker — not a local file)
+## Subtask description (tracker — not a local file)
 
-When splitting a parent ticket, create **real subtasks** in JIRA (or your tracker). Each
-description must include **Background**, **Description**, **Scope**, and **DoD**, plus links
-to Parent / Depends on / Blocks.
+When splitting a parent ticket, create **real child issues** in your tracker. Each
+description must include **Background**, **Description**, **Scope**, **DoD**, and
+**Verification plan**, plus links to Parent / Depends on / Blocks.
 
 **Do not** use synthetic branch names — branch must equal the child ticket key.
 
-Full template: [jira-subtask-template.md](jira-subtask-template.md)
+Full template: [subtask-template.md](subtask-template.md)
 
 ______________________________________________________________________
 
@@ -138,8 +138,8 @@ ______________________________________________________________________
 
 | Module id | Responsibility | Tracker subtask | Depends on |
 |-----------|----------------|-----------------|------------|
-| scaffolding | Package + registry | PROJ-XXX | — |
-| core | Domain logic | PROJ-YYY | scaffolding |
+| scaffolding | Module scaffold | PROJ-XXX | — |
+| core | Core logic | PROJ-YYY | scaffolding |
 
 **Build order:** scaffolding → core → ...
 

@@ -9,7 +9,7 @@ file adds local path conventions and the **plan approval gate**.
 ## Prerequisites
 
 - [ ] Spec (or capability map + module spec) **explicitly approved** by the user
-- [ ] Split decision recorded if scope is large ([pr-splitting.md](pr-splitting.md)); oversized work → **real tracker subtasks** with [jira-subtask-template.md](jira-subtask-template.md) (never synthetic branches like `PROJ-100-a`)
+- [ ] Split decision recorded if scope is large ([pr-splitting.md](pr-splitting.md)); oversized work → **real tracker subtasks** with [subtask-template.md](subtask-template.md) (never synthetic branches like `PROJ-100-a`)
 - [ ] Phase 1 intake complete — issue context and decision-log constraints known
 
 If spec is not approved, go back to [specify.md](specify.md) — do not plan yet.
@@ -89,7 +89,7 @@ Do **not** proceed until the user gives **explicit confirmation** (e.g. "approve
 | ---------------------------------------- | --- |
 | Creating committed task memory / status  | Yes |
 | Checking out ticket branch               | Yes |
-| Writing or modifying product code        | Yes |
+| Writing or modifying application code    | Yes |
 | Running implementation slices            | Yes |
 
 **Do not treat as approval:** silence, implied consent, or agent inference. If the

@@ -31,6 +31,8 @@ INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY �
 | ADRs | [documentation-and-adrs.md](documentation-and-adrs.md) |
 | Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
 | PR | [make-pull-request/workflow.md](make-pull-request/workflow.md) |
+| Ticket review | [review-ticket/workflow.md](review-ticket/workflow.md) |
+| Ticket create | [create-ticket/workflow.md](create-ticket/workflow.md) |
 
 ## Artifacts
 
@@ -44,6 +46,7 @@ INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY �
 
 ```
 - [ ] project.yaml loaded; issue fetched; assumptions recorded
+- [ ] Documentation quality gate passed or backfilled + confirmed ([review-ticket/quality-gate.md](review-ticket/quality-gate.md) via `/review-ticket`)
 - [ ] Spec approved (local_specs); plan + todo approved
 - [ ] Task memory + branch ({ticket.id_pattern})
 - [ ] Each slice: REUSE → RED → GREEN → REFACTOR → spec adherence ([incremental-implementation.md](incremental-implementation.md))
@@ -61,7 +64,20 @@ ______________________________________________________________________
 
 Fetch issue (`integrations.issue_tracker`), read `memory.*` + agent guide, check prior PRs/task files.
 Unassigned JIRA → assign to current user ([issue-transitions.md](issue-transitions.md)).
-Split oversized work → [pr-splitting.md](pr-splitting.md) + real subtasks ([jira-subtask-template.md](jira-subtask-template.md)).
+Split oversized work → [pr-splitting.md](pr-splitting.md) + real subtasks ([subtask-template.md](subtask-template.md)).
+
+**Documentation quality gate (hard stop):** before spec/plan, run **`/review-ticket`**
+(or inline [review-ticket/quality-gate.md](review-ticket/quality-gate.md)):
+
+1. Enough background for the assignee to handle the task?
+2. Well-defined scope? (too big → split into real sub-tasks)
+3. Definition of done + required steps clear?
+4. Can a new onboarder read the ticket and complete it?
+
+If the fetched ticket fails any check, **ask clarifying questions**, backfill the ticket
+(via [issue-tracker-adapters.md](issue-tracker-adapters.md)), and **confirm with the caller**
+before proceeding to spec. Do not start implementation on an under-documented ticket. If the
+user asks to create a fresh ticket instead, hand off to `/create-ticket`.
 
 ## Phases 2–4: Specify
 

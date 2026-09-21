@@ -112,19 +112,19 @@ committed task memory — **do not paste the full local spec**.
 | **Background**   | 2–4 sentences: problem, ticket link, stack context if applicable     |
 | **Purpose**      | One paragraph: what this PR achieves                                 |
 | **Review guide** | **Suggested read order** — numbered file paths, one line each on why |
-| **Changes made** | Table or bullets by layer (entity / task / config / tests)           |
+| **Changes made** | Table or bullets by layer (model / service / config / tests)         |
 | **Verification** | Executable plan (see below)                                          |
 | **Out of scope** | Explicit non-goals, follow-up tickets                                |
 
-Optional when helpful: ASCII/mermaid diagram for DAG or data-flow changes.
+Optional when helpful: ASCII/mermaid diagram for pipeline or data-flow changes.
 
 ### Review guide (required for non-trivial PRs)
 
 List files in the order a reviewer should read them — typically:
 
-1. Core logic / entity change (smallest surface that defines behavior)
-2. Task or service wiring
-3. Config / YAML
+1. Core logic / model change (smallest surface that defines behavior)
+2. Service or module wiring
+3. Config / schema
 4. Tests (what changed in assertions)
 
 Example:
@@ -132,10 +132,10 @@ Example:
 ```markdown
 ## Review guide
 
-1. **`path/to/core.py`** — entity shape + builders (main logic)
-2. **`path/to/task.py`** — drop unused input
-3. **`path/to/config.yaml`** — DAG input list
-4. **`tests/.../test_core.py`** — in-memory assertions replace disk checks
+1. **`src/models/user.py`** — type shape + validation (main logic)
+2. **`src/services/user_service.py`** — wire model into handler
+3. **`config/settings.yaml`** — new feature flag
+4. **`tests/unit/test_user.py`** — assertion updates for new fields
 ```
 
 ### Verification plan (generate before opening PR)
@@ -225,7 +225,7 @@ verification plan and ask once.
    | --------------- | --------------------------------------------------------------- |
    | `always`        | Applied to every PR from this workflow                          |
    | `by_commit_tag` | Map commit/PR `{tag}` → label name(s)                           |
-   | `by_path`       | Optional glob → extra labels (e.g. `apps/context_interface/**`) |
+   | `by_path`       | Optional glob → extra labels (e.g. `src/api/**` → api)          |
 
    If `pr.labels` is unset, infer: `{tag}` from title → matching repo label when it
    exists (`gh label list`). Never invent labels — use only labels that exist on the repo.

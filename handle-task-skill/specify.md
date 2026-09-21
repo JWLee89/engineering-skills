@@ -77,8 +77,8 @@ When the task introduces typed records for an external JSON or API shape:
 
 - Align dataclass field names with wire keys when possible; serialize with `asdict()` (not manual key lists)
 - Use named mapping dicts only when internal and external names differ
-- Legacy ingest aliases get **named attributes** on the relevant business-object grouping
-- **Single source of truth for keys:** define each wire/metadata string **once** in the entity module
+- Legacy ingest aliases get **named constants** on the relevant type or module
+- **Single source of truth for keys:** define each wire/metadata string **once** in the model module
 - Tests: derive expected key sets from `fields(Model)`; assert representative values separately
 - Tests: **name shape/dimension constants once**; build fixtures and assertions from them
 - Tests: prefer **`@pytest.mark.parametrize`** when behavior varies by inputs
@@ -123,7 +123,7 @@ Do **not** proceed until the user gives **explicit confirmation** (e.g. "approve
 | Writing `plan-*` or `todo-*` under `{local_specs}`     | Yes |
 | Creating committed task memory or updating `memory.status` | Yes |
 | Checking out ticket branch                             | Yes |
-| Writing or modifying product code                        | Yes |
+| Writing or modifying application code                    | Yes |
 
 **Do not treat as approval:** silence, implied consent, or the agent continuing because
 the task "seems obvious". If the user requests changes, revise the spec and re-prompt.

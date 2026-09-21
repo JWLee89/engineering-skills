@@ -13,21 +13,22 @@ Split or create subtasks when **any** threshold is likely exceeded:
 | Diff size        | ~500+ lines changed                                                                          |
 | File count       | ~15+ files                                                                                   |
 | Task granularity | Any step touches >5 files ([planning-and-task-breakdown.md](planning-and-task-breakdown.md)) |
-| Review domains   | Different reviewers for infra vs product code                                                |
+| Review domains   | Different reviewers for infra vs application code                                            |
 | Capabilities     | Capability map has >1 module with independent acceptance                                     |
 
 Re-check after each implementation phase — scope creep is the usual trigger.
 
-## Pattern: parent task → JIRA subtasks (preferred over branch suffixes)
+## Pattern: parent task → child issues (preferred over branch suffixes)
 
-When a ticket is too large for one reviewable PR, **create real JIRA subtasks** — not
-synthetic branch names like `PROJ-100-a`. Each subtask gets its own key, branch, and PR.
+When a ticket is too large for one reviewable PR, **create real child issues** in your
+tracker — not synthetic branch names like `PROJ-100-a`. Each child gets its own key,
+branch, and PR.
 
 Example split (illustrative):
 
 ```
 PROJ-100  Task — parent (coordination; closes when last subtask merges)
-├── PROJ-101  Subtask — foundation (entities + helpers)
+├── PROJ-101  Subtask — foundation (models + helpers)
 ├── PROJ-102  Subtask — core logic        (blocked by 101)
 └── PROJ-103  Subtask — integration       (blocked by 102)
 ```
@@ -45,15 +46,17 @@ Each child should:
 
 - Have **one primary acceptance outcome**
 - Map to **exactly one PR** on branch matching `ticket.id_pattern` (e.g. `PROJ-101`)
-- Use the **four required sections** in the JIRA description — see
-  [jira-subtask-template.md](jira-subtask-template.md): **Background**, **Description**,
-  **Scope**, **DoD (Definition of Done)**
+- Use all **required sections** in the ticket description — see
+  [subtask-template.md](subtask-template.md): **Background**, **Description**,
+  **Scope**, **DoD**, **Verification plan**
 - Header links: **Parent**, **Epic** (if any), **Depends on**, **Blocks** (when ordered)
 - Leave the repo **green** when merged
 
-**Canonical template:** [jira-subtask-template.md](jira-subtask-template.md)
+**Canonical template:** [subtask-template.md](subtask-template.md)
 
-## Tracker operations (JIRA via Atlassian MCP)
+## Tracker operations
+
+Use [issue-tracker-adapters.md](issue-tracker-adapters.md). JIRA example below (Atlassian MCP):
 
 ### 1. Propose split (before creating issues)
 
@@ -67,8 +70,8 @@ Wait for human approval unless the user delegated split authority.
 
 ### 2. Create subtasks
 
-Use `jira_create_issue` per slice. Copy the full template from
-[jira-subtask-template.md](jira-subtask-template.md) — all four sections are **required**.
+Create one child ticket per slice via the tracker adapter. Copy the full template from
+[subtask-template.md](subtask-template.md) — all required sections must be present.
 
 Minimal API sketch (fill from template):
 
@@ -78,7 +81,7 @@ issue_type: Subtask          # when parent is a Task; use Task under Epic otherw
 summary: [{area}] {title} ({PARENT-KEY} / {n})
 assignee: <current user>
 description: |
-  <paste Background, Description, Scope, DoD from jira-subtask-template.md>
+  <paste Background, Description, Scope, DoD, Verification plan from subtask-template.md>
 additional_fields: {"parent": "<PARENT-KEY>", "labels": ["<team-label>"]}
 ```
 
@@ -142,7 +145,7 @@ Avoid stacking more than **2–3** PRs deep — merge frequently. Close **parent
 ## PR-too-big recovery (branch already bloated)
 
 1. Identify the **smallest shippable prefix** of commits (git log / diff stat)
-2. Create JIRA subtask for "Part 1" if not already split
+2. Create a child issue for "Part 1" if not already split
 3. Interactive recovery options (pick one with user):
    - **Soft split:** new branch from base, cherry-pick prefix commits → PR-A; remainder → PR-B
    - **Reset scope:** revert out-of-scope files from branch; track reverted work in new subtask
