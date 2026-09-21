@@ -19,6 +19,8 @@
 # Installs:
 #   /handle-task        → handle-task-skill/
 #   /make-pull-request  → handle-task-skill/make-pull-request/
+#   /create-ticket      → handle-task-skill/create-ticket/
+#   /review-ticket      → handle-task-skill/review-ticket/
 #
 # Environment:
 #   SKILLS_ROOT  Override repo root (default: parent of handle-task-skill/)
@@ -35,8 +37,8 @@ DO_INSTALL_HOOK=false
 DO_REMOVE_HOOK=false
 QUIET=false
 
-SKILL_NAMES=(handle-task make-pull-request)
-LEGACY_SKILLS=(modelops modelops-workflow modelops-skill handle-task-workflow)
+SKILL_NAMES=(handle-task make-pull-request create-ticket review-ticket)
+LEGACY_SKILLS=(modelops modelops-workflow modelops-skill handle-task-workflow create-jira-ticket)
 
 usage() {
   sed -n '2,24p' "$0" | sed 's/^# \{0,1\}//'
@@ -96,6 +98,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_ROOT="${SKILLS_ROOT:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
 HANDLE_TASK_DIR="${SKILLS_ROOT}/handle-task-skill"
 MAKE_PR_DIR="${SKILLS_ROOT}/handle-task-skill/make-pull-request"
+CREATE_TICKET_DIR="${SKILLS_ROOT}/handle-task-skill/create-ticket"
+REVIEW_TICKET_DIR="${SKILLS_ROOT}/handle-task-skill/review-ticket"
 MANIFEST="${HOME}/.config/handle-task-skills/source"
 HOOK_MARKER="# handle-task-skills-sync (managed by install-skills.sh)"
 HOOK_SCRIPT="${HANDLE_TASK_DIR}/scripts/sync-skills-hook.sh"
@@ -122,6 +126,8 @@ skill_source_dir() {
   case "$1" in
     handle-task) printf '%s\n' "${HANDLE_TASK_DIR}" ;;
     make-pull-request) printf '%s\n' "${MAKE_PR_DIR}" ;;
+    create-ticket) printf '%s\n' "${CREATE_TICKET_DIR}" ;;
+    review-ticket) printf '%s\n' "${REVIEW_TICKET_DIR}" ;;
     *)
       echo "error: unknown skill: $1" >&2
       exit 1
@@ -148,6 +154,8 @@ write_manifest() {
     echo "source_root=${SKILLS_ROOT}"
     echo "handle_task_dir=${HANDLE_TASK_DIR}"
     echo "make_pull_request_dir=${MAKE_PR_DIR}"
+    echo "create_ticket_dir=${CREATE_TICKET_DIR}"
+    echo "review_ticket_dir=${REVIEW_TICKET_DIR}"
     echo "install_cursor=${INSTALL_CURSOR}"
     echo "install_claude=${INSTALL_CLAUDE}"
     echo "updated_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
@@ -304,6 +312,8 @@ if [[ "${DO_REMOVE}" == true ]]; then
   for target_dir in "${TARGET_DIRS[@]}"; do
     remove_one "${target_dir}" handle-task
     remove_one "${target_dir}" make-pull-request
+    remove_one "${target_dir}" create-ticket
+    remove_one "${target_dir}" review-ticket
     remove_legacy "${target_dir}"
   done
   if [[ -f "${MANIFEST}" && "${SCOPE}" == "global" ]]; then
@@ -316,6 +326,8 @@ else
     remove_legacy "${target_dir}"
     link_one "${target_dir}" handle-task "${HANDLE_TASK_DIR}"
     link_one "${target_dir}" make-pull-request "${MAKE_PR_DIR}"
+    link_one "${target_dir}" create-ticket "${CREATE_TICKET_DIR}"
+    link_one "${target_dir}" review-ticket "${REVIEW_TICKET_DIR}"
   done
   write_manifest
   log
@@ -328,6 +340,8 @@ else
   fi
   log "  /handle-task         — ticket → implement → verify"
   log "  /make-pull-request   — draft PR → CI → ready"
+  log "  /create-ticket       — draft + create well-documented tickets"
+  log "  /review-ticket       — quality gate, backfill, scope check"
   log
   log "Per repo: copy handle-task-skill/examples/generic.project.yaml → .handle-task/project.yaml"
   log "Auto-sync on commit:  ./handle-task-skill/scripts/install-skills.sh --install-hook"

@@ -1,10 +1,11 @@
-# JIRA subtask template (split work)
+# Subtask template (split work)
 
 Use when a parent ticket is too large for one reviewable PR. **Always create real tracker
 issues** — never synthetic branch names like `PROJ-100-a` or `PARENT-1`.
 
-Portable across JIRA projects: substitute `{prefix}` from `.handle-task/project.yaml`
-(e.g. `PROJ`, `ENG`, `ACME`).
+Portable across trackers — substitute `{prefix}` from `.handle-task/project.yaml`
+(e.g. `PROJ`, `ENG`, `ACME`). Create/link children via
+[issue-tracker-adapters.md](issue-tracker-adapters.md).
 
 ______________________________________________________________________
 
@@ -15,32 +16,31 @@ ______________________________________________________________________
 | **One subtask → one PR** | Each child issue gets exactly one mergeable PR |
 | **Branch = ticket key** | Git branch must match `ticket.id_pattern` (e.g. `PROJ-101`, not `PROJ-100-1`) |
 | **Implement on child key** | `/handle-task PROJ-101` — not the parent key |
-| **Required description sections** | Background, Description, Scope, DoD (see below) |
-| **Link parent + blockers** | Header lines + JIRA link types (see [Links](#links)) |
+| **Required description sections** | Background, Description, Scope, DoD, Verification plan |
+| **Link parent + blockers** | Header lines + tracker-specific links (see [Links](#links)) |
 | **Human approval first** | Propose split on parent; wait for approval before creating issues |
 
 ______________________________________________________________________
 
 ## When to split
 
-See [pr-splitting.md](pr-splitting.md) for size heuristics (~500 lines, ~15 files, etc.).
+Triggered by `/review-ticket` scope check or `/handle-task` intake. Size heuristics:
+[pr-splitting.md](pr-splitting.md) (~500 lines, ~15 files, etc.).
 
 ______________________________________________________________________
 
 ## Workflow
 
 1. **Propose** — comment on parent with proposed subtasks, merge order, first implement key
-2. **Approve** — wait for explicit user approval (unless split authority delegated)
-3. **Create issues** — one per slice using template below
-4. **Link** — parent hierarchy + Work item split + Blocks chain
+2. **Approve** — wait for explicit user approval
+3. **Create issues** — one per slice using template below (via adapter)
+4. **Link** — parent hierarchy + merge-order relations
 5. **Update parent** — subtask table, rollup DoD, verification plan
 6. **Implement** — `/handle-task <child-key>` on branch `<child-key>`
 
 ______________________________________________________________________
 
 ## Description template (copy per subtask)
-
-Use `jira_create_issue` (or your tracker UI). For JIRA **Subtask** under a Task:
 
 ```markdown
 **Parent:** [{PARENT-KEY}]({url_template})
@@ -61,8 +61,8 @@ Local spec: `{local_specs}/<parent_key_lower>/SPEC-<slug>.md` (if applicable)
 
 ## Description
 
-<What to build or change. Concrete files, workflow steps, acceptance outcome.
-State the git branch explicitly: `{CHILD-KEY}`.>
+<What to build or change, **in layman terms**. Concrete files, workflow steps,
+acceptance outcome. State the git branch explicitly: `{CHILD-KEY}`.>
 
 ---
 
@@ -79,6 +79,12 @@ State the git branch explicitly: `{CHILD-KEY}`.>
 - [ ] <testable checklist item>
 - [ ] PR merged to `{git.pr_target}` on branch `{CHILD-KEY}`
 - [ ] Parent rollup updated if needed
+
+---
+
+## Verification plan
+
+<Executable checks for this slice — map each DoD item to a command or manual step.>
 ```
 
 ### Summary line pattern
@@ -87,21 +93,20 @@ State the git branch explicitly: `{CHILD-KEY}`.>
 [{area}] {imperative title} ({PARENT-KEY} / {n})
 ```
 
-Example: `[Engine] Parallel unit and integration CI jobs (PROJ-100 / 1)`
-
-The `/ {n}` ordinal is optional but helps ordering in the parent table.
+Example: `[CI] Parallel unit and integration test jobs (PROJ-100 / 1)`
 
 ______________________________________________________________________
 
 ## Links
 
-| Link | JIRA API | Purpose |
-|------|----------|---------|
-| **Subtask parent field** | `additional_fields: {"parent": "PROJ-100"}` | Hierarchy (required for Subtask) |
-| **Work item split** | `link_type: Work item split`, outward parent, inward child | Traceability |
-| **Blocks** | `link_type: Blocks`, outward predecessor, inward successor | Merge / implement order |
+| Tracker | Hierarchy | Split traceability | Merge order |
+| ------- | --------- | ------------------ | ----------- |
+| **JIRA** | Subtask + `parent` field | `Work item split` link | `Blocks` chain |
+| **Linear** | Sub-issue under parent | Parent relation | Dependency / blocked-by |
+| **GitHub** | Issue reference in body | Cross-link `#parent` | Note order in parent table |
+| **None** | Document in parent body | Task memory table | Numbered implement order |
 
-Example merge order **A → B → C**:
+### JIRA example (merge order A → B → C)
 
 ```text
 Blocks: PROJ-101 blocks PROJ-102
@@ -130,16 +135,17 @@ ______________________________________________________________________
 
 | Mistake | Fix |
 |---------|-----|
-| Branch `PROJ-100-a` | Create `PROJ-101` subtask; branch `PROJ-101` |
+| Branch `PROJ-100-a` | Create `PROJ-101` child; branch `PROJ-101` |
 | One PR for entire parent | Split until each PR is reviewable |
-| Missing Scope / DoD | Use all four required sections |
+| Missing Verification plan | All required sections per child |
 | Implement on parent branch | `/handle-task` on child key only |
-| Subtasks without Blocks when order matters | Add Blocks chain + document in parent |
+| Subtasks without ordering when merge order matters | Blocks chain or equivalent |
 
 ______________________________________________________________________
 
 ## See also
 
 - [pr-splitting.md](pr-splitting.md) — heuristics, stacked PRs, recovery
-- [SKILL.md](SKILL.md) — Phase 3 split decision
+- [review-ticket/quality-gate.md](review-ticket/quality-gate.md) — scope check triggers split
+- [create-ticket/ticket-template.md](create-ticket/ticket-template.md) — full ticket sections
 - [templates.md](templates.md) — local spec/plan templates

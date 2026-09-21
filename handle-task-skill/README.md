@@ -9,9 +9,11 @@ JIRA (or Linear / GitHub Issues) project.
 | ------------------------ | -------------------------------------- | --------------------------------------- |
 | **`/handle-task`**       | `handle-task-skill/`                   | Work a ticket: spec, plan, code, verify |
 | **`/make-pull-request`** | `handle-task-skill/make-pull-request/` | Open draft PR, run CI, mark ready       |
+| **`/create-ticket`**     | `handle-task-skill/create-ticket/`     | Draft + create well-documented tickets      |
+| **`/review-ticket`**     | `handle-task-skill/review-ticket/`     | Review, backfill, and scope-check tickets   |
 
-Large tickets: split into **real JIRA subtasks** (branch = ticket key) — see
-[jira-subtask-template.md](jira-subtask-template.md).
+Large tickets: split into **real subtasks** (branch = ticket key) — see
+[subtask-template.md](subtask-template.md).
 
 There is **only one** task-handling skill name: **`handle-task`**.
 
@@ -71,6 +73,16 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 │   ├── make-pull-request/   ← /make-pull-request (same bundle)
 │   │   ├── SKILL.md
 │   │   └── workflow.md
+│   ├── create-ticket/       ← /create-ticket (same bundle)
+│   │   ├── SKILL.md
+│   │   ├── workflow.md
+│   │   └── ticket-template.md
+│   ├── review-ticket/       ← /review-ticket (same bundle)
+│   │   ├── SKILL.md
+│   │   ├── workflow.md
+│   │   └── quality-gate.md
+│   ├── issue-tracker-adapters.md
+│   ├── subtask-template.md
 │   ├── spec-driven-development.md      ┐
 │   ├── planning-and-task-breakdown.md  │ standalone delegates
 │   ├── incremental-implementation.md   │ (no external agent-skills)
@@ -86,8 +98,8 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 ```
 
 Delegates are **in-repo** so PR feedback and project conventions stay with the bundle.
-Install symlinks only `handle-task` and `make-pull-request` entry skills; delegates load
-via relative paths inside this folder.
+Install symlinks `handle-task`, `make-pull-request`, `create-ticket`, and `review-ticket`
+entry skills; delegates load via relative paths inside this folder.
 
 ## Issue trackers
 

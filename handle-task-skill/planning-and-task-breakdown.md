@@ -31,8 +31,8 @@ Each todo item includes:
 
 During planning, search for existing code to extend:
 
-- Similar tasks, protocols, entities, or test helpers in the same product area
-- Shared utilities under `core/`, `common/`, or product `entities/`
+- Similar tasks, interfaces, types, or test helpers in the same module or feature area
+- Shared utilities under `core/`, `common/`, or shared `models/` / `entities/`
 - YAML/config patterns already used for the same concern
 
 Prefer **extend existing** over **add parallel implementation**. If a new abstraction

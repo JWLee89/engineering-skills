@@ -57,7 +57,7 @@ Flag as **Required** when tests use brittle literals or duplicated cases:
 | ------------------------------------------------------------------- | --------------------------------------------------------------- |
 | Magic numbers in `shape=(h, w)` **and** separate `assert rows == h` | Named constants at module top; same names in fixture and assert |
 | Copy-pasted test methods differing only by input                    | `@pytest.mark.parametrize`                                      |
-| Wire keys repeated in fixture + assertion + production              | Import from entity module; derive keys from `fields(Model)`     |
+| Wire keys repeated in fixture + assertion + production              | Import from model module; derive keys from `fields(Model)`     |
 
 ### Example (good)
 

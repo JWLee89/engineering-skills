@@ -5,7 +5,7 @@ just what.
 
 ## When to use
 
-- Architectural or protocol choices
+- Architectural or public API / interface choices
 - Reuse vs new abstraction decisions ([incremental-implementation.md](incremental-implementation.md))
 - Public API or wire-format changes
 - PR feedback that changes design direction
@@ -26,7 +26,7 @@ When `memory.decisions` is set in config, append there (typically newest-first).
 | ------------------ | ---------------------------------------------------- |
 | ADR / decision row | Context, choice, alternatives rejected, consequences |
 | Inline comment     | Non-obvious *why* only                               |
-| Spec / HAC task    | Links to decisions; keep scratchpad concise          |
+| Spec / task memory | Links to decisions; keep scratchpad concise          |
 | PR body            | Verification evidence, not full spec paste           |
 
 ## Implementation design (document when non-obvious)
