@@ -1,6 +1,6 @@
 # Documentation and ADRs
 
-Standalone delegate for `/handle-task` and `/make-pull-request`. Records **why**, not
+Standalone delegate for `/handle-task` and `/pull-request`. Records **why**, not
 just what.
 
 ## When to use

@@ -7,7 +7,7 @@ Delegate for `/handle-task` Phase 8. Run **after** [spec-adherence.md](spec-adhe
 Load `.handle-task/project.yaml` → `verify.commands`, `verify.by_path`, `verify.hooks`.
 If empty, discover from `Makefile`, `pyproject.toml`, `package.json`, CI workflows.
 
-Run the **smallest** set covering touched code; full suite before `/make-pull-request`.
+Run the **smallest** set covering touched code; full suite before `/pull-request`.
 
 ## Phase 8 checklist
 

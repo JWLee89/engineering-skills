@@ -5,7 +5,7 @@
 | Skill                 | Command               | When                                              |
 | --------------------- | --------------------- | ------------------------------------------------- |
 | **Handle task**       | `/handle-task`        | Ticket assigned → spec → implement → verify       |
-| **Make pull request** | `/make-pull-request`  | Implementation done → draft PR → CI green → ready |
+| **Pull request** | `/pull-request`  | Create/update PR → CI → review → conflicts → ready |
 | **Create ticket**     | `/create-ticket`      | Brief/context → draft + create well-documented ticket |
 | **Review ticket**     | `/review-ticket`      | Quality gate, backfill, scope check on existing ticket |
 
@@ -22,7 +22,7 @@
 
 ```
 /handle-task          Phases 1–8: intake → spec → plan → implement → local verify
-/make-pull-request    Phases 0–7: draft PR → CI → review → merge-ready
+/pull-request         Phases 0–7: create/update PR → CI → review → merge-ready
 /create-ticket        Intake context → draft → create → /review-ticket → split/backfill
 /review-ticket        Fetch → four-point quality review → backfill / split proposal
 ```
@@ -45,7 +45,7 @@ When `status_transitions` is set in config (JIRA):
 | When                                     | Transition (example) | Target status (example) |
 | ---------------------------------------- | -------------------- | ----------------------- |
 | Start implement (`/handle-task` Phase 7) | `Assign`             | In Progress             |
-| PR ready (`/make-pull-request` Phase 7)  | `Review`             | Ready for Review        |
+| PR ready (`/pull-request` Phase 7)  | `Review`             | Ready for Review        |
 
 **Unassigned tickets:** at intake (Phase 1), if the issue has no assignee, assign it to
 the authenticated JIRA user running the skill before continuing.
@@ -73,7 +73,7 @@ Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-
 | [specify.md](specify.md)                                       | Spec + approval gate          |
 | [plan-and-tasks.md](plan-and-tasks.md)                         | Plan + approval gate          |
 | [verification.md](verification.md)                             | Local test/lint commands      |
-| [make-pull-request/workflow.md](make-pull-request/workflow.md) | PR workflow                   |
+| [pull-request/workflow.md](pull-request/workflow.md) | PR workflow                   |
 | [create-ticket/workflow.md](create-ticket/workflow.md) | Create well-documented tickets |
 | [review-ticket/workflow.md](review-ticket/workflow.md) | Review and backfill tickets |
 | [review-ticket/quality-gate.md](review-ticket/quality-gate.md) | Four-point ticket review |

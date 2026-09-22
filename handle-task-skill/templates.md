@@ -10,7 +10,7 @@ from `.handle-task/project.yaml`. Expand `{key}` in URLs (e.g. `PROJ-123`).
 | ---------------------------- | -------------------------------------------------------------- |
 | Spec writing + approval gate | [specify.md](specify.md)                                       |
 | Plan + todo + approval gate  | [plan-and-tasks.md](plan-and-tasks.md)                         |
-| Draft PR → merge-ready       | [make-pull-request/workflow.md](make-pull-request/workflow.md) |
+| PR lifecycle → merge-ready     | [pull-request/workflow.md](pull-request/workflow.md) |
 | Project settings             | [project-config.md](project-config.md)                         |
 | Subtask (split work)         | [subtask-template.md](subtask-template.md)                       |
 
@@ -264,7 +264,7 @@ ______________________________________________________________________
 
 ## Verification plan (PR body)
 
-Build in Phase 2 of [make-pull-request.md](make-pull-request.md). Three subsections are
+Build in Phase 2 of [pull-request.md](pull-request.md). Three subsections are
 **required** under `## Verification`:
 
 ### Steps run (author)
@@ -327,7 +327,7 @@ ______________________________________________________________________
 ## Draft PR body (local — not committed)
 
 Use after commits + verify, when the user approves opening a PR. **Always** create with
-`gh pr create --draft`. Full workflow: [make-pull-request.md](make-pull-request.md).
+`gh pr create --draft`. Full workflow: [pull-request.md](pull-request.md).
 
 ```markdown
 ## Background
@@ -345,8 +345,12 @@ Mention constraints from committed decision log when configured.>
 
 ## Changes made
 
-- <Grouped bullet: e.g. "Add auth middleware — JWT validation on protected routes">
-- <Grouped bullet: tests, docs, task memory updates>
+| Layer | Change | Δ lines |
+| ----- | ------ | ------- |
+| <e.g. Tests> | <one-line summary> | **+N / −M** (net ±K) |
+
+Populate from `git diff origin/<base>...HEAD --numstat` (group by layer). Bold Δ when \|net\| > 100 or row is the main story. Optional file-level table for top churn paths.
+
 - <Explicit "not in this PR" only under Verification → Out of scope>
 
 ## Verification
@@ -368,7 +372,7 @@ Mention constraints from committed decision log when configured.>
 **Agent prompt after commit (copy/adapt):**
 
 > Commits for {TICKET-KEY} are on branch `{TICKET-KEY}`. Verify: \[passed commands\].
-> Gaps: \[CI-only tests\]. Should I run `/make-pull-request` (draft PR + verification plan +
+> Gaps: \[CI-only tests\]. Should I run `/pull-request` (draft PR + verification plan +
 > CI watch)?
 
 **Agent prompt at finalize (copy/adapt):**

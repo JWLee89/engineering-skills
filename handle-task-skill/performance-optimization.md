@@ -1,6 +1,6 @@
 # Performance optimization
 
-Standalone delegate for `/handle-task` and `/make-pull-request` when performance is in
+Standalone delegate for `/handle-task` and `/pull-request` when performance is in
 scope or flagged in review.
 
 ## When to use

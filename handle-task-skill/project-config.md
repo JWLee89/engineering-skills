@@ -1,6 +1,6 @@
 # Project configuration
 
-**`/handle-task`**, **`/make-pull-request`**, **`/create-ticket`**, and **`/review-ticket`**
+**`/handle-task`**, **`/pull-request`**, **`/create-ticket`**, and **`/review-ticket`**
 read **`.handle-task/project.yaml`** at the workspace root.
 
 **Discovery:** if the file is missing, copy

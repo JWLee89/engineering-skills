@@ -3,19 +3,19 @@ name: handle-task
 description: >-
   Portable ticket-to-ship workflow: load .handle-task/project.yaml, fetch issue,
   spec with approval gates, TDD implementation with spec adherence verification,
-  self-improving skill updates on gaps, then hand off to /make-pull-request.
+  self-improving skill updates on gaps, then hand off to /pull-request.
   Use when user gives a ticket ID, asks to handle a task, or improve the workflow.
 disable-model-invocation: true
 ---
 
 # Handle task
 
-**Invoke:** `/handle-task` · **Companion:** `/make-pull-request` · **Entry:** [QUICKSTART.md](QUICKSTART.md)
+**Invoke:** `/handle-task` · **Companion:** `/pull-request` · **Entry:** [QUICKSTART.md](QUICKSTART.md)
 
 Load **`.handle-task/project.yaml`** first ([project-config.md](project-config.md)).
 
 ```
-INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT → VERIFY → /make-pull-request
+INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT → VERIFY → /pull-request
 ```
 
 ## Delegates
@@ -30,7 +30,7 @@ INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY �
 | Skill evolution | [self-improvement.md](self-improvement.md) |
 | ADRs | [documentation-and-adrs.md](documentation-and-adrs.md) |
 | Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
-| PR | [make-pull-request/workflow.md](make-pull-request/workflow.md) |
+| PR | [pull-request/workflow.md](pull-request/workflow.md) |
 | Ticket review | [review-ticket/workflow.md](review-ticket/workflow.md) |
 | Ticket create | [create-ticket/workflow.md](create-ticket/workflow.md) |
 
@@ -53,7 +53,7 @@ INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY �
 - [ ] Phase 8: traceability matrix green or gaps reported to user ([spec-adherence.md](spec-adherence.md))
 - [ ] Local verify green; CI-only gaps documented
 - [ ] Process gap or user feedback → skill patched + user notified ([self-improvement.md](self-improvement.md))
-- [ ] User prompted for /make-pull-request
+- [ ] User prompted for /pull-request
 ```
 
 **Skip** entire flow for trivial one-file fixes.
@@ -107,11 +107,11 @@ Commits when user asks or for PR prep. Never commit local specs or secrets.
 ## Phase 8: Verify
 
 [verification.md](verification.md) + full **[spec-adherence.md](spec-adherence.md)** matrix (all success criteria, testing strategy, non-negotiables).
-Document CI-only gaps for `/make-pull-request`.
+Document CI-only gaps for `/pull-request`.
 
 ## Phase 9: Pull request
 
-Prompt user → `/make-pull-request` only.
+Prompt user → `/pull-request` only.
 
 ## Self-improvement
 
