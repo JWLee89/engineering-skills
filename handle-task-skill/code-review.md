@@ -1,6 +1,6 @@
 # Code review
 
-Standalone delegate for `/handle-task` and `/make-pull-request` Phase 6.
+Standalone delegate for `/handle-task` and `/pull-request` Phase 6.
 
 **Approve when** the change improves overall code health and meets the spec — not when
 it matches your personal style perfectly.

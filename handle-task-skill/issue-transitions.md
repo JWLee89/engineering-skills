@@ -13,7 +13,7 @@ ______________________________________________________________________
 | Workflow point                                                | Config key             | Common JIRA pattern (varies)    |
 | ------------------------------------------------------------- | ---------------------- | ------------------------------- |
 | Start of **implement** (Phase 7, branch checked out)          | `implementation_start` | e.g. `Assign` → **In Progress** |
-| **PR merge-ready** (`gh pr ready`, make-pull-request Phase 7) | `pr_ready`             | e.g. `Review` → **In Review**   |
+| **PR merge-ready** (`gh pr ready`, pull-request Phase 7) | `pr_ready`             | e.g. `Review` → **In Review**   |
 
 Do **not** transition on spec/plan approval — only when coding starts and when PR is ready.
 

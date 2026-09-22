@@ -18,7 +18,7 @@
 #
 # Installs:
 #   /handle-task        → handle-task-skill/
-#   /make-pull-request  → handle-task-skill/make-pull-request/
+#   /pull-request       → handle-task-skill/pull-request/
 #   /create-ticket      → handle-task-skill/create-ticket/
 #   /review-ticket      → handle-task-skill/review-ticket/
 #
@@ -37,8 +37,11 @@ DO_INSTALL_HOOK=false
 DO_REMOVE_HOOK=false
 QUIET=false
 
-SKILL_NAMES=(handle-task make-pull-request create-ticket review-ticket)
-LEGACY_SKILLS=(modelops modelops-workflow modelops-skill handle-task-workflow create-jira-ticket)
+SKILL_NAMES=(handle-task pull-request create-ticket review-ticket)
+LEGACY_SKILLS=(
+  modelops modelops-workflow modelops-skill handle-task-workflow create-jira-ticket
+  make-pull-request
+)
 
 usage() {
   sed -n '2,24p' "$0" | sed 's/^# \{0,1\}//'
@@ -97,7 +100,7 @@ done
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_ROOT="${SKILLS_ROOT:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
 HANDLE_TASK_DIR="${SKILLS_ROOT}/handle-task-skill"
-MAKE_PR_DIR="${SKILLS_ROOT}/handle-task-skill/make-pull-request"
+PULL_REQUEST_DIR="${SKILLS_ROOT}/handle-task-skill/pull-request"
 CREATE_TICKET_DIR="${SKILLS_ROOT}/handle-task-skill/create-ticket"
 REVIEW_TICKET_DIR="${SKILLS_ROOT}/handle-task-skill/review-ticket"
 MANIFEST="${HOME}/.config/handle-task-skills/source"
@@ -125,7 +128,7 @@ skills_target_dirs() {
 skill_source_dir() {
   case "$1" in
     handle-task) printf '%s\n' "${HANDLE_TASK_DIR}" ;;
-    make-pull-request) printf '%s\n' "${MAKE_PR_DIR}" ;;
+    pull-request) printf '%s\n' "${PULL_REQUEST_DIR}" ;;
     create-ticket) printf '%s\n' "${CREATE_TICKET_DIR}" ;;
     review-ticket) printf '%s\n' "${REVIEW_TICKET_DIR}" ;;
     *)
@@ -153,7 +156,7 @@ write_manifest() {
     echo "# Written by handle-task-skill/scripts/install-skills.sh — do not edit."
     echo "source_root=${SKILLS_ROOT}"
     echo "handle_task_dir=${HANDLE_TASK_DIR}"
-    echo "make_pull_request_dir=${MAKE_PR_DIR}"
+    echo "pull_request_dir=${PULL_REQUEST_DIR}"
     echo "create_ticket_dir=${CREATE_TICKET_DIR}"
     echo "review_ticket_dir=${REVIEW_TICKET_DIR}"
     echo "install_cursor=${INSTALL_CURSOR}"
@@ -311,7 +314,7 @@ validate_sources
 if [[ "${DO_REMOVE}" == true ]]; then
   for target_dir in "${TARGET_DIRS[@]}"; do
     remove_one "${target_dir}" handle-task
-    remove_one "${target_dir}" make-pull-request
+    remove_one "${target_dir}" pull-request
     remove_one "${target_dir}" create-ticket
     remove_one "${target_dir}" review-ticket
     remove_legacy "${target_dir}"
@@ -325,7 +328,7 @@ else
     mkdir -p "${target_dir}"
     remove_legacy "${target_dir}"
     link_one "${target_dir}" handle-task "${HANDLE_TASK_DIR}"
-    link_one "${target_dir}" make-pull-request "${MAKE_PR_DIR}"
+    link_one "${target_dir}" pull-request "${PULL_REQUEST_DIR}"
     link_one "${target_dir}" create-ticket "${CREATE_TICKET_DIR}"
     link_one "${target_dir}" review-ticket "${REVIEW_TICKET_DIR}"
   done
@@ -339,7 +342,7 @@ else
     log "Claude Code: restart the session if /handle-task does not appear yet."
   fi
   log "  /handle-task         — ticket → implement → verify"
-  log "  /make-pull-request   — draft PR → CI → ready"
+  log "  /pull-request        — PR lifecycle (create, CI, review, ready)"
   log "  /create-ticket       — draft + create well-documented tickets"
   log "  /review-ticket       — quality gate, backfill, scope check"
   log

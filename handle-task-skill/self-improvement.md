@@ -1,6 +1,6 @@
 # Self-improvement loop
 
-Standalone delegate for `/handle-task` and `/make-pull-request`. Keeps the skill bundle
+Standalone delegate for `/handle-task` and `/pull-request`. Keeps the skill bundle
 **accurate, concise, and effective** over time.
 
 ## When to run
@@ -45,7 +45,7 @@ Edit the **minimal** file in `handle-task-skill/`:
 | New gate or checklist item | [SKILL.md](SKILL.md) Phase 7/8 or relevant delegate |
 | Detailed how-to | New or existing delegate (keep [SKILL.md](SKILL.md) thin) |
 | Remove duplication | Consolidate into one delegate; replace duplicates with links |
-| PR/make-pull-request gap | [make-pull-request/workflow.md](make-pull-request/workflow.md) |
+| PR/pull-request gap | [pull-request/workflow.md](pull-request/workflow.md) |
 
 **Principles when editing:**
 
