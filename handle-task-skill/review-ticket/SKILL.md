@@ -46,7 +46,7 @@ This folder lives inside `handle-task-skill/`. Edits apply globally via
 
 | Caller | When |
 | ------ | ---- |
-| `/handle-task` | Phase 1 intake — hard stop if gate fails |
+| `/handle-task` | **Phase 1 — mandatory** for every tracker issue (JIRA/Linear/GitHub); do not substitute an inline review |
 | `/create-ticket` | After creating a ticket — mandatory quality pass |
 
 When invoked standalone, the user provides a ticket key/number or pastes the full description.

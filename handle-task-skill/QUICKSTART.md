@@ -21,10 +21,10 @@
 ## Two-skill split
 
 ```
-/handle-task          Phases 1–8: intake → spec → plan → implement → local verify
-/pull-request         Phases 0–7: create/update PR → CI → review → merge-ready
-/create-ticket        Intake context → draft → create → /review-ticket → split/backfill
-/review-ticket        Fetch → four-point quality review → backfill / split proposal
+/review-ticket        Required in /handle-task Phase 1 for tracker tickets (JIRA, etc.)
+/handle-task          review-ticket ✓ → spec ✓ → plan ✓ → implement → verify
+/pull-request         Full PR template, Δ lines, verification, CI (after handle-task Phase 8)
+/create-ticket        Draft → create → /review-ticket → split/backfill
 ```
 
 Install all entry skills once (global):

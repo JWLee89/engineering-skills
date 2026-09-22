@@ -1,10 +1,9 @@
 ---
 name: handle-task
 description: >-
-  Portable ticket-to-ship workflow: load .handle-task/project.yaml, fetch issue,
-  spec with approval gates, TDD implementation with spec adherence verification,
-  self-improving skill updates on gaps, then hand off to /pull-request.
-  Use when user gives a ticket ID, asks to handle a task, or improve the workflow.
+  Portable ticket-to-ship workflow: load .handle-task/project.yaml, /review-ticket on
+  tracker issues, spec + plan approval gates, TDD implementation, then /pull-request
+  (full PR template and CI). Use for ticket IDs, handle a task, or workflow fixes.
 disable-model-invocation: true
 ---
 
@@ -15,23 +14,38 @@ disable-model-invocation: true
 Load **`.handle-task/project.yaml`** first ([project-config.md](project-config.md)).
 
 ```
-INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT → VERIFY → /pull-request
+INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT → VERIFY → /pull-request
 ```
+
+## Mandatory gates (do not skip)
+
+| Gate | When | Source of truth |
+| ---- | ---- | --------------- |
+| **Ticket quality** | Before writing a spec | Invoke **`/review-ticket`** ([review-ticket/workflow.md](review-ticket/workflow.md)); user confirms ticket is ready |
+| **Implementation spec** | Before plan or code | [specify.md](specify.md) — **explicit user approval** of local spec (not ticket description alone) |
+| **Plan + todo** | Before branch / code | [plan-and-tasks.md](plan-and-tasks.md) — explicit user approval |
+| **Pull request** | After Phase 8 verify | Invoke **`/pull-request`** ([pull-request/workflow.md](pull-request/workflow.md)) — not a bare `gh pr create` summary |
+
+**Tracker issues (JIRA, Linear, GitHub):** always run **`/review-ticket`** in Phase 1. Do not inline the four-point review or skip because the ticket “looks fine.”
+
+**Resume / handoff:** if context was summarized or the user said “approved” earlier, still **re-present the spec (or spec path + bullets) and wait for explicit approval** before implementation.
+
+**Skip** the full flow only for trivial one-file fixes (no tracker, no spec).
 
 ## Delegates
 
 | Phase | Read |
 | ----- | ---- |
+| Ticket review | [review-ticket/workflow.md](review-ticket/workflow.md) |
 | Spec | [specify.md](specify.md) → [spec-driven-development.md](spec-driven-development.md) |
 | Plan | [plan-and-tasks.md](plan-and-tasks.md) → [planning-and-task-breakdown.md](planning-and-task-breakdown.md) |
 | Implement | [incremental-implementation.md](incremental-implementation.md) → [test-driven-development.md](test-driven-development.md) |
 | Spec ↔ tests | [spec-adherence.md](spec-adherence.md) |
 | Verify | [verification.md](verification.md) |
-| Skill evolution | [self-improvement.md](self-improvement.md) |
-| ADRs | [documentation-and-adrs.md](documentation-and-adrs.md) |
-| Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
 | PR | [pull-request/workflow.md](pull-request/workflow.md) |
-| Ticket review | [review-ticket/workflow.md](review-ticket/workflow.md) |
+| ADRs / docs | [documentation-and-adrs.md](documentation-and-adrs.md) |
+| Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
+| Skill fixes | [self-improvement.md](self-improvement.md) |
 | Ticket create | [create-ticket/workflow.md](create-ticket/workflow.md) |
 
 ## Artifacts
@@ -45,47 +59,41 @@ INTAKE → [SPLIT?] → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY �
 ## Checklist
 
 ```
-- [ ] project.yaml loaded; issue fetched; assumptions recorded
-- [ ] Documentation quality gate passed or backfilled + confirmed ([review-ticket/quality-gate.md](review-ticket/quality-gate.md) via `/review-ticket`)
-- [ ] Spec approved (local_specs); plan + todo approved
+- [ ] project.yaml loaded; issue fetched
+- [ ] /review-ticket completed; caller confirmed ticket ready (tracker issues)
+- [ ] Implementation spec written; explicit spec approval recorded
+- [ ] Plan + todo written; explicit plan approval recorded
 - [ ] Task memory + branch ({ticket.id_pattern})
-- [ ] Each slice: REUSE → RED → GREEN → REFACTOR → spec adherence ([incremental-implementation.md](incremental-implementation.md))
-- [ ] Phase 8: traceability matrix green or gaps reported to user ([spec-adherence.md](spec-adherence.md))
-- [ ] Local verify green; CI-only gaps documented
-- [ ] Process gap or user feedback → skill patched + user notified ([self-improvement.md](self-improvement.md))
-- [ ] User prompted for /pull-request
+- [ ] Slices: REUSE → RED → GREEN → spec adherence
+- [ ] Phase 8 verify + spec traceability ([spec-adherence.md](spec-adherence.md))
+- [ ] /pull-request: template body, Δ lines, verification plan, CI URLs
 ```
-
-**Skip** entire flow for trivial one-file fixes.
 
 ______________________________________________________________________
 
 ## Phase 1: Intake
 
-Fetch issue (`integrations.issue_tracker`), read `memory.*` + agent guide, check prior PRs/task files.
+Fetch issue ([issue-tracker-adapters.md](issue-tracker-adapters.md)), read `memory.*` + agent guide, check prior PRs/task files.
+
 Unassigned JIRA → assign to current user ([issue-transitions.md](issue-transitions.md)).
-Split oversized work → [pr-splitting.md](pr-splitting.md) + real subtasks ([subtask-template.md](subtask-template.md)).
 
-**Documentation quality gate (hard stop):** before spec/plan, run **`/review-ticket`**
-(or inline [review-ticket/quality-gate.md](review-ticket/quality-gate.md)):
+Oversized scope → [pr-splitting.md](pr-splitting.md) + real subtasks ([subtask-template.md](subtask-template.md)).
 
-1. Enough background for the assignee to handle the task?
-2. Well-defined scope? (too big → split into real sub-tasks)
-3. Definition of done + required steps clear?
-4. Can a new onboarder read the ticket and complete it?
+### Ticket review (hard stop)
 
-If the fetched ticket fails any check, **ask clarifying questions**, backfill the ticket
-(via [issue-tracker-adapters.md](issue-tracker-adapters.md)), and **confirm with the caller**
-before proceeding to spec. Do not start implementation on an under-documented ticket. If the
-user asks to create a fresh ticket instead, hand off to `/create-ticket`.
+1. Invoke **`/review-ticket`** for the issue key (or pasted content if `issue_tracker.type: none`).
+2. Backfill / split per that workflow until the four-point gate passes.
+3. **Stop** until the user confirms the **ticket** is ready to implement (separate from spec approval later).
+
+Do not write `{local_specs}` or code until this step completes.
 
 ## Phases 2–4: Specify
 
-[specify.md](specify.md) — **hard stop** until user approves spec.
+Follow [specify.md](specify.md). **Hard stop** until the user **explicitly approves the implementation spec** (local `SPEC-*.md`), even when the JIRA description was already approved via `/review-ticket`.
 
 ## Phase 5: Plan
 
-[plan-and-tasks.md](plan-and-tasks.md) — **hard stop** until user approves plan/todo.
+Follow [plan-and-tasks.md](plan-and-tasks.md). **Hard stop** until the user explicitly approves plan + todo.
 
 ## Phase 6: Task memory
 
@@ -93,40 +101,33 @@ Concise committed scratchpad; link local spec — never paste full spec.
 
 ## Phase 7: Implement
 
-Branch + optional issue transition. Execute todo slices:
-
-1. **[incremental-implementation.md](incremental-implementation.md)** — REUSE, SOLID, vertical slices
-2. **[test-driven-development.md](test-driven-development.md)** — RED → GREEN → REFACTOR for behavior changes
-3. **[spec-adherence.md](spec-adherence.md)** — after each slice: map acceptance criteria → tests; report gaps to user; fix Blockers
-
-**Non-negotiable:** tests must cover spec success criteria — passing tests alone is insufficient.
-Shortcuts over core requirements → stop, report, fix.
+Execute approved todo: [incremental-implementation.md](incremental-implementation.md), [test-driven-development.md](test-driven-development.md), [spec-adherence.md](spec-adherence.md) per slice.
 
 Commits when user asks or for PR prep. Never commit local specs or secrets.
 
 ## Phase 8: Verify
 
-[verification.md](verification.md) + full **[spec-adherence.md](spec-adherence.md)** matrix (all success criteria, testing strategy, non-negotiables).
-Document CI-only gaps for `/pull-request`.
+[verification.md](verification.md) + [spec-adherence.md](spec-adherence.md) matrix. Document CI-only gaps for the PR.
 
 ## Phase 9: Pull request
 
-Prompt user → `/pull-request` only.
+Run **`/pull-request`** — do not substitute a minimal PR description.
+
+Required from [pull-request/workflow.md](pull-request/workflow.md): **Background**, **Purpose**, **Review guide**, **Changes made (git numstat Δ)**, **Verification** (author steps + CI checkboxes + out of scope), draft until ready unless user says otherwise, JIRA transition on ready when configured.
+
+Record spec deviations (e.g. simplified design vs original JIRA DoD) in the PR **Spec adherence** or **Notes** section.
 
 ## Self-improvement
 
-When a mistake, spec gap, or user improvement request reveals **workflow** weakness:
-
-1. Fix the ticket work if still in scope
-2. **[self-improvement.md](self-improvement.md)** — patch skill, notify user, PR to `engineering-skills` when appropriate
+Process gaps → [self-improvement.md](self-improvement.md); notify user.
 
 ## Anti-patterns
 
 | Mistake | Fix |
 | ------- | --- |
-| Code before spec/plan approval | Gates in specify.md / plan-and-tasks.md |
-| Production code before failing test | [test-driven-development.md](test-driven-development.md) |
-| Tests pass but spec scenario missing | [spec-adherence.md](spec-adherence.md) |
-| Reimplementing existing helpers | REUSE in [incremental-implementation.md](incremental-implementation.md) |
-| Duplicated rules across skill files | One source; link elsewhere ([self-improvement.md](self-improvement.md)) |
-| Silent deferral of spec items | Report + user ack |
+| Code without **implementation spec** approval | [specify.md](specify.md) gate |
+| JIRA “approved” treated as spec approval | Two gates: ticket (`/review-ticket`) then local spec |
+| Skipping `/review-ticket` on JIRA tickets | Phase 1 hard stop |
+| `gh pr create` with Summary-only body | `/pull-request` + [templates.md](templates.md) |
+| Silent deferral of spec items | Report + user ack in PR |
+| Duplicating review rules in handle-task | Link [quality-gate.md](review-ticket/quality-gate.md) only |
