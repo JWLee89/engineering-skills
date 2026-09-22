@@ -6,11 +6,16 @@ conventions from `.handle-task/project.yaml` and the **spec approval gate**.
 
 ## When to run
 
-- After Phase 1 (Intake) and Phase 3 (Split decision) are complete
+- After Phase 1 (**`/review-ticket` complete** and ticket confirmed ready)
 - Before any plan, committed memory setup, branch checkout, or code
 - When resuming a ticket and scope has shifted — update spec first, re-run this gate
 
 **Skip** for trivial one-file fixes (orchestrator skips the whole spec flow).
+
+**Not the same as ticket approval:** `/review-ticket` validates the **tracker description**.
+This phase produces an **implementation spec** in `{local_specs}`; the user must approve
+**that document explicitly** before planning or coding — including after conversation
+summaries or a prior “looks good” on the JIRA text alone.
 
 ______________________________________________________________________
 

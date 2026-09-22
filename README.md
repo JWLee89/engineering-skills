@@ -14,7 +14,7 @@ each skill).
 | Skill | Invoke | Purpose |
 | ----- | ------ | ------- |
 | [handle-task-skill](handle-task-skill/) | `/handle-task` | Ticket → spec → plan → implement → verify |
-| *(same bundle)* | `/make-pull-request` | Draft PR → CI → code review → merge-ready |
+| *(same bundle)* | `/pull-request` | PR lifecycle → CI → review → merge-ready |
 | *(same bundle)* | `/create-ticket` | Draft + create well-documented tickets (any tracker) |
 | *(same bundle)* | `/review-ticket` | Four-point quality gate, backfill, scope check |
 
@@ -28,7 +28,7 @@ cd engineering-skills
 ./handle-task-skill/scripts/install-skills.sh
 ```
 
-This symlinks `handle-task`, `make-pull-request`, `create-ticket`, and `review-ticket` into:
+This symlinks `handle-task`, `pull-request`, `create-ticket`, and `review-ticket` into:
 
 - `~/.cursor/skills/` (Cursor)
 - `~/.claude/skills/` (Claude Code)
@@ -69,7 +69,7 @@ Commit `.handle-task/project.yaml`. Add local spec dir (default `tasks/`) to `.g
 Then, when implementation is verified locally:
 
 ```
-/make-pull-request
+/pull-request
 ```
 
 See [handle-task-skill/QUICKSTART.md](handle-task-skill/QUICKSTART.md) for the full workflow.
