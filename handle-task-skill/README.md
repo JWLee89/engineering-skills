@@ -1,5 +1,9 @@
 # Moved — use `skills/`
 
+> **If `/handle-task` still loads this folder:** run `./scripts/install-skills.sh --update` from the
+> repo root, then reload Cursor. Until then, agents should follow
+> [`SKILL.md`](SKILL.md) → [`skills/handle-task/`](../skills/handle-task/).
+
 Canonical skill content lives under **[`../skills/`](../skills/)**.
 
 | Legacy path | New path |
