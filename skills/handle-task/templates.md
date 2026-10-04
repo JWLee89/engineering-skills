@@ -1,28 +1,27 @@
 # Handle task templates
 
-Copy and fill. Save under `memory.local_specs` from config (e.g. `tasks/`) — never commit.
+Copy and fill. Save under `memory.local_specs` from config (e.g. `tasks/`) — **never commit**.
 
-**Path convention:** use lowercase ticket key in filenames — `proj-123` for `PROJ-123`.
-Load `ticket.prefix`, `git.default_base`, and `integrations.issue_tracker.url_template`
-from `.handle-task/project.yaml`. Expand `{key}` in URLs (e.g. `PROJ-123`).
+**Path convention:** lowercase ticket key in filenames — `proj-123` for `PROJ-123`.  
+Load `ticket.prefix`, `git.default_base`, and `integrations.issue_tracker.url_template` from
+[project-config.md](project-config.md).
 
-| Workflow step                | Reference                                                      |
-| ---------------------------- | -------------------------------------------------------------- |
-| Spec writing + approval gate | [specify.md](specify.md)                                       |
-| Plan + todo + approval gate  | [plan-and-tasks.md](plan-and-tasks.md)                         |
-| PR lifecycle → merge-ready     | [pull-request/workflow.md](../pull-request/workflow.md) |
-| Project settings             | [project-config.md](project-config.md)                         |
-| Subtask (split work)         | [subtask-template.md](subtask-template.md)                       |
+| Workflow step | Reference |
+| ------------- | --------- |
+| Spec + approval gate | [specify.md](specify.md) |
+| Plan + todo + approval gate | [plan-and-tasks.md](plan-and-tasks.md) |
+| PR lifecycle | [../pull-request/workflow.md](../pull-request/workflow.md) |
+| Subtask (tracker) | [subtask-template.md](subtask-template.md) |
+| PR body shape | [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md) |
+
+**Deep templates** live under [references/templates/](references/templates/) — load **one** file for the current phase.
 
 ______________________________________________________________________
 
 ## Subtask description (tracker — not a local file)
 
-When splitting a parent ticket, create **real child issues** in your tracker. Each
-description must include **Background**, **Description**, **Scope**, **DoD**, and
-**Verification plan**, plus links to Parent / Depends on / Blocks.
-
-**Do not** use synthetic branch names — branch must equal the child ticket key.
+When splitting a parent ticket, create **real child issues**. Each description needs Background,
+Description, Scope, DoD, Verification plan, and Parent/Depends/Blocks links. Branch = child key.
 
 Full template: [subtask-template.md](subtask-template.md)
 
@@ -32,418 +31,60 @@ ______________________________________________________________________
 
 Used during Phase 2–4 — see [specify.md](specify.md).
 
-````markdown
-# Spec: <title> ({TICKET-KEY})
-
-**Issue:** [{TICKET-KEY}](<url from url_template>)
-**Parent / epic:** <link or —>
-**Branch:** `{TICKET-KEY}` (base: `<git.default_base>`)
-**Capability map:** `{local_specs}/<ticket_key_lower>/CAPABILITY-MAP.md` (if applicable)
-
----
-
-## Assumptions I'm Making
-
-1. ...
-2. ...
-
-→ Correct me now or implementation proceeds with these.
-
----
-
-## Objective
-
-<What and why. User stories or acceptance criteria from the tracker, refined.>
-
-### Success criteria
-
-- [ ] <testable condition>
-- [ ] <testable condition>
-
----
-
-## Current state
-
-<Relevant files, data flow, existing behavior — from codebase reading.>
-
----
-
-## Tech stack / scope boundary
-
-| In scope | Out of scope |
-|----------|--------------|
-| ... | ... |
-
----
-
-## Commands
-
-```bash
-# From repo root — use real commands from verify.commands in config
-npm test
-npm run lint
-# or: make test-unit, pytest, etc.
-````
+**Full copy-paste template:** [references/templates/spec.md](references/templates/spec.md)
 
 ______________________________________________________________________
-
-## Project structure (expected changes)
-
-| File            | Action          |
-| --------------- | --------------- |
-| `src/...`       | Create / modify |
-
-______________________________________________________________________
-
-## Testing strategy
-
-- Unit / isolation: `tests/unit/...` — **feature gate** per slice ([feature-gating.md](feature-gating.md))
-- Integration: note CI-only deps if any
-- Manual / smoke: ...
-- Phase 8: agent runs verify commands; evidence in task memory + PR ([verification.md](verification.md))
-
-______________________________________________________________________
-
-## Boundaries
-
-- **Always:** Run scoped tests before PR; match existing patterns in adjacent modules
-- **Ask first:** New deps, CI changes, schema/API contract edits
-- **Never:** Commit local specs; commit secrets; remove failing tests without approval
-
-______________________________________________________________________
-
-## Open questions
-
-| Question | Owner | Status |
-| -------- | ----- | ------ |
-| ...      | ...   | open   |
-
-______________________________________________________________________
-
-## Risks
-
-| Risk | Mitigation |
-| ---- | ---------- |
-| ...  | ...        |
-
-````
-
----
 
 ## Capability map (`{local_specs}/<ticket_key_lower>/CAPABILITY-MAP.md`)
 
-```markdown
-# Capability Map: {TICKET-KEY} — <initiative name>
+Multi-module specs only — see [specify.md](specify.md#phase-2-scope-check-multi-capability).
 
-**Issue:** [{TICKET-KEY}](<url from url_template>)
-
-| Module id | Responsibility | Tracker subtask | Depends on |
-|-----------|----------------|-----------------|------------|
-| scaffolding | Module scaffold | PROJ-XXX | — |
-| core | Core logic | PROJ-YYY | scaffolding |
-
-**Build order:** scaffolding → core → ...
-
-Each module gets its own `SPEC-<module-id>.md` and (usually) its own PR.
-````
+**Template:** [references/templates/capability-map.md](references/templates/capability-map.md)
 
 ______________________________________________________________________
 
 ## Plan (`{local_specs}/plan-<ticket_key_lower>.md`)
 
-Written after **spec approval** — see [plan-and-tasks.md](plan-and-tasks.md).
+After **spec approval** — [plan-and-tasks.md](plan-and-tasks.md).
 
-```markdown
-# Implementation Plan: {TICKET-KEY}
-
-**Spec:** `{local_specs}/<ticket_key_lower>/SPEC-<slug>.md`
-**Tasks:** `{local_specs}/todo-<ticket_key_lower>.md`
-
-## Overview
-
-<One paragraph approach.>
-
-## Verified findings
-
-1. ...
-
-## Architecture decisions
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| ... | ... | ... |
-
-## Implementation order
-
-```
-
-1. ...
-2. ...
-
-```
-
-## Files changed (expected)
-
-| File | Action |
-|------|--------|
-
-## Verification checkpoints
-
-| After | Isolation gate | Integration / full verify |
-|-------|----------------|---------------------------|
-| Slice 1 | `pytest tests/unit/...::test_...` | — |
-| Before PR | Re-run slice isolation gates | `<from verify.commands>` |
-
-## Out of scope
-
-- ...
-```
+**Template:** [references/templates/plan.md](references/templates/plan.md)
 
 ______________________________________________________________________
 
 ## Todo (`{local_specs}/todo-<ticket_key_lower>.md`)
 
-Written with the plan, before **plan approval** — see [plan-and-tasks.md](plan-and-tasks.md).
+Written with the plan, before **plan approval**.
 
-```markdown
-# Tasks: {TICKET-KEY} — <short title>
-
-**Spec:** `{local_specs}/<ticket_key_lower>/SPEC-<slug>.md`
-**Plan:** `{local_specs}/plan-<ticket_key_lower>.md`
-
----
-
-## Phase 0: ...
-
-- [ ] **Task N: <name>**
-  - Acceptance: ...
-  - Spec: satisfies `<success criterion # or scenario>`
-  - TDD: RED in `<test file>` → GREEN in `<production file(s)>`
-  - Isolation gate: `<scoped command>` ([feature-gating.md](feature-gating.md))
-  - Spec adhere: matrix row ✅ for this slice
-  - Verify: `<scoped test command>` (agent runs; record summary + commit SHA)
-
----
-
-## Plan approval gate
-
-Do not start committed memory setup or implementation until the user explicitly approves this
-plan and todo. See [plan-and-tasks.md](plan-and-tasks.md#plan-approval-gate-hard-stop).
-```
+**Template:** [references/templates/todo.md](references/templates/todo.md)
 
 ______________________________________________________________________
 
 ## Committed task memory (`{memory.committed_tasks}/<ticket_key_lower>-<slug>.md`)
 
-Keep this **short**. Link to local spec path; do not duplicate full spec.
-Skip this section when `memory.committed_tasks` is `null` in config.
+Short scratchpad — link local spec; skip when `memory.committed_tasks` is `null`.
 
-```markdown
-# {TICKET-KEY} — <short title>
-
-| Field | Value |
-|-------|-------|
-| **Status** | Active |
-| **Priority** | P1 |
-| **Owner** | @... |
-| **Issue** | [{TICKET-KEY}](<url from url_template>) |
-| **Branch** | `{TICKET-KEY}` |
-| **Local spec** | `{local_specs}/<ticket_key_lower>/SPEC-<slug>.md` (not committed) |
-
-## Plan
-
-- [ ] ...
-
-## Notes / Findings
-
-- ...
-
-## Session Log
-
-- **YYYY-MM-DD:** ...
-```
+**Template:** [references/templates/task-memory.md](references/templates/task-memory.md)
 
 ______________________________________________________________________
 
 ## Verification plan (PR body)
 
-Build in Phase 2 of [pull-request.md](pull-request.md). Three subsections are
-**required** under `## Verification`:
+Phase 2 of [pull-request.md](pull-request.md) / `/pull-request`. Required under `## Verification`.
 
-### Steps run (author)
-
-Checkboxes for commands the agent runs locally before/during PR iteration:
-
-```markdown
-### Steps run (author)
-
-- [ ] `<verify.hooks or scoped lint>` — exit 0; `<summary line>`
-- [ ] `<verify.commands[0]>` — exit 0; `<N passed>`; commit [shortsha](https://github.com/{owner}/{repo}/commit/{fullsha})
-- [ ] Isolation — `<command>` — [tests/...::test_...](https://github.com/{owner}/{repo}/blob/{sha}/tests/….py#Lnn)
-- [ ] Integration / smoke — `<command>` — `<brief output proof>`
-```
-
-When a step passes, check it and add evidence: command, exit code, summary line
-(e.g. `42 passed`), linked test lines or node ids, linked commit SHA, and/or CI run URL.
-See [verification.md](verification.md#agentic-validation-always-required).
-
-### Test plan (reviewer / CI)
-
-Items that need GitHub Actions or branch-level proof:
-
-```markdown
-### Test plan (reviewer / CI)
-
-- [ ] **CI** workflow green — <name from verify.ci_workflows>
-- [ ] <scenario> — [run ID](https://github.com/org/repo/actions/runs/...) (after verification commit)
-```
-
-Use **verification commits** (Phase 5b) when behavior only shows on a follow-up push.
-
-### Test coverage (when behavior changes)
-
-Optional but recommended (aligns with [Jeffallan code-reviewer](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/report-template.md)):
-
-```markdown
-### Test coverage (when code changes)
-
-- [ ] Happy path covered
-- [ ] Error / edge paths covered
-- [ ] Spec criteria traced (see Background)
-```
-
-### Out of scope
-
-```markdown
-### Out of scope
-
-- <deferred ticket or workflow>
-- <explicit non-goals from spec>
-```
+**Template:** [references/templates/verification-pr-body.md](references/templates/verification-pr-body.md)
 
 ______________________________________________________________________
 
-## Draft PR title
+## Draft PR title and body
 
-Expand `pr.title_format` from `.handle-task/project.yaml`:
+After verify — `gh pr create --draft`. Reviewer-friendly body required.
 
-```
-[{prefix}-{number}]({tag}): {summary}
-```
-
-Example: `[PROJ-42](feat): Add user authentication endpoint`
-
-| Part        | Rule                                                             |
-| ----------- | ---------------------------------------------------------------- |
-| `{tag}`     | Primary semantic type (`commit.tags`: `feat`, `fix`, `chore`, …) |
-| `{summary}` | What the PR delivers — not the full issue title                   |
-
-PR titles use a colon after `({tag})`. Commits use a space: `[PROJ-42](feat) Summary`.
-
-______________________________________________________________________
-
-## Draft PR body (local — not committed)
-
-Use after commits + verify, when the user approves opening a PR. **Always** create with
-`gh pr create --draft`. Full workflow: [pull-request.md](pull-request.md).
-
-**Reviewer-friendly shape (required):** [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
-**Example:** [engineering-skills PR #8](https://github.com/JWLee89/engineering-skills/pull/8).
-
-```markdown
-## Background
-
-<Problem space and ticket context. Link parent epic or blocking tickets if relevant.
-Mention constraints from committed decision log when configured.>
-
-- Issue: [{TICKET-KEY}](<url from url_template>)
-- Task memory: `{memory.committed_tasks}/<ticket_key_lower>-<slug>.md` (if configured)
-- Local spec: `{local_specs}/<ticket_key_lower>/SPEC-<slug>.md` (not committed)
-
-## Purpose
-
-<Single clear statement of what this PR delivers and why now.>
-
-## Review guide
-
-### Summary for reviewers
-
-<2–4 sentences: approach, subtle/risky areas, what to skip.>
-
-### Commits
-
-| Commit | Message (short) | What changed (human) |
-| ------ | --------------- | -------------------- |
-| [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}) | `<subject>` | <plain-language delta> |
-
-**Start here:** [Review all changes on this PR](https://github.com/{owner}/{repo}/pull/{n}/changes)
-
-### Focus areas (read in this order)
-
-1. **Review:** [file.py Lstart–Lend (this PR)](https://github.com/{owner}/{repo}/pull/{n}/changes#diff-{sha256_path}Rstart-Rend) ·
-   **Source:** [Lstart–Lend](https://github.com/{owner}/{repo}/blob/{head_sha}/path/to/file.py#Lstart-Lend) —
-   <why a reviewer should read this>. Commit [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}).
-
-For `.md` source links use `?plain=1` before `#L`. `sha256_path` = SHA-256 hex of repo-relative path — [pull-request/workflow.md](../pull-request/workflow.md).
-
-<Core logic → wiring → config → tests. Refresh diff anchors after each push — [pull-request/workflow.md](../pull-request/workflow.md).>
-
-## Changes made
-
-| Layer | Change | Δ lines |
-| ----- | ------ | ------- |
-| <e.g. Tests> | <one-line summary> | **+N / −M** (net ±K) |
-
-Populate from `git diff origin/<base>...HEAD --numstat` (group by layer). Bold Δ when \|net\| > 100 or row is the main story. Optional file-level table for top churn paths.
-
-- <Explicit "not in this PR" only under Verification → Out of scope>
-
-## Verification
-
-### Steps run (author)
-
-- [ ] `<commands from verify.commands>`
-
-### Test plan (reviewer / CI)
-
-- [ ] Reviewer: smoke steps if any manual checks apply
-- [ ] CI: <workflow name> — especially for tests not runnable locally
-
-### Out of scope
-
-- <Follow-up ticket or deferred wiring>
-```
-
-**Agent prompt after commit (copy/adapt):**
-
-> Commits for {TICKET-KEY} are on branch `{TICKET-KEY}`. Verify: \[passed commands\].
-> Gaps: \[CI-only tests\]. Should I run `/pull-request` (draft PR + verification plan +
-> CI watch)?
-
-**Agent prompt at finalize (copy/adapt):**
-
-> CI green on run \[link\]. Code review pass complete. Updating PR description, marking
-> ready for review, and transitioning issue to ready-for-review (per
-> `status_transitions.pr_ready` in config).
+**Template:** [references/templates/draft-pr.md](references/templates/draft-pr.md)
 
 ______________________________________________________________________
 
 ## Decision entry (`{memory.decisions}`) — append-only
 
-Add a row to the quick-reference table **and** a detailed entry below (newest first).
-Follow [documentation-and-adrs.md](documentation-and-adrs.md) and match the repo's existing format.
+See [documentation-and-adrs.md](documentation-and-adrs.md).
 
-```markdown
-| YYYY-MM-DD | <short decision> ({TICKET-KEY}) | <choice> | <impact> |
-```
-
-Detailed section:
-
-```markdown
-### YYYY-MM-DD — <title> ({TICKET-KEY})
-
-- **Context:** ...
-- **Decision:** ...
-- **Alternatives considered:** ...
-- **Impact:** ...
-```
+**Template:** [references/templates/decision-entry.md](references/templates/decision-entry.md)

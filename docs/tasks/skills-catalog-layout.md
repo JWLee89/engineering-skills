@@ -1,17 +1,27 @@
 # Task: skills catalog restructure
 
-**Branch:** `feat/skills-catalog-layout`  
+**Status:** **Complete** — merged [PR #10](https://github.com/JWLee89/engineering-skills/pull/10) (`216ecb1`).
+
 **Local spec:** `tasks/skills-benchmark/SPEC-skills-benchmark-restructure.md` (gitignored)
 
-## Summary
+## Delivered in PR #10 (原 P1–P3 合併)
 
-Benchmark [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills); adopt catalog layout
-(`skills/*`), SKILLS_GUIDE, OWASP + positive-feedback rubric, optional EARS; migrate install to
-`scripts/install-skills.sh`; stub `handle-task-skill/`.
+- [x] `skills/*` catalog, `SKILLS_GUIDE`, `docs/BENCHMARK-CLAUDE-SKILLS.md`
+- [x] OWASP + positive feedback; code-review intent + PR-body map
+- [x] `scripts/install-skills.sh` (legacy `handle-task-skill/` removed post–#10)
+- [x] Frontmatter on five invokable skills; catalog-first README
+- [x] PR author UX: `pull-request/references/*`, Jeffallan-aligned `.github` template
+- [x] `docs/tasks/skills-catalog-layout.md`; legacy stub SKILL.md (M1)
 
-## Status
+## Spec gaps deferred to follow-up
 
-- [x] P1 benchmark doc, SKILLS_GUIDE, rubric, code-review template, EARS reference
-- [x] P2 `skills/` tree, install script, legacy stub
-- [x] P3 frontmatter, README catalog-first
-- [x] Review follow-up: stub `handle-task-skill/**/SKILL.md`, task doc committed
+See **[plan-post-catalog.md](plan-post-catalog.md)** (PR #11+).
+
+## Post-merge (operators)
+
+```bash
+git checkout main && git pull
+./scripts/install-skills.sh --update
+```
+
+Reload Cursor after `SKILL.md` changes.

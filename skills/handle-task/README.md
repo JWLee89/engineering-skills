@@ -22,5 +22,3 @@ folders: `skills/pull-request`, `skills/code-review`, `skills/create-ticket`, `s
 | `/review-ticket` | `skills/review-ticket/` |
 
 Per-repo config: `.handle-task/project.yaml` — [project-config.md](project-config.md).
-
-Legacy stub: [handle-task-skill/](../../handle-task-skill/README.md).

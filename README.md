@@ -29,8 +29,6 @@ cd engineering-skills
 ./scripts/install-skills.sh
 ```
 
-Legacy path (same script): `./handle-task-skill/scripts/install-skills.sh`
-
 Symlinks into:
 
 - `~/.cursor/skills/` (Cursor)
@@ -64,8 +62,10 @@ Then, when implementation is verified locally:
 
 We aligned this repo with industry skill-catalog patterns (see
 [docs/BENCHMARK-CLAUDE-SKILLS.md](docs/BENCHMARK-CLAUDE-SKILLS.md), inspired by
-[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)). The legacy
-[handle-task-skill/](handle-task-skill/) folder is a stub pointer only.
+[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)).
+
+**Migrating from pre–PR #10 clones:** run `./scripts/install-skills.sh --update` so symlinks
+point at `skills/*` (the old `handle-task-skill/` path was removed).
 
 ## Contributing
 

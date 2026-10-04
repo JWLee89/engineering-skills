@@ -35,6 +35,17 @@ from the target repo.
 RESOLVE PR → GATHER CONTEXT → RUBRIC → DRAFT MD → USER APPROVAL → [POST REVIEW]
 ```
 
+## Load when (do not read the whole folder)
+
+| Phase | Read | Defer |
+| ----- | ---- | ----- |
+| Start | This file, [workflow.md](workflow.md) Phase 0–1 | [rubric.md](rubric.md) until intent checkpoint |
+| Context | workflow Phase 2, PR Focus areas if present | Full handle-task bundle |
+| Rubric | [rubric.md](rubric.md) | [references/review-guide.md](references/review-guide.md) unless tracing spec/Jeffallan |
+| Draft | workflow Phase 4 template | Publish rules until user approves draft |
+
+Reference map: [references/review-guide.md](references/review-guide.md).
+
 ## Required input
 
 The user must specify **which PR** to review:

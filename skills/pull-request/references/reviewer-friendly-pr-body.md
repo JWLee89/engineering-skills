@@ -106,7 +106,7 @@ Under `## Verification`, always include:
 - **Test coverage** (when behavior changes) — happy path, edge paths, spec traceability
 - **Out of scope** — explicit deferrals
 
-Template blocks: [templates.md#verification-plan-pr-body](../../handle-task/templates.md#verification-plan-pr-body).
+Template blocks: [verification-pr-body.md](../../handle-task/references/templates/verification-pr-body.md).
 
 ______________________________________________________________________
 

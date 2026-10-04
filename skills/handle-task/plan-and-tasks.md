@@ -24,10 +24,10 @@ ______________________________________________________________________
 | `{local_specs}/plan-<ticket_key_lower>.md` | Architecture choices, file list, risks, verification checkpoints |
 | `{local_specs}/todo-<ticket_key_lower>.md` | Phased checklist — executable slices for implementation |
 
-Templates (one anchor each, not full [templates.md](templates.md)):
+Templates (one file each — index: [templates.md](templates.md)):
 
-- [Plan](templates.md#plan-local_specplan-ticket_key_lowermd)
-- [Todo](templates.md#todo-local_specstodo-ticket_key_lowermd)
+- [Plan](references/templates/plan.md) · [index](templates.md#plan-local_specplan-ticket_key_lowermd)
+- [Todo](references/templates/todo.md) · [index](templates.md#todo-local_specstodo-ticket_key_lowermd)
 
 ### Planning process (read-only)
 
