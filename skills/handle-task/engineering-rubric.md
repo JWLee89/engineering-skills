@@ -3,8 +3,8 @@
 **Single source of truth** for **writing code** and **author self-review** (`/handle-task` Phase 7,
 `/pull-request` Phase 6). Do not duplicate these axes elsewhere — link here.
 
-For **deep PR review** by a reviewer pass, use **`/code-review`** → [code-review/rubric.md](code-review/rubric.md).
-For **ticket text quality**, use [review-ticket/quality-gate.md](review-ticket/quality-gate.md).
+For **deep PR review** by a reviewer pass, use **`/code-review`** → [code-review/rubric.md](../code-review/rubric.md).
+For **ticket text quality**, use [review-ticket/quality-gate.md](../review-ticket/quality-gate.md).
 
 **Approve when** the change improves overall code health and meets the spec — not when it matches
 personal style perfectly.
@@ -57,6 +57,22 @@ for constants and wire keys.
 - Parameterized queries; safe defaults
 - Fail closed on auth and permission checks
 
+**OWASP Top 10 baseline** (when change touches auth, input, data, or dependencies — checklist;
+deeper review: **`/code-review`** and optional global `security-and-hardening`):
+
+| Risk area | Quick check |
+| --------- | ----------- |
+| Injection | Parameterized queries / bound params; no string-built SQL/shell |
+| Broken auth | Session/token validation on protected paths; fail closed |
+| Sensitive data | No secrets in repo/logs; minimize PII in errors |
+| XSS / unsafe output | Encode or sanitize user-controlled output in UI/API |
+| Misconfiguration | Secure defaults; no debug flags in production paths |
+| Vulnerable components | Note dependency bumps; avoid known-bad versions without reason |
+| Access control | Authorization checked server-side for each sensitive action |
+| Logging & monitoring | Security-relevant failures logged without leaking secrets |
+
+Not every PR needs every row — skip rows clearly out of scope and say so in the PR.
+
 ### 5. Performance (proportional)
 
 - Hot-path changes: see [performance-optimization.md](performance-optimization.md)
@@ -97,4 +113,5 @@ Before `/pull-request` ready gate:
 - [ ] Core axes 1–5 addressed for this diff
 - [ ] No drive-by refactors outside PR scope
 - [ ] Duplicated logic calls existing helpers
+- [ ] **Positive feedback:** note at least one thing the diff does well (for PR body or self-review)
 - [ ] Invoke **`/code-review`** on the task PR before `gh pr ready` ([SKILL.md](SKILL.md) Phase 9b)

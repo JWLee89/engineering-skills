@@ -146,6 +146,6 @@ ______________________________________________________________________
 ## See also
 
 - [pr-splitting.md](pr-splitting.md) — heuristics, stacked PRs, recovery
-- [review-ticket/quality-gate.md](review-ticket/quality-gate.md) — scope check triggers split
-- [create-ticket/ticket-template.md](create-ticket/ticket-template.md) — full ticket sections
+- [review-ticket/quality-gate.md](../review-ticket/quality-gate.md) — scope check triggers split
+- [create-ticket/ticket-template.md](../create-ticket/ticket-template.md) — full ticket sections
 - [templates.md](templates.md) — local spec/plan templates

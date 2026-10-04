@@ -4,21 +4,21 @@ Create, **update**, and harden pull requests until they are **merge-ready**: cle
 description, green CI, conflicts resolved, review feedback addressed, and code quality
 suitable for human review.
 
-**Portable:** load **`.handle-task/project.yaml`** first ([../project-config.md](../project-config.md)).
+**Portable:** load **`.handle-task/project.yaml`** first ([../project-config.md](../handle-task/project-config.md)).
 If missing, infer from `CONTRIBUTING.md`, `Makefile`, `package.json`, and ask once.
 
-**Single source of truth:** `handle-task-skill/pull-request/` (symlinked as `/pull-request`).
+**Single source of truth:** `skills/pull-request/` (symlinked as `/pull-request`).
 
-**Delegates (in `handle-task-skill/`):**
+**Delegates (in `skills/handle-task/`):**
 
 | Need | File |
 | ---- | ---- |
-| Local verify | [../verification.md](../verification.md) (agentic evidence **required**) |
-| Isolation gates | [../feature-gating.md](../feature-gating.md) |
-| Author self-review | [../engineering-rubric.md](../engineering-rubric.md) |
+| Local verify | [../verification.md](../handle-task/verification.md) (agentic evidence **required**) |
+| Isolation gates | [../feature-gating.md](../handle-task/feature-gating.md) |
+| Author self-review | [../engineering-rubric.md](../handle-task/engineering-rubric.md) |
 | Deep PR review | [../code-review/workflow.md](../code-review/workflow.md) (`/code-review`) |
-| Performance | [../performance-optimization.md](../performance-optimization.md) |
-| ADR / why docs | [../documentation-and-adrs.md](../documentation-and-adrs.md) |
+| Performance | [../performance-optimization.md](../handle-task/performance-optimization.md) |
+| ADR / why docs | [../documentation-and-adrs.md](../handle-task/documentation-and-adrs.md) |
 
 Also: user `creating-pull-requests` rule; `ci-investigator` subagent for a single failing check.
 
@@ -147,6 +147,10 @@ ______________________________________________________________________
 Build **before** `gh pr create` and **refresh** after every significant push (CI fix,
 review round, conflict merge).
 
+**Format SSOT:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md).
+**Example PR (this repo):** [#8](https://github.com/JWLee89/engineering-skills/pull/8) — summary,
+commit map, **Start here**, focus areas with PR diff + source links, Changes made Δ table.
+
 ### Required body sections
 
 | Section | Purpose |
@@ -259,8 +263,8 @@ Three subsections under `## Verification`, all `- [ ]` until executed:
 
 1. **Steps run (author)** — concrete commands from `verify.commands` / changed paths;
    each checked item must include **evidence** (exit code, pass summary, test ids,
-   commit SHA, smoke output snippet) per [../verification.md](../verification.md).
-   Include **isolation gate** reruns from [../feature-gating.md](../feature-gating.md)
+   commit SHA, smoke output snippet) per [../verification.md](../handle-task/verification.md).
+   Include **isolation gate** reruns from [../feature-gating.md](../handle-task/feature-gating.md)
    when the PR adds behavioral code.
 2. **Test plan (reviewer / CI)** — each required `verify.ci_workflows` entry
 3. **Out of scope** — deferred work (also usable under Verification or standalone section)
@@ -323,7 +327,7 @@ Refresh **Changes made** Δ lines and Verification after conflict resolution.
 
 ### 5c. Code quality / reviewability (proactive)
 
-Before re-requesting review, apply [../engineering-rubric.md](../engineering-rubric.md):
+Before re-requesting review, apply [../engineering-rubric.md](../handle-task/engineering-rubric.md):
 
 - Remove duplication; reuse existing helpers
 - Split oversized commits only when user asked to squash/simplify history
@@ -348,7 +352,7 @@ ______________________________________________________________________
 
 ## Phase 6: Pre-merge code review
 
-Author self-review: full pass [../engineering-rubric.md](../engineering-rubric.md) before `gh pr ready`.
+Author self-review: full pass [../engineering-rubric.md](../handle-task/engineering-rubric.md) before `gh pr ready`.
 Fix blockers; note residual nits in PR comment for human reviewer.
 
 **`/handle-task`:** Phase 9b **requires** **`/code-review`** on the task PR before Phase 7
@@ -370,11 +374,11 @@ ______________________________________________________________________
 - Required CI workflows green (URLs in body)
 - No unresolved merge conflicts
 - Blocking review feedback addressed (or explicitly deferred with user ack)
-- Author self-review ([../engineering-rubric.md](../engineering-rubric.md)): no blockers (deep `/code-review`
+- Author self-review ([../engineering-rubric.md](../handle-task/engineering-rubric.md)): no blockers (deep `/code-review`
   tracked separately above for `/handle-task` callers)
 
 Then: update body (Review guide with current line ranges, full Verification + **Changes made** with final Δ lines) →
-`gh pr ready` → issue transition per [../issue-transitions.md](../issue-transitions.md) →
+`gh pr ready` → issue transition per [../issue-transitions.md](../handle-task/issue-transitions.md) →
 comment with PR URL + CI links.
 
 Do **not** merge unless user asks.
@@ -393,14 +397,14 @@ ______________________________________________________________________
 | Stale line numbers after new pushes | Re-diff; refresh Review guide in Phase 2 / 5d / 7 |
 | Only creates PR, never updates | Re-run Phases 2–5 on every review/CI round |
 | `gh pr ready` before CI green | Phase 4–5 |
-| Author verification without command output | [../verification.md](../verification.md) evidence bundle |
-| Behavioral PR with no isolation proof | [../feature-gating.md](../feature-gating.md) |
+| Author verification without command output | [../verification.md](../handle-task/verification.md) evidence bundle |
+| Behavioral PR with no isolation proof | [../feature-gating.md](../handle-task/feature-gating.md) |
 | Huge conflict merge without re-verify | Re-run tests + CI |
 | Ignoring review comments | Phase 5d triage |
-| Duplicate skill folders | Edit only `handle-task-skill/pull-request/` |
+| Duplicate skill folders | Edit only `skills/pull-request/` |
 
 ______________________________________________________________________
 
 ## Bundled with handle-task
 
-Ticket flow: `/handle-task` → [../SKILL.md](../SKILL.md). Templates: [../templates.md](../templates.md).
+Ticket flow: `/handle-task` → [../SKILL.md](../handle-task/SKILL.md). Templates: [../templates.md](../handle-task/templates.md).

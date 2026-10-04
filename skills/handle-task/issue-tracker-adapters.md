@@ -81,7 +81,7 @@ ______________________________________________________________________
 No external tracker API. The agent:
 
 1. Uses user-supplied brief + repo memory for context.
-2. Drafts ticket content from [create-ticket/ticket-template.md](create-ticket/ticket-template.md).
+2. Drafts ticket content from [create-ticket/ticket-template.md](../create-ticket/ticket-template.md).
 3. Saves draft to `memory.local_specs/tickets/` (gitignored) if the user wants a record.
 4. User creates the tracker item manually or continues with `/handle-task` using a
    synthetic key the team agrees on (document in task memory).

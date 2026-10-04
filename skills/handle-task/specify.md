@@ -93,6 +93,10 @@ Before writing, read relevant modules and adjacent patterns in the repo. Record
 Wire formats and test patterns: [engineering-rubric.md](engineering-rubric.md) ·
 [documentation-and-adrs.md](documentation-and-adrs.md) · [verification.md](verification.md#test-robustness).
 
+**Optional formal requirements:** when the user asks for EARS or numbered functional requirements,
+use [references/ears-syntax.md](references/ears-syntax.md) — default templates in
+[templates.md](templates.md) remain the norm; EARS is not an extra approval gate.
+
 ______________________________________________________________________
 
 ## Spec approval gate (hard stop)

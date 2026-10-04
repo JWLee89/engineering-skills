@@ -1,7 +1,7 @@
 # Create ticket — workflow
 
 **Entry:** [SKILL.md](SKILL.md). Load `.handle-task/project.yaml`
-([../project-config.md](../project-config.md)) before starting.
+([../project-config.md](../handle-task/project-config.md)) before starting.
 
 ```
 Phase 0  Load config
@@ -20,7 +20,7 @@ ______________________________________________________________________
 1. Read `.handle-task/project.yaml`.
 2. Note `integrations.issue_tracker.type`, `ticket.prefix`, `git.pr_target`,
    `url_template`, `memory.*`, and `verify.*` for the Verification plan.
-3. Open the matching adapter in [../issue-tracker-adapters.md](../issue-tracker-adapters.md).
+3. Open the matching adapter in [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md).
 
 If `type: none`, tell the user the draft will be presented for manual creation unless they
 configure a tracker.
@@ -85,7 +85,7 @@ ______________________________________________________________________
 ## Phase 3: Create ticket
 
 Use the adapter for `integrations.issue_tracker.type`
-([../issue-tracker-adapters.md](../issue-tracker-adapters.md)).
+([../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md)).
 
 1. Resolve fields:
    - **Project / repo** — from `ticket.prefix` or user input.
@@ -93,7 +93,7 @@ Use the adapter for `integrations.issue_tracker.type`
    - **Summary** — `[{area}] {imperative title}` (see template).
    - **Assignee** — only if user specifies; otherwise leave unassigned.
    - **Epic / parent** — only if user provides and confirms.
-2. Create via the tracker adapter ([issue-tracker-adapters.md](../issue-tracker-adapters.md)).
+2. Create via the tracker adapter ([issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md)).
 3. Capture the new key from the response.
 4. Set parent/epic links if confirmed (adapter-specific).
 5. Build URL from `url_template` and report to user.
@@ -118,7 +118,7 @@ ______________________________________________________________________
 
 ## Phase 5: Split into sub-tasks (only if too big)
 
-Follow [../subtask-template.md](../subtask-template.md). **Approval-first.**
+Follow [../subtask-template.md](../handle-task/subtask-template.md). **Approval-first.**
 
 1. Propose subtasks on parent (comment or chat).
 2. Wait for approval.
@@ -153,5 +153,5 @@ ______________________________________________________________________
 | Drafting on thin context | Phase 1 sufficiency check |
 | Missing Description or Verification plan | Required sections in Phase 2 |
 | Skipping review after create | Phase 4 mandatory |
-| Hard-coded tracker APIs in this workflow | Use [../issue-tracker-adapters.md](../issue-tracker-adapters.md) |
+| Hard-coded tracker APIs in this workflow | Use [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md) |
 | Synthetic sub-task branch names | Real ticket keys only |

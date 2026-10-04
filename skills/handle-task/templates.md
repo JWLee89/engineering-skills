@@ -10,7 +10,7 @@ from `.handle-task/project.yaml`. Expand `{key}` in URLs (e.g. `PROJ-123`).
 | ---------------------------- | -------------------------------------------------------------- |
 | Spec writing + approval gate | [specify.md](specify.md)                                       |
 | Plan + todo + approval gate  | [plan-and-tasks.md](plan-and-tasks.md)                         |
-| PR lifecycle → merge-ready     | [pull-request/workflow.md](pull-request/workflow.md) |
+| PR lifecycle → merge-ready     | [pull-request/workflow.md](../pull-request/workflow.md) |
 | Project settings             | [project-config.md](project-config.md)                         |
 | Subtask (split work)         | [subtask-template.md](subtask-template.md)                       |
 
@@ -300,6 +300,18 @@ Items that need GitHub Actions or branch-level proof:
 
 Use **verification commits** (Phase 5b) when behavior only shows on a follow-up push.
 
+### Test coverage (when behavior changes)
+
+Optional but recommended (aligns with [Jeffallan code-reviewer](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/report-template.md)):
+
+```markdown
+### Test coverage (when code changes)
+
+- [ ] Happy path covered
+- [ ] Error / edge paths covered
+- [ ] Spec criteria traced (see Background)
+```
+
 ### Out of scope
 
 ```markdown
@@ -335,6 +347,9 @@ ______________________________________________________________________
 Use after commits + verify, when the user approves opening a PR. **Always** create with
 `gh pr create --draft`. Full workflow: [pull-request.md](pull-request.md).
 
+**Reviewer-friendly shape (required):** [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
+**Example:** [engineering-skills PR #8](https://github.com/JWLee89/engineering-skills/pull/8).
+
 ```markdown
 ## Background
 
@@ -369,9 +384,9 @@ Mention constraints from committed decision log when configured.>
    **Source:** [Lstart–Lend](https://github.com/{owner}/{repo}/blob/{head_sha}/path/to/file.py#Lstart-Lend) —
    <why a reviewer should read this>. Commit [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}).
 
-For `.md` source links use `?plain=1` before `#L`. `sha256_path` = SHA-256 hex of repo-relative path — [pull-request/workflow.md](pull-request/workflow.md).
+For `.md` source links use `?plain=1` before `#L`. `sha256_path` = SHA-256 hex of repo-relative path — [pull-request/workflow.md](../pull-request/workflow.md).
 
-<Core logic → wiring → config → tests. Refresh diff anchors after each push — [pull-request/workflow.md](pull-request/workflow.md).>
+<Core logic → wiring → config → tests. Refresh diff anchors after each push — [pull-request/workflow.md](../pull-request/workflow.md).>
 
 ## Changes made
 

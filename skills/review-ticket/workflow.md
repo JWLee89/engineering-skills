@@ -1,7 +1,7 @@
 # Review ticket — workflow
 
 **Entry:** [SKILL.md](SKILL.md). Load `.handle-task/project.yaml`
-([../project-config.md](../project-config.md)) before starting.
+([../project-config.md](../handle-task/project-config.md)) before starting.
 
 ```
 Phase 0  Load config
@@ -19,7 +19,7 @@ ______________________________________________________________________
 2. Note `integrations.issue_tracker.type`, `url_template`, `ticket.prefix`,
    `memory.*`, and `git.*` for placeholder expansion.
 3. Identify the tracker adapter row in
-   [../issue-tracker-adapters.md](../issue-tracker-adapters.md).
+   [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md).
 
 If `type: none` and no ticket is pasted, ask the user for the full ticket content or a
 task description to review.
@@ -61,7 +61,7 @@ ______________________________________________________________________
 
 ## Phase 3: Split into sub-tasks (scope too large)
 
-Follow [../subtask-template.md](../subtask-template.md). **Approval-first.**
+Follow [../subtask-template.md](../handle-task/subtask-template.md). **Approval-first.**
 
 1. **Propose** — comment on parent (via adapter) or present in chat: subtask list,
    merge order, first implement key. Each proposed child includes all required sections.

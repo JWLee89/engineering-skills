@@ -3,7 +3,7 @@
 **Entry:** [SKILL.md](SKILL.md).
 
 **Project config (optional):** when the repo has `.handle-task/project.yaml`, load
-[../project-config.md](../project-config.md) for `memory.*`, `verify.*`, `ticket.prefix`, and
+[../project-config.md](../handle-task/project-config.md) for `memory.*`, `verify.*`, `ticket.prefix`, and
 issue-tracker settings. When absent, use `CONTRIBUTING.md`, `README.md`, and conventional repo
 docs paths.
 
@@ -40,7 +40,7 @@ Do **not** use:
 Do use:
 
 - PR host CLI/API (e.g. `gh pr view`, `gh pr diff`, checks, comments when GitHub)
-- Issue tracker adapter from project config ([../issue-tracker-adapters.md](../issue-tracker-adapters.md))
+- Issue tracker adapter from project config ([../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md))
 - Paths from config when set: `memory.agent_guide`, `memory.decisions`, `memory.committed_tasks`,
   `memory.local_specs`; otherwise repo `docs/`, decision/ADR locations, and specs linked from the PR
 
@@ -59,9 +59,25 @@ closing keywords, cross-links).
 
 If ambiguous (fork, wrong repo, multiple PRs for branch) → ask once.
 
+### Intent checkpoint (mandatory)
+
+Before Phase 2, write **one sentence** stating what you believe this PR is intended to accomplish
+(from PR title/body + linked work items only). Share it with the user briefly; if intent is
+unclear, ask once. Do not run the full rubric until intent is plausible or confirmed.
+
 ______________________________________________________________________
 
 ## Phase 2: Gather context (parallel where possible)
+
+### PR body as review map
+
+When the author used `/pull-request` Phase 2, the description should include **Review guide →
+Focus areas** with PR `#diff-…` links. **Start there** before re-deriving hunks from scratch.
+If the body is summary-only, note it under **Context used** (documentation gap — not automatic
+Blocker unless repo policy requires linked focus areas).
+
+See [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
+When a spec or ticket link exists in **Background**, run [Jeffallan-style Stage 1 spec compliance](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/spec-compliance-review.md) before code-quality axes.
 
 ### From the PR host
 
@@ -95,7 +111,7 @@ Use the equivalent commands or UI for other forges when the user specifies them.
 
 - PR-linked specs, `docs/`, ADRs/decision logs (including `memory.decisions` when configured),
   committed task scratchpads (`memory.committed_tasks` when configured)
-- [../documentation-and-adrs.md](../documentation-and-adrs.md) for ADR and wire-format conventions
+- [../documentation-and-adrs.md](../handle-task/documentation-and-adrs.md) for ADR and wire-format conventions
 
 ______________________________________________________________________
 
@@ -119,7 +135,7 @@ Optional: run targeted tests locally when `verify.commands` exist in project con
 commands and outcome in the draft under **Verification notes**. Do not mark PR approved on green
 tests alone; rubric still applies.
 
-Cross-check [../engineering-rubric.md](../engineering-rubric.md) but **do not** skip rubric sections here.
+Cross-check [../engineering-rubric.md](../handle-task/engineering-rubric.md) but **do not** skip rubric sections here.
 
 ______________________________________________________________________
 
@@ -141,8 +157,14 @@ Use this structure:
 **Reviewer persona:** Senior engineer — rigorous, kind, respectful (/code-review)
 **Verdict (draft):** Request changes | Approve with nits | Approve
 
+## PR intent (checkpoint)
+<One sentence — what this PR is meant to accomplish>
+
 ## Summary
 <2–4 sentences: what the PR does well, overall quality, merge recommendation — lead with strengths where genuine>
+
+## Positive feedback
+<Required: specific patterns, tests, or design choices worth keeping — at least one item when anything is merge-worthy>
 
 ## Context used
 - PR description (+ gaps)
@@ -245,7 +267,7 @@ If the user is the **author** and wants to address findings:
 
 1. Triage Blockers → Majors → Minors
 2. Implement fixes on the PR branch — **only when user explicitly asks** to implement
-3. Re-run verification from [../verification.md](../verification.md) when the project defines it
+3. Re-run verification from [../verification.md](../handle-task/verification.md) when the project defines it
 4. Re-run `/code-review` (new draft) before merge
 
 ______________________________________________________________________
@@ -269,7 +291,7 @@ ______________________________________________________________________
 ## See also
 
 - [rubric.md](rubric.md) — eight-axis criteria
-- [../engineering-rubric.md](../engineering-rubric.md) — author implement/self-review (`/pull-request` Phase 6)
+- [../engineering-rubric.md](../handle-task/engineering-rubric.md) — author implement/self-review (`/pull-request` Phase 6)
 - [../pull-request/workflow.md](../pull-request/workflow.md) — CI, ready gate
-- [../spec-adherence.md](../spec-adherence.md) — requirement ↔ test mapping
-- [../issue-tracker-adapters.md](../issue-tracker-adapters.md) — fetch linked work items by tracker type
+- [../spec-adherence.md](../handle-task/spec-adherence.md) — requirement ↔ test mapping
+- [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md) — fetch linked work items by tracker type

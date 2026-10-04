@@ -2,7 +2,7 @@
 
 Standalone delegate for `/handle-task` and `/pull-request`. Keeps the skill bundle
 **accurate, concise, and effective** over time. Implementation/review criteria live in
-[engineering-rubric.md](engineering-rubric.md) and [code-review/rubric.md](code-review/rubric.md) — patch those SSOTs when process gaps are rubric gaps.
+[engineering-rubric.md](engineering-rubric.md) and [code-review/rubric.md](../code-review/rubric.md) — patch those SSOTs when process gaps are rubric gaps.
 
 ## When to run
 
@@ -39,14 +39,14 @@ Answer briefly:
 
 ### 3. Patch skill (same session when possible)
 
-Edit the **minimal** file in `handle-task-skill/`:
+Edit the **minimal** file under `skills/`:
 
 | Change type | Target |
 | ----------- | ------ |
 | New gate or checklist item | [SKILL.md](SKILL.md) Phase 7/8 or relevant delegate |
 | Detailed how-to | New or existing delegate (keep [SKILL.md](SKILL.md) thin) |
 | Remove duplication | Consolidate into one delegate; replace duplicates with links |
-| PR/pull-request gap | [pull-request/workflow.md](pull-request/workflow.md) |
+| PR/pull-request gap | [pull-request/workflow.md](../pull-request/workflow.md) |
 
 **Principles when editing:**
 
@@ -66,18 +66,18 @@ If the user owns `engineering-skills`, offer to open a PR (see below).
 
 ### 5. PR to engineering-skills (when user wants it persisted)
 
-Repo: `engineering-skills` / `handle-task-skill/`
+Repo: `engineering-skills` / `skills/`
 
 ```bash
 cd /path/to/engineering-skills
 git checkout -b fix/skill-<short-slug>
-# edit handle-task-skill/
+# edit skills/
 git commit -m "docs(handle-task): <what and why>"
 git push -u origin HEAD
 gh pr create --title "docs(handle-task): ..." --body "..."
 ```
 
-After merge: `./handle-task-skill/scripts/install-skills.sh --update`
+After merge: `./scripts/install-skills.sh --update`
 
 Local-only patch (no PR): symlinks pick up edits immediately if working in the clone.
 

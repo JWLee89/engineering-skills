@@ -3,14 +3,14 @@
 **Single source of truth** for **`/code-review`**. Do not duplicate criteria elsewhere — link here.
 
 **Shared implementation bar** (correctness, design, tests, security, perf): defined in
-[../engineering-rubric.md](../engineering-rubric.md). This file adds **reviewer-only** checks
+[../engineering-rubric.md](../handle-task/engineering-rubric.md). This file adds **reviewer-only** checks
 (PRD/intent drift, introduced vs pre-existing, repo-wide duplicate search, severity/verdict).
 
 Persona: **very senior engineer** — block merge when quality is not production-grade.
 
 **Tone:** Kind and respectful; critique code, not the person.
 
-Author self-review: [../code-review.md](../code-review.md) → [../engineering-rubric.md](../engineering-rubric.md).
+Author self-review: [../code-review.md](../handle-task/code-review.md) → [../engineering-rubric.md](../handle-task/engineering-rubric.md).
 
 ______________________________________________________________________
 
@@ -18,7 +18,7 @@ ______________________________________________________________________
 
 | Check | What to verify |
 | ----- | -------------- |
-| Engineering best practices | [../engineering-rubric.md](../engineering-rubric.md) + project conventions |
+| Engineering best practices | [../engineering-rubric.md](../handle-task/engineering-rubric.md) + project conventions |
 | Right thing to build | Aligns with PR purpose, linked work items, product constraints |
 | Definition of done | PR / tracker DoD / referenced spec — satisfied or explicitly deferred |
 
@@ -41,7 +41,7 @@ ______________________________________________________________________
 
 ## 3. Software design
 
-Apply **Design & boundaries** from [../engineering-rubric.md](../engineering-rubric.md).
+Apply **Design & boundaries** from [../engineering-rubric.md](../handle-task/engineering-rubric.md).
 
 **Reviewer focus:** Does this PR's structure block the next change? Suggest concrete redesign if yes.
 
@@ -49,10 +49,10 @@ ______________________________________________________________________
 
 ## 4. Tests
 
-Apply **Correctness & testing** from [../engineering-rubric.md](../engineering-rubric.md).
+Apply **Correctness & testing** from [../engineering-rubric.md](../handle-task/engineering-rubric.md).
 
 **Reviewer focus:** Table requirement → test file/name; **gaps**; integration when boundaries crossed.
-Cross-check [../spec-adherence.md](../spec-adherence.md) when PR references a spec.
+Cross-check [../spec-adherence.md](../handle-task/spec-adherence.md) when PR references a spec.
 
 ______________________________________________________________________
 
@@ -60,7 +60,7 @@ ______________________________________________________________________
 
 | Check | What to verify |
 | ----- | -------------- |
-| New vs existing | Search repo; prefer reuse per [../incremental-implementation.md](../incremental-implementation.md) |
+| New vs existing | Search repo; prefer reuse per [../incremental-implementation.md](../handle-task/incremental-implementation.md) |
 | Within PR | Copy-paste that should share a helper |
 
 **Output:** Canonical path + line ranges on both sides.
@@ -69,17 +69,17 @@ ______________________________________________________________________
 
 ## 6. Code smells
 
-Apply **Clarity & maintainability** from [../engineering-rubric.md](../engineering-rubric.md).
+Apply **Clarity & maintainability** from [../engineering-rubric.md](../handle-task/engineering-rubric.md).
 
 **Reviewer focus:** Missing **why** comments on non-obvious rules; error-prone patterns (bare except, unchecked casts).
 
-Wire formats: [../documentation-and-adrs.md](../documentation-and-adrs.md).
+Wire formats: [../documentation-and-adrs.md](../handle-task/documentation-and-adrs.md).
 
 ______________________________________________________________________
 
 ## 7. Optimizations
 
-Apply **Performance** from [../engineering-rubric.md](../engineering-rubric.md) — flag only plausible impact.
+Apply **Performance** from [../engineering-rubric.md](../handle-task/engineering-rubric.md) — flag only plausible impact.
 
 ______________________________________________________________________
 

@@ -57,7 +57,7 @@ Weak:    “looks correct” / typecheck only for behavioral change  → do not 
 ```
 
 If only **CI-only** proof is possible, run what you can locally, document the gap, push,
-and attach CI run URL when green ([pull-request/workflow.md](pull-request/workflow.md)).
+and attach CI run URL when green ([pull-request/workflow.md](../pull-request/workflow.md)).
 
 ### Agentic validation process (checklist)
 

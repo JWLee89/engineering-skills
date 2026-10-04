@@ -47,7 +47,7 @@ ______________________________________________________________________
 
 A ticket is "too big" when it would produce a PR that is not cleanly reviewable. Signals:
 
-- Likely > ~500 lines changed or > ~15 files (see [../pr-splitting.md](../pr-splitting.md)).
+- Likely > ~500 lines changed or > ~15 files (see [../pr-splitting.md](../handle-task/pr-splitting.md)).
 - Spans more than one independently testable capability.
 - Multiple DoD items that could each be their own merged PR.
 - Description lists several distinct "and also" tasks.
@@ -58,15 +58,15 @@ ______________________________________________________________________
 
 ## Split into sub-tasks (check 2 failure)
 
-Follow [../subtask-template.md](../subtask-template.md). **Approval-first — never auto-create.**
+Follow [../subtask-template.md](../handle-task/subtask-template.md). **Approval-first — never auto-create.**
 
 1. **Propose** the split (subtask list, merge order, first implement key) to the user —
    as a comment on the parent or in chat.
 2. Wait for **explicit approval**.
 3. Create one **real** child ticket per slice via the issue tracker adapter
-   ([../issue-tracker-adapters.md](../issue-tracker-adapters.md)).
+   ([../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md)).
    Each child keeps all required sections.
-4. Link parent ↔ children and document merge order (dependency/blocking links per tracker — see [../issue-tracker-adapters.md](../issue-tracker-adapters.md)).
+4. Link parent ↔ children and document merge order (dependency/blocking links per tracker — see [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md)).
 5. Update the parent: subtask table, rollup DoD, rollup verification plan, and a note:
    "implement on child keys only."
 6. Re-run this gate on each child.
@@ -83,7 +83,7 @@ ______________________________________________________________________
    - "A new hire wouldn't know what 'OAuth token refresh flow' means — can you rephrase the
      goal?" (check 4)
 2. On the user's reply, **backfill** the ticket description via the tracker adapter
-   ([../issue-tracker-adapters.md](../issue-tracker-adapters.md)), preserving all required
+   ([../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md)), preserving all required
    sections ([../create-ticket/ticket-template.md](../create-ticket/ticket-template.md)).
 3. **Confirm** with the caller: re-state what was added and re-run the four checks. Do not
    mark the ticket ready until the user confirms.
@@ -128,6 +128,6 @@ ______________________________________________________________________
 |---------|-----|
 | Proceeding to implement a ticket that fails the gate | Stop; run `/review-ticket` or backfill first |
 | Auto-creating sub-tasks without approval | Approval-first split |
-| Restating the four checks elsewhere | Link this file ([../self-improvement.md](../self-improvement.md)) |
+| Restating the four checks elsewhere | Link this file ([../self-improvement.md](../handle-task/self-improvement.md)) |
 | Silently accepting a gap the user didn't acknowledge | Record as explicit assumption + surface it |
 | Skipping the review because "it looks fine" | Mandatory for every created or fetched ticket |

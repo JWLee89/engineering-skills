@@ -4,8 +4,8 @@ Every ticket created by `/create-ticket` uses this description. All sections are
 **required**. Expand placeholders from `.handle-task/project.yaml`:
 `{prefix}`, `{TICKET-KEY}`, `{git.default_base}`, `{git.pr_target}`, `url_template` (`{key}`).
 
-Portable across issue trackers — apply via the adapter in [../issue-tracker-adapters.md](../issue-tracker-adapters.md)
-in [../issue-tracker-adapters.md](../issue-tracker-adapters.md).
+Portable across issue trackers — apply via the adapter in [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md)
+in [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md).
 
 ______________________________________________________________________
 
@@ -106,7 +106,7 @@ ______________________________________________________________________
 
 ## Field guidance (by tracker)
 
-See [../issue-tracker-adapters.md](../issue-tracker-adapters.md) for create/update APIs.
+See [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md) for create/update APIs.
 
 | Field | Guidance |
 | ----- | -------- |
