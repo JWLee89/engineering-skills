@@ -58,11 +58,10 @@ Then, when implementation is verified locally:
 /pull-request
 ```
 
-## Benchmark & layout
+## Layout
 
-We aligned this repo with industry skill-catalog patterns (see
-[docs/BENCHMARK-CLAUDE-SKILLS.md](docs/BENCHMARK-CLAUDE-SKILLS.md), inspired by
-[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)).
+Catalog layout follows common `skills/{name}/SKILL.md` + `references/` patterns (see
+[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) — MIT; we cite patterns, not vendored prose).
 
 **Migrating from pre–PR #10 clones:** run `./scripts/install-skills.sh --update` so symlinks
 point at `skills/*` (the old `handle-task-skill/` path was removed).

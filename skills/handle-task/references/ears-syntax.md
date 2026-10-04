@@ -24,5 +24,4 @@ In `{local_specs}/.../SPEC-*.md`:
 
 ## References
 
-- Inspired by [feature-forge](https://github.com/Jeffallan/claude-skills/tree/main/skills/feature-forge) (MIT)  
-- See [docs/BENCHMARK-CLAUDE-SKILLS.md](../../../docs/BENCHMARK-CLAUDE-SKILLS.md)
+- [feature-forge](https://github.com/Jeffallan/claude-skills/tree/main/skills/feature-forge) (MIT)
