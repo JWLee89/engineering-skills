@@ -11,4 +11,4 @@ review responses, or a clearer description.
 
 Setup: [project-config.md](project-config.md) → `.handle-task/project.yaml`
 
-**Code review:** [code-review.md](code-review.md) · **ADRs:** [documentation-and-adrs.md](documentation-and-adrs.md)
+**Quality:** [engineering-rubric.md](engineering-rubric.md) · **ADRs:** [documentation-and-adrs.md](documentation-and-adrs.md)

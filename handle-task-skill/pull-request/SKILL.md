@@ -47,7 +47,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 | 3 | Create draft PR or refresh open PR |
 | 4–5 | Execute verification; CI/CD fix loop; merge conflicts |
 | 5d | Review feedback loop |
-| 6 | Pre-merge code review → [../code-review.md](../code-review.md) |
+| 6 | Author self-review → [../engineering-rubric.md](../engineering-rubric.md) |
 | 7 | Ready gate → `gh pr ready` → issue transition |
 
 ## Core principles

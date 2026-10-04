@@ -1,8 +1,8 @@
 # Incremental implementation
 
-Delegate for `/handle-task` Phase 7. **Orchestrates** slice execution; TDD detail in
-[test-driven-development.md](test-driven-development.md); spec proof in
-[spec-adherence.md](spec-adherence.md).
+Delegate for `/handle-task` Phase 7. **Orchestrates** slice execution; quality bar in
+[engineering-rubric.md](engineering-rubric.md); TDD in [test-driven-development.md](test-driven-development.md);
+spec proof in [spec-adherence.md](spec-adherence.md).
 
 ## Slice cycle (canonical)
 
@@ -37,22 +37,14 @@ REUSE CHECK: considered [paths]; approach: reuse | extend | new (why)
 
 Log non-obvious choices in `memory.decisions`.
 
-## SOLID (guardrails)
+## Design & quality
 
-| Principle | Practice |
-| --------- | -------- |
-| **S** | One reason to change per unit |
-| **O** | Extend via types/composition, not editing stable core for every variant |
-| **L** | Subtypes honor contracts |
-| **I** | Narrow public APIs |
-| **D** | Inject abstractions at boundaries; test with fakes |
-
-Also: minimal diff, explicit module ownership, single source of truth for constants/keys.
+Apply [engineering-rubric.md](engineering-rubric.md) axes 1–5 on every slice.
 
 ## Slicing
 
 Prefer **vertical slices** (end-to-end path per todo item). ≤ ~5 files per slice.
-See [planning-and-task-breakdown.md](planning-and-task-breakdown.md).
+See [plan-and-tasks.md](plan-and-tasks.md).
 
 ## Slice checklist
 

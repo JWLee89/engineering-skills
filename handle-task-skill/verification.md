@@ -98,7 +98,7 @@ ______________________________________________________________________
 - **Parametrize** variant behavior
 - **Wire keys** — derive from `fields(Model)` / shared enums, not duplicated literals
 
-Details: [code-review.md](code-review.md).
+Details: [engineering-rubric.md](engineering-rubric.md).
 
 ______________________________________________________________________
 

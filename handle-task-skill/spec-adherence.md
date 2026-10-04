@@ -83,4 +83,4 @@ Treat as **Blocker** if missing:
 
 - [test-driven-development.md](test-driven-development.md) — tests derive from acceptance criteria
 - [verification.md](verification.md) — commands after adherence audit
-- [code-review.md](code-review.md) — second pass before PR ready
+- [engineering-rubric.md](engineering-rubric.md) — quality pass before PR ready

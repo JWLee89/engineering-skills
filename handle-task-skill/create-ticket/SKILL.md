@@ -4,7 +4,7 @@ description: >-
   Create well-documented tracker tickets by combining context from related tickets,
   user-supplied context banks, wiki/docs, and skill memory. Each ticket includes a
   layman-terms Description and a detailed Verification plan, then passes the four-point
-  quality review via /review-ticket. Works with JIRA, Linear, GitHub Issues, or manual
+  quality review via /review-ticket. Works with any configured issue tracker or manual
   creation. Use when the user asks to create, draft, or write a ticket from a brief.
 disable-model-invocation: true
 ---

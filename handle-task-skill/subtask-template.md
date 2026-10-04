@@ -99,14 +99,14 @@ ______________________________________________________________________
 
 ## Links
 
-| Tracker | Hierarchy | Split traceability | Merge order |
-| ------- | --------- | ------------------ | ----------- |
-| **JIRA** | Subtask + `parent` field | `Work item split` link | `Blocks` chain |
-| **Linear** | Sub-issue under parent | Parent relation | Dependency / blocked-by |
-| **GitHub** | Issue reference in body | Cross-link `#parent` | Note order in parent table |
-| **None** | Document in parent body | Task memory table | Numbered implement order |
+| `issue_tracker.type` | Hierarchy | Split traceability | Merge order |
+| -------------------- | --------- | ------------------ | ----------- |
+| `jira` | Subtask + `parent` field | `Work item split` link | `Blocks` chain |
+| `linear` | Sub-issue under parent | Parent relation | Dependency / blocked-by |
+| `github` | Issue reference in body | Cross-link `#parent` | Note order in parent table |
+| `none` | Document in parent body | Task memory table | Numbered implement order |
 
-### JIRA example (merge order A → B → C)
+### Example blocking chain (merge order A → B → C)
 
 ```text
 Blocks: PROJ-101 blocks PROJ-102

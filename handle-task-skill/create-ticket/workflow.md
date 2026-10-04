@@ -93,7 +93,7 @@ Use the adapter for `integrations.issue_tracker.type`
    - **Summary** — `[{area}] {imperative title}` (see template).
    - **Assignee** — only if user specifies; otherwise leave unassigned.
    - **Epic / parent** — only if user provides and confirms.
-2. Create via adapter (`jira_create_issue`, `gh issue create`, Linear MCP, etc.).
+2. Create via the tracker adapter ([issue-tracker-adapters.md](../issue-tracker-adapters.md)).
 3. Capture the new key from the response.
 4. Set parent/epic links if confirmed (adapter-specific).
 5. Build URL from `url_template` and report to user.
@@ -153,5 +153,5 @@ ______________________________________________________________________
 | Drafting on thin context | Phase 1 sufficiency check |
 | Missing Description or Verification plan | Required sections in Phase 2 |
 | Skipping review after create | Phase 4 mandatory |
-| JIRA-only APIs in this workflow | Use [../issue-tracker-adapters.md](../issue-tracker-adapters.md) |
+| Hard-coded tracker APIs in this workflow | Use [../issue-tracker-adapters.md](../issue-tracker-adapters.md) |
 | Synthetic sub-task branch names | Real ticket keys only |

@@ -17,6 +17,7 @@ each skill).
 | *(same bundle)* | `/pull-request` | PR lifecycle → CI → review → merge-ready |
 | *(same bundle)* | `/create-ticket` | Draft + create well-documented tickets (any tracker) |
 | *(same bundle)* | `/review-ticket` | Four-point quality gate, backfill, scope check |
+| *(same bundle)* | `/code-review` | Deep PR rubric, draft review before post |
 
 ## Quick start
 
@@ -54,7 +55,7 @@ Edit `.handle-task/project.yaml`:
 | `integrations.issue_tracker.type` | `jira` | Tracker integration |
 | `integrations.issue_tracker.url_template` | `https://org.atlassian.net/browse/{key}` | Issue links |
 
-For a JIRA-backed setup, copy
+For an issue-tracker setup with status transitions (`type: jira`), copy
 [handle-task-skill/examples/jira-project.project.yaml](handle-task-skill/examples/jira-project.project.yaml)
 instead.
 

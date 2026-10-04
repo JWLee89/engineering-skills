@@ -1,7 +1,7 @@
 # Issue splitting and stacked PRs
 
 Use when an issue/ticket, spec, or in-progress branch exceeds reviewable size.
-Works with JIRA, Linear, GitHub Issues, or any tracker — create sub-issues in the
+Works with any issue tracker — create sub-issues in the
 tool your project uses (`integrations.issue_tracker.type` in config).
 
 ## Size heuristics
@@ -12,7 +12,7 @@ Split or create subtasks when **any** threshold is likely exceeded:
 | ---------------- | -------------------------------------------------------------------------------------------- |
 | Diff size        | ~500+ lines changed                                                                          |
 | File count       | ~15+ files                                                                                   |
-| Task granularity | Any step touches >5 files ([planning-and-task-breakdown.md](planning-and-task-breakdown.md)) |
+| Task granularity | Any step touches >5 files ([plan-and-tasks.md](plan-and-tasks.md)) |
 | Review domains   | Different reviewers for infra vs application code                                            |
 | Capabilities     | Capability map has >1 module with independent acceptance                                     |
 
@@ -56,7 +56,7 @@ Each child should:
 
 ## Tracker operations
 
-Use [issue-tracker-adapters.md](issue-tracker-adapters.md). JIRA example below (Atlassian MCP):
+Use [issue-tracker-adapters.md](issue-tracker-adapters.md). Example below when `type: jira`:
 
 ### 1. Propose split (before creating issues)
 
@@ -91,7 +91,7 @@ additional_fields: {"parent": "<PARENT-KEY>", "labels": ["<team-label>"]}
 
 | Link type                  | Use                                         |
 | -------------------------- | ------------------------------------------- |
-| **Subtask** `parent` field | JIRA hierarchy (required)                   |
+| **Subtask** `parent` field | Parent/child hierarchy (required when supported) |
 | **Work item split**        | Parent *split to* each child (traceability) |
 | **Blocks**                 | 101 blocks 102 blocks 103 (merge order)     |
 

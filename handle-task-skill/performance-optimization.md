@@ -36,7 +36,7 @@ Establish baseline before changing code.
 - Keep readability — document non-obvious perf trade-offs inline or in decisions log
 - Reuse existing caching/batching patterns in the repo before inventing new ones
 
-## Review checklist (with [code-review.md](code-review.md))
+## Review checklist (with [engineering-rubric.md](engineering-rubric.md) § Performance)
 
 - N+1 or repeated work in loops
 - Unbounded fetch / missing pagination

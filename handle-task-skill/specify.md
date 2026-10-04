@@ -1,8 +1,12 @@
 # Handle task — Spec definition
 
-Read during **Specify** phases of [SKILL.md](SKILL.md). Base process:
-[spec-driven-development.md](spec-driven-development.md). This file adds local path
-conventions from `.handle-task/project.yaml` and the **spec approval gate**.
+Read during **Specify** phases of [SKILL.md](SKILL.md). Local paths from
+`.handle-task/project.yaml` and the **spec approval gate**.
+
+## When to use spec (vs skip)
+
+- New feature or non-trivial change; multi-file work; > ~30 minutes expected
+- **Skip:** trivial one-file fixes (orchestrator skips spec flow)
 
 ## When to run
 
@@ -15,15 +19,14 @@ conventions from `.handle-task/project.yaml` and the **spec approval gate**.
 **Not the same as ticket approval:** `/review-ticket` validates the **tracker description**.
 This phase produces an **implementation spec** in `{local_specs}`; the user must approve
 **that document explicitly** before planning or coding — including after conversation
-summaries or a prior “looks good” on the JIRA text alone.
+summaries or a prior “looks good” on the tracker description alone.
 
 ______________________________________________________________________
 
-## Phase 2: Scope check
+## Phase 2: Scope check (multi-capability)
 
-Run [spec-driven-development.md](spec-driven-development.md) **Phase 0** when the ticket
-bundles **independently testable capabilities** (distinct consumers, separate
-acceptance clusters, or one piece could ship without the others).
+When the ticket bundles **independently testable capabilities** (distinct consumers,
+separate acceptance clusters, or one piece could ship without the others):
 
 ### Output paths (local — never commit)
 
@@ -34,8 +37,10 @@ Use `{local_specs}` and lowercase ticket key from config (e.g. `tasks/proj-123/`
 | Single capability | `{local_specs}/<ticket_key_lower>/SPEC-<slug>.md`                  |
 | Multi-capability  | `{local_specs}/<ticket_key_lower>/CAPABILITY-MAP.md` + per-module specs |
 
-Templates: [Spec](templates.md#spec-local_specsticket_key_lowerspec-slugmd) and
-[Capability map](templates.md#capability-map-local_specsticket_key_lowercapability-mapmd).
+Templates (read **one anchor**, not all of [templates.md](templates.md)):
+
+- [Spec template](templates.md#spec-local_specsticket_key_lowerspec-slugmd)
+- [Capability map](templates.md#capability-map-local_specsticket_key_lowercapability-mapmd)
 
 ### Multi-module order
 
@@ -47,7 +52,16 @@ ______________________________________________________________________
 
 ## Phase 4: Write the spec
 
-Write the spec **before** any plan or code. Use the template in [templates.md](templates.md).
+Write the spec **before** any plan or code. Use the [spec template](templates.md#spec-local_specsticket_key_lowerspec-slugmd).
+
+### Spec quality bar
+
+| Good | Bad |
+| ---- | --- |
+| Testable acceptance criteria | Vague "make it work" |
+| Explicit out of scope | Scope creep by omission |
+| Links to existing code patterns | Greenfield assumptions without reading repo |
+| Wire keys from models ([engineering-rubric.md](engineering-rubric.md)) | Duplicated field-name lists |
 
 ### Naming convention
 
@@ -76,20 +90,8 @@ Every spec must include:
 Before writing, read relevant modules and adjacent patterns in the repo. Record
 **current state** and **expected file changes** in the spec — do not guess from the tracker alone.
 
-### Wire-format / constants convention
-
-When the task introduces typed records for an external JSON or API shape:
-
-- Align dataclass field names with wire keys when possible; serialize with `asdict()` (not manual key lists)
-- Use named mapping dicts only when internal and external names differ
-- Legacy ingest aliases get **named constants** on the relevant type or module
-- **Single source of truth for keys:** define each wire/metadata string **once** in the model module
-- Tests: derive expected key sets from `fields(Model)`; assert representative values separately
-- Tests: **name shape/dimension constants once**; build fixtures and assertions from them
-- Tests: prefer **`@pytest.mark.parametrize`** when behavior varies by inputs
-
-See [documentation-and-adrs.md](documentation-and-adrs.md) → **Schema and wire formats**.
-Test patterns: [verification.md](verification.md#test-robustness).
+Wire formats and test patterns: [engineering-rubric.md](engineering-rubric.md) ·
+[documentation-and-adrs.md](documentation-and-adrs.md) · [verification.md](verification.md#test-robustness).
 
 ______________________________________________________________________
 
@@ -155,4 +157,4 @@ ______________________________________________________________________
 - [SKILL.md](SKILL.md) — full orchestrator
 - [plan-and-tasks.md](plan-and-tasks.md) — next phase after spec approval
 - [pr-splitting.md](pr-splitting.md) — when to split before specifying
-- [spec-driven-development.md](spec-driven-development.md) — Phase 0 / assumptions / spec structure
+- [engineering-rubric.md](engineering-rubric.md) — implementation quality bar

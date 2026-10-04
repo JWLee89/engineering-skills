@@ -15,7 +15,7 @@ If missing, infer from `CONTRIBUTING.md`, `Makefile`, `package.json`, and ask on
 | ---- | ---- |
 | Local verify | [../verification.md](../verification.md) (agentic evidence **required**) |
 | Isolation gates | [../feature-gating.md](../feature-gating.md) |
-| Author self-review | [../code-review.md](../code-review.md) |
+| Author self-review | [../engineering-rubric.md](../engineering-rubric.md) |
 | Deep PR review | [../code-review/workflow.md](../code-review/workflow.md) (`/code-review`) |
 | Performance | [../performance-optimization.md](../performance-optimization.md) |
 | ADR / why docs | [../documentation-and-adrs.md](../documentation-and-adrs.md) |
@@ -323,7 +323,7 @@ Refresh **Changes made** Δ lines and Verification after conflict resolution.
 
 ### 5c. Code quality / reviewability (proactive)
 
-Before re-requesting review, apply [../code-review.md](../code-review.md):
+Before re-requesting review, apply [../engineering-rubric.md](../engineering-rubric.md):
 
 - Remove duplication; reuse existing helpers
 - Split oversized commits only when user asked to squash/simplify history
@@ -348,11 +348,11 @@ ______________________________________________________________________
 
 ## Phase 6: Pre-merge code review
 
-Author self-review: full pass [../code-review.md](../code-review.md) before `gh pr ready`.
+Author self-review: full pass [../engineering-rubric.md](../engineering-rubric.md) before `gh pr ready`.
 Fix blockers; note residual nits in PR comment for human reviewer.
 
 **`/handle-task`:** Phase 9b **requires** **`/code-review`** on the task PR before Phase 7
-ready gate — not optional. See [../SKILL.md](../SKILL.md#phase-9-pull-request-draft-deep-code-review).
+ready gate — not optional. See [../SKILL.md](../SKILL.md#phase-9-pull-request-draft-deep-code-review) (Phase 9b).
 
 For other callers, **`/code-review`** is the eight-axis rubric pass (draft markdown before
 forge review comments) — [../code-review/workflow.md](../code-review/workflow.md).
@@ -370,7 +370,7 @@ ______________________________________________________________________
 - Required CI workflows green (URLs in body)
 - No unresolved merge conflicts
 - Blocking review feedback addressed (or explicitly deferred with user ack)
-- Author self-review ([../code-review.md](../code-review.md)): no blockers (deep `/code-review`
+- Author self-review ([../engineering-rubric.md](../engineering-rubric.md)): no blockers (deep `/code-review`
   tracked separately above for `/handle-task` callers)
 
 Then: update body (Review guide with current line ranges, full Verification + **Changes made** with final Δ lines) →

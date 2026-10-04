@@ -119,7 +119,7 @@ Optional: run targeted tests locally when `verify.commands` exist in project con
 commands and outcome in the draft under **Verification notes**. Do not mark PR approved on green
 tests alone; rubric still applies.
 
-Cross-check lightweight axes in [../code-review.md](../code-review.md) but **do not** skip rubric sections.
+Cross-check [../engineering-rubric.md](../engineering-rubric.md) but **do not** skip rubric sections here.
 
 ______________________________________________________________________
 
@@ -269,7 +269,7 @@ ______________________________________________________________________
 ## See also
 
 - [rubric.md](rubric.md) — eight-axis criteria
-- [../code-review.md](../code-review.md) — author pre-merge checklist (`/pull-request`)
+- [../engineering-rubric.md](../engineering-rubric.md) — author implement/self-review (`/pull-request` Phase 6)
 - [../pull-request/workflow.md](../pull-request/workflow.md) — CI, ready gate
 - [../spec-adherence.md](../spec-adherence.md) — requirement ↔ test mapping
 - [../issue-tracker-adapters.md](../issue-tracker-adapters.md) — fetch linked work items by tracker type

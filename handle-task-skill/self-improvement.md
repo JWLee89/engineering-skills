@@ -1,7 +1,8 @@
 # Self-improvement loop
 
 Standalone delegate for `/handle-task` and `/pull-request`. Keeps the skill bundle
-**accurate, concise, and effective** over time.
+**accurate, concise, and effective** over time. Implementation/review criteria live in
+[engineering-rubric.md](engineering-rubric.md) and [code-review/rubric.md](code-review/rubric.md) — patch those SSOTs when process gaps are rubric gaps.
 
 ## When to run
 

@@ -1,7 +1,7 @@
 # Handle-task skills (portable)
 
 Agent skills for **issue → implement → pull request**, usable in any repository and any
-JIRA (or Linear / GitHub Issues) project.
+any issue-tracker-backed project.
 
 ## How to invoke (read this first)
 
@@ -57,7 +57,7 @@ cp handle-task-skill/examples/generic.project.yaml .handle-task/project.yaml
 # edit: ticket.prefix, git.pr_target, verify.commands, issue_tracker
 ```
 
-For JIRA projects, start from [examples/jira-project.project.yaml](examples/jira-project.project.yaml).
+For issue trackers with automated status transitions, start from [examples/jira-project.project.yaml](examples/jira-project.project.yaml) (`type: jira`).
 
 Commit `.handle-task/project.yaml` so all agents share the same settings.
 
@@ -88,15 +88,16 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 │   │   └── rubric.md
 │   ├── issue-tracker-adapters.md
 │   ├── subtask-template.md
-│   ├── spec-driven-development.md      ┐
-│   ├── planning-and-task-breakdown.md  │ standalone delegates
-│   ├── incremental-implementation.md   │ (no external agent-skills)
-│   ├── test-driven-development.md      │
+│   ├── engineering-rubric.md           ┐ implement + author SSOT
+│   ├── incremental-implementation.md   │
+│   ├── test-driven-development.md      │ delegates (lazy-load per phase)
 │   ├── spec-adherence.md               │
 │   ├── self-improvement.md             │
 │   ├── documentation-and-adrs.md       │
-│   ├── code-review.md                  │
+│   ├── code-review.md                  │ author pointer
 │   ├── performance-optimization.md     ┘
+│   ├── spec-driven-development.md      ← stub → specify.md
+│   ├── planning-and-task-breakdown.md  ← stub → plan-and-tasks.md
 │   └── scripts/install-skills.sh
 └── .handle-task/
     └── project.yaml         ← per-project settings
@@ -108,7 +109,7 @@ Install symlinks `handle-task`, `pull-request`, `create-ticket`, `review-ticket`
 
 ## Issue trackers
 
-Not JIRA-specific. Set in `.handle-task/project.yaml`:
+Tracker-agnostic. Set in `.handle-task/project.yaml`:
 
 ```yaml
 integrations:
@@ -117,15 +118,15 @@ integrations:
     url_template: "https://your-org.atlassian.net/browse/{key}"
 ```
 
-Agents use the matching tool (Atlassian MCP, `gh issue`, user paste, etc.).
+Agents use the matching adapter ([issue-tracker-adapters.md](issue-tracker-adapters.md)).
 
-### Status transitions (JIRA)
+### Status transitions
 
-When configured, agents move tickets automatically at implementation start and when the PR
+When configured, agents move work items automatically at implementation start and when the PR
 is marked ready for review. Transition **action names** (e.g. `Assign`, `Review`) vary by
-JIRA workflow — configure them in project.yaml. See [issue-transitions.md](issue-transitions.md).
+workflow — configure them in project.yaml. See [issue-transitions.md](issue-transitions.md).
 
-Unassigned tickets are auto-assigned to the authenticated JIRA user at intake.
+Unassigned items may be auto-assigned to the authenticated tracker user at intake when the adapter supports it.
 
 ## Updating
 
@@ -140,4 +141,6 @@ If you move this repository, run:
 
 Manifest (global): `~/.config/handle-task-skills/source`
 
-**Agents:** read [QUICKSTART.md](QUICKSTART.md) at the start of every `/handle-task` session.
+**Agents:** [QUICKSTART.md](QUICKSTART.md) (nine-step workflow). **Humans:** install above; do not duplicate QUICKSTART prose here.
+
+**Related global skills:** prefer bundle SSOT ([engineering-rubric.md](engineering-rubric.md), [code-review/rubric.md](code-review/rubric.md)) over parallel globals for the same phase.
