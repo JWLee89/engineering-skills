@@ -12,7 +12,7 @@ Split or create subtasks when **any** threshold is likely exceeded:
 | ---------------- | -------------------------------------------------------------------------------------------- |
 | Diff size        | ~500+ lines changed                                                                          |
 | File count       | ~15+ files                                                                                   |
-| Task granularity | Any step touches >5 files ([planning-and-task-breakdown.md](planning-and-task-breakdown.md)) |
+| Task granularity | Any step touches >5 files ([plan-and-tasks.md](plan-and-tasks.md)) |
 | Review domains   | Different reviewers for infra vs application code                                            |
 | Capabilities     | Capability map has >1 module with independent acceptance                                     |
 

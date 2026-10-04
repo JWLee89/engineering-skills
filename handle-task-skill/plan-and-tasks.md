@@ -3,8 +3,7 @@
 Read during **Plan** phase of [SKILL.md](SKILL.md), **only after spec approval**
 ([specify.md](specify.md)).
 
-Base process: [planning-and-task-breakdown.md](planning-and-task-breakdown.md). This
-file adds local path conventions and the **plan approval gate**.
+Local path conventions and the **plan approval gate**.
 
 ## Prerequisites
 
@@ -25,17 +24,23 @@ ______________________________________________________________________
 | `{local_specs}/plan-<ticket_key_lower>.md` | Architecture choices, file list, risks, verification checkpoints |
 | `{local_specs}/todo-<ticket_key_lower>.md` | Phased checklist — executable slices for implementation |
 
-Templates: [Plan](templates.md#plan-local_specplan-ticket_key_lowermd) and
-[Todo](templates.md#todo-local_specstodo-ticket_key_lowermd).
+Templates (one anchor each, not full [templates.md](templates.md)):
 
-### Planning process
+- [Plan](templates.md#plan-local_specplan-ticket_key_lowermd)
+- [Todo](templates.md#todo-local_specstodo-ticket_key_lowermd)
 
-Follow [planning-and-task-breakdown.md](planning-and-task-breakdown.md):
+### Planning process (read-only)
 
-1. **Read-only planning** — read approved spec and relevant codebase; no code yet
+1. Read approved spec + relevant codebase — **no code yet**
 2. **Dependency graph** — foundations before dependents
-3. **Vertical slices** — prefer end-to-end paths over horizontal layers
-4. **Slice sizing** — each todo task ≤ ~5 files, completable in one focused session
+3. **Vertical slices** — end-to-end paths over horizontal layers (good: schema+API+UI for one flow; bad: all schema then all API)
+4. **Slice sizing** — each todo ≤ ~5 files, one focused session
+
+### Reuse discovery (during planning)
+
+Search for similar tasks, types, test helpers, shared utilities. Prefer **extend** over
+parallel implementation. Name new abstractions in the plan with rationale
+([incremental-implementation.md](incremental-implementation.md)).
 
 ### Plan must include
 
@@ -129,5 +134,5 @@ ______________________________________________________________________
 
 - [SKILL.md](SKILL.md) — Phases 6–9 (memory, implement, verify, draft PR)
 - [specify.md](specify.md) — spec phase and spec approval gate
-- [planning-and-task-breakdown.md](planning-and-task-breakdown.md) — dependency graphs and vertical slicing
+- [engineering-rubric.md](engineering-rubric.md) — code quality bar during implement
 - [incremental-implementation.md](incremental-implementation.md) — execution discipline per todo slice

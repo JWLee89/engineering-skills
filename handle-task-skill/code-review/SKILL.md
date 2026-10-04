@@ -56,12 +56,12 @@ main. Be **kind and respectful** — reviews should improve the code while the a
 6. **Optionally publish** forge review comments after approval — never before.
 7. **Never push commits** until the user approves the review and separately requests fixes.
 
-## Distinction from `code-review.md`
+## Distinction from author review
 
 | Artifact | Role |
 | -------- | ---- |
-| **`/code-review`** (this skill) | External-style, rubric-complete PR review; draft → approve → post |
-| [../code-review.md](../code-review.md) | Lightweight five-axis checklist for **authors** during `/pull-request` Phase 6 |
+| **`/code-review`** (this skill) | Reviewer pass — [rubric.md](rubric.md); draft → approve → post |
+| [../engineering-rubric.md](../engineering-rubric.md) | Author implement + self-review ([../code-review.md](../code-review.md) pointer) |
 
 ## Boundaries
 

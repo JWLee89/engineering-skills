@@ -17,6 +17,7 @@ each skill).
 | *(same bundle)* | `/pull-request` | PR lifecycle → CI → review → merge-ready |
 | *(same bundle)* | `/create-ticket` | Draft + create well-documented tickets (any tracker) |
 | *(same bundle)* | `/review-ticket` | Four-point quality gate, backfill, scope check |
+| *(same bundle)* | `/code-review` | Deep PR rubric, draft review before post |
 
 ## Quick start
 

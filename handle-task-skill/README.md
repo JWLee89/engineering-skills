@@ -88,15 +88,16 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 │   │   └── rubric.md
 │   ├── issue-tracker-adapters.md
 │   ├── subtask-template.md
-│   ├── spec-driven-development.md      ┐
-│   ├── planning-and-task-breakdown.md  │ standalone delegates
-│   ├── incremental-implementation.md   │ (no external agent-skills)
-│   ├── test-driven-development.md      │
+│   ├── engineering-rubric.md           ┐ implement + author SSOT
+│   ├── incremental-implementation.md   │
+│   ├── test-driven-development.md      │ delegates (lazy-load per phase)
 │   ├── spec-adherence.md               │
 │   ├── self-improvement.md             │
 │   ├── documentation-and-adrs.md       │
-│   ├── code-review.md                  │
+│   ├── code-review.md                  │ author pointer
 │   ├── performance-optimization.md     ┘
+│   ├── spec-driven-development.md      ← stub → specify.md
+│   ├── planning-and-task-breakdown.md  ← stub → plan-and-tasks.md
 │   └── scripts/install-skills.sh
 └── .handle-task/
     └── project.yaml         ← per-project settings
@@ -140,4 +141,6 @@ If you move this repository, run:
 
 Manifest (global): `~/.config/handle-task-skills/source`
 
-**Agents:** read [QUICKSTART.md](QUICKSTART.md) at the start of every `/handle-task` session.
+**Agents:** [QUICKSTART.md](QUICKSTART.md) (nine-step workflow). **Humans:** install above; do not duplicate QUICKSTART prose here.
+
+**Related global skills:** prefer bundle SSOT ([engineering-rubric.md](engineering-rubric.md), [code-review/rubric.md](code-review/rubric.md)) over parallel globals for the same phase.
