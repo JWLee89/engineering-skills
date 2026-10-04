@@ -148,7 +148,7 @@ Use this structure:
 - PR description (+ gaps)
 - Work items: …
 - Docs: …
-- CI: <pass/fail summary + check names>
+- CI: n/a (no workflows) / pending (run URL) / pass/fail summary + check names
 
 ## Findings
 

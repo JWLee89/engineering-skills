@@ -8,8 +8,9 @@ comments, no reliance on prior chat context — portable across repos and tracke
 [code-review/rubric.md](code-review/rubric.md).
 
 **Approve when** the change improves overall code health and meets the spec — not when
-it matches your personal style perfectly. When leaving notes for others, be **kind and
-respectful** — help the author improve while feeling empowered and encouraged.
+it matches your personal style perfectly (self-review bar; for the full rubric pass use
+`/code-review`). When leaving notes for others, be **kind and respectful** — help the author
+improve while feeling empowered and encouraged.
 
 ## Five-axis review
 

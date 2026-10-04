@@ -71,8 +71,8 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 - [ ] Task memory + branch ({ticket.id_pattern})
 - [ ] Slices: REUSE → RED → GREEN → feature gate (when applicable) → spec adherence
 - [ ] Phase 8: agentic verify + evidence bundle + spec traceability ([verification.md](verification.md), [spec-adherence.md](spec-adherence.md))
-- [ ] Phase 9: /pull-request draft PR (body, Δ lines, verification plan, push)
-- [ ] Phase 9: /code-review on that PR — draft approved; no Blockers (or user-accepted deferral)
+- [ ] Phase 9a: /pull-request draft PR (body, Δ lines, verification plan, push)
+- [ ] Phase 9b: /code-review on that PR — draft approved; no Blockers (or user-accepted deferral)
 - [ ] Phase 10: /pull-request CI green, author self-review, ready gate, CI URLs
 ```
 

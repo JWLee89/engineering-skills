@@ -352,7 +352,7 @@ Author self-review: full pass [../code-review.md](../code-review.md) before `gh 
 Fix blockers; note residual nits in PR comment for human reviewer.
 
 **`/handle-task`:** Phase 9b **requires** **`/code-review`** on the task PR before Phase 7
-ready gate — not optional. See [../SKILL.md](../SKILL.md#phase-9-pull-request-draft--deep-code-review).
+ready gate — not optional. See [../SKILL.md](../SKILL.md#phase-9-pull-request-draft-deep-code-review).
 
 For other callers, **`/code-review`** is the eight-axis rubric pass (draft markdown before
 forge review comments) — [../code-review/workflow.md](../code-review/workflow.md).
@@ -370,7 +370,8 @@ ______________________________________________________________________
 - Required CI workflows green (URLs in body)
 - No unresolved merge conflicts
 - Blocking review feedback addressed (or explicitly deferred with user ack)
-- Author self-review ([../code-review.md](../code-review.md)): no blockers
+- Author self-review ([../code-review.md](../code-review.md)): no blockers (deep `/code-review`
+  tracked separately above for `/handle-task` callers)
 
 Then: update body (Review guide with current line ranges, full Verification + **Changes made** with final Δ lines) →
 `gh pr ready` → issue transition per [../issue-transitions.md](../issue-transitions.md) →
