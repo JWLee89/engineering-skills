@@ -27,7 +27,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 **Invoke:** `/pull-request`
 **Companions:** `/handle-task` (ticket → code) — run **after Phase 8**; **`/code-review`** is
 **mandatory in handle-task Phase 9b** before `gh pr ready`. Do not replace with ad-hoc `gh pr create`.
-**Agent entry:** read [workflow.md](workflow.md) in full.
+**Agent entry:** read [workflow.md](workflow.md) in full. **PR body format:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md) (example: [PR #8](https://github.com/JWLee89/engineering-skills/pull/8)).
 
 **Single source of truth:** `skills/pull-request/` (symlinked globally by
 `scripts/install-skills.sh`).
@@ -63,7 +63,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 
 ## Core principles
 
-1. **Easy to review** — Background/Purpose, **Review guide** (PR `/changes#diff-…` links primary; markdown blob uses `?plain=1`), **Changes made with line deltas**, Out of scope
+1. **Easy to review** — follow [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md): Background/Purpose, **Review guide** (Summary, Commits, **Start here**, linked **Focus areas**), **Changes made (Δ lines)**, Verification + Out of scope. PR `/changes#diff-…` links primary; markdown blob uses `?plain=1`.
 2. **Verification is executable** — every checkbox maps to a command or CI run URL
 3. **Draft until proven** — stay draft until author steps + required CI are green
 4. **Improve while iterating** — fix CI, conflicts, and review findings in focused commits; simplify complexity when it blocks review

@@ -2,6 +2,8 @@
 
 **Canonical workflow:** [pull-request/workflow.md](../pull-request/workflow.md)
 
+**PR body (reviewer-friendly):** [reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md) · example [PR #8](https://github.com/JWLee89/engineering-skills/pull/8)
+
 **Invoke:** `/pull-request`
 
 Use after implementation **or** anytime an open PR needs CI fixes, conflict resolution,

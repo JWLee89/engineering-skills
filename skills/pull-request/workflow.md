@@ -147,6 +147,10 @@ ______________________________________________________________________
 Build **before** `gh pr create` and **refresh** after every significant push (CI fix,
 review round, conflict merge).
 
+**Format SSOT:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md).
+**Example PR (this repo):** [#8](https://github.com/JWLee89/engineering-skills/pull/8) — summary,
+commit map, **Start here**, focus areas with PR diff + source links, Changes made Δ table.
+
 ### Required body sections
 
 | Section | Purpose |

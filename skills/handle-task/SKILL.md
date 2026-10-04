@@ -109,7 +109,7 @@ Cross-link target for [pull-request/workflow.md](../pull-request/workflow.md). A
 | Skip `/review-ticket` on tracker issues | Phase 1 |
 | Silent deferral of spec items | Report + user ack in PR ([spec-adherence.md](spec-adherence.md)) |
 | Full-stack only, no isolation proof | [feature-gating.md](feature-gating.md) in plan + slice |
-| `gh pr create` with summary-only body | `/pull-request` + [templates.md](templates.md) |
+| `gh pr create` with summary-only body | `/pull-request` + [reviewer-friendly PR body](../pull-request/references/reviewer-friendly-pr-body.md) |
 | `gh pr ready` without `/code-review` | [Phase 9b](#phase-9-pull-request-draft-deep-code-review) |
 | User asked to run tests | Agent runs verify ([verification.md](verification.md)) |
 | “Tests pass” with no command output | Evidence in [verification.md](verification.md) |

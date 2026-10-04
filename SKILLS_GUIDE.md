@@ -103,6 +103,7 @@ Domain framework skills (React, Django, etc.) — install separately; see [BENCH
 | Author implement + self-review | [engineering-rubric.md](skills/handle-task/engineering-rubric.md) |
 | Reviewer deep review | [code-review/rubric.md](skills/code-review/rubric.md) |
 | PR template sections | [templates.md](skills/handle-task/templates.md) |
+| Reviewer-friendly PR body | [reviewer-friendly-pr-body.md](skills/pull-request/references/reviewer-friendly-pr-body.md) · [PR #8 example](https://github.com/JWLee89/engineering-skills/pull/8) |
 
 ---
 

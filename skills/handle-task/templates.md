@@ -335,6 +335,9 @@ ______________________________________________________________________
 Use after commits + verify, when the user approves opening a PR. **Always** create with
 `gh pr create --draft`. Full workflow: [pull-request.md](pull-request.md).
 
+**Reviewer-friendly shape (required):** [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
+**Example:** [engineering-skills PR #8](https://github.com/JWLee89/engineering-skills/pull/8).
+
 ```markdown
 ## Background
 

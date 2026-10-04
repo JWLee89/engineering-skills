@@ -69,6 +69,15 @@ ______________________________________________________________________
 
 ## Phase 2: Gather context (parallel where possible)
 
+### PR body as review map
+
+When the author used `/pull-request` Phase 2, the description should include **Review guide →
+Focus areas** with PR `#diff-…` links. **Start there** before re-deriving hunks from scratch.
+If the body is summary-only, note it under **Context used** (documentation gap — not automatic
+Blocker unless repo policy requires linked focus areas).
+
+See [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
+
 ### From the PR host
 
 Example (GitHub):

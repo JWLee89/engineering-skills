@@ -47,6 +47,7 @@ Install (once): `./scripts/install-skills.sh` — symlinks to `~/.cursor/skills/
 | Deep PR review | [code-review/rubric.md](../code-review/rubric.md) |
 | Verify | [verification.md](verification.md) |
 | PR phases | [pull-request/workflow.md](../pull-request/workflow.md) |
+| PR body format | [reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md) |
 | Code review phases | [code-review/workflow.md](../code-review/workflow.md) |
 
 ## Related global skills
