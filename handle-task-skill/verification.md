@@ -39,7 +39,7 @@ For each proof, capture **at least one** of:
 Also record when applicable:
 
 - **Commit SHA(s)** — link in PR body: `[short](https://github.com/{owner}/{repo}/commit/{sha})` from `git rev-parse HEAD`
-- **Code pointers** — markdown link to `blob/{sha}/{path}#L{n}` (or test `::test_name` in text when no line anchor)
+- **Code pointers** — PR diff `…/pull/{n}/changes#diff-{sha256(path)}R{n}-R{m}` when PR open; else `blob/{sha}/{path}?plain=1#L{n}` for `.md`
 - **Short excerpt** — 3–10 lines of terminal output proving pass (not full logs)
 
 Store summaries in:
