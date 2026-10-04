@@ -1,0 +1,14 @@
+name: Markdown links
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check-skills-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check relative links under skills/
+        run: python3 scripts/check-markdown-links.py --root skills
