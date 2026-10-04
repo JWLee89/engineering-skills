@@ -1,5 +1,24 @@
 #!/usr/bin/env python3
-"""Verify relative markdown links under a directory tree."""
+"""Verify relative markdown links under a directory tree.
+
+Scans ``*.md`` under ``--root`` (default: ``skills/``) for inline links
+``[text](url)`` and images ``![alt](url)``.
+
+**Skipped URLs (not validated):**
+
+- Empty, ``#``-only fragment anchors
+- ``http://``, ``https://``, ``mailto:``, ``ftp://``
+- Template placeholders containing ``{``, ``<``, or ``…`` (ellipsis)
+- Commit/PR title examples: single tag tokens like ``feat`` or ``test``
+- Non-path tokens without ``.`` or ``/`` (not file-like)
+
+**Not scanned:** Markdown inside fenced code blocks (``` … ```) — examples may
+show fake paths without failing CI.
+
+**Targets:** Relative paths are resolved from the source file's directory; URL
+fragments are ignored for existence checks. Missing files anywhere on disk are
+reported; paths outside ``--repo-root`` print as absolute paths in errors.
+"""
 
 from __future__ import annotations
 
@@ -9,12 +28,17 @@ import sys
 from pathlib import Path
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+FENCE_RE = re.compile(r"^```[^\n]*\n.*?^```\s*$", re.MULTILINE | re.DOTALL)
 
 SKIP_PREFIXES = ("http://", "https://", "mailto:", "ftp://")
 SKIP_SUBSTRINGS = ("{", "<", "example.com", "github.com/{owner}", "…")
 
 # Commit/PR title examples embed markdown like `[TICKET](feat)` inside prose.
 EXAMPLE_TAG_ONLY = re.compile(r"^[a-z][a-z0-9_-]*$")
+
+
+def strip_fenced_code_blocks(text: str) -> str:
+    return FENCE_RE.sub("", text)
 
 
 def is_skippable(url: str) -> bool:
@@ -40,6 +64,13 @@ def target_path(source: Path, url: str) -> Path:
     return (source.parent / path_part).resolve()
 
 
+def format_target(repo_root: Path, resolved: Path) -> str:
+    try:
+        return str(resolved.relative_to(repo_root))
+    except ValueError:
+        return str(resolved)
+
+
 def collect_markdown_files(root: Path) -> list[Path]:
     return sorted(root.rglob("*.md"))
 
@@ -47,7 +78,7 @@ def collect_markdown_files(root: Path) -> list[Path]:
 def check_file(md: Path, repo_root: Path) -> list[str]:
     errors: list[str] = []
     try:
-        text = md.read_text(encoding="utf-8")
+        text = strip_fenced_code_blocks(md.read_text(encoding="utf-8"))
     except OSError as exc:
         return [f"{md.relative_to(repo_root)}: read failed: {exc}"]
 
@@ -58,14 +89,15 @@ def check_file(md: Path, repo_root: Path) -> list[str]:
         resolved = target_path(md, url)
         if not resolved.exists():
             rel_src = md.relative_to(repo_root)
-            errors.append(
-                f"{rel_src}: broken link {url!r} -> {resolved.relative_to(repo_root)}"
-            )
+            target_label = format_target(repo_root, resolved)
+            errors.append(f"{rel_src}: broken link {url!r} -> {target_label}")
     return errors
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description="Verify relative markdown links under a directory tree."
+    )
     parser.add_argument(
         "--root",
         type=Path,
@@ -86,8 +118,9 @@ def main() -> int:
         print(f"error: not a directory: {scan_root}", file=sys.stderr)
         return 2
 
+    markdown_files = collect_markdown_files(scan_root)
     all_errors: list[str] = []
-    for md in collect_markdown_files(scan_root):
+    for md in markdown_files:
         all_errors.extend(check_file(md, repo_root))
 
     if all_errors:
@@ -96,8 +129,10 @@ def main() -> int:
             print(f"  {line}", file=sys.stderr)
         return 1
 
-    count = len(collect_markdown_files(scan_root))
-    print(f"OK: {count} markdown file(s) under {args.root}/ — relative links resolve.")
+    print(
+        f"OK: {len(markdown_files)} markdown file(s) under {args.root}/ "
+        "— relative links resolve."
+    )
     return 0
 
 
