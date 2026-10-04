@@ -226,6 +226,19 @@ still include context links per Phase 3. Adapt for other forges per their API.
 
 ______________________________________________________________________
 
+## Invoked from `/handle-task`
+
+When **`/handle-task`** reaches Phase 9b, run this skill on **the task’s open draft PR** (same
+branch). The gate is **mandatory** before `gh pr ready`:
+
+1. Full rubric → draft markdown → user approves draft
+2. **Blockers** fixed (push + optional re-review) unless user explicitly defers with a follow-up
+3. Then continue **`/pull-request`** Phase 10 (CI, author self-review, ready)
+
+Do not skip because Phase 8 tests passed — `/code-review` catches design, test-gap, and spec issues.
+
+______________________________________________________________________
+
 ## Phase 6: Author fix loop (optional)
 
 If the user is the **author** and wants to address findings:

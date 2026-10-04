@@ -22,10 +22,10 @@
 ## Two-skill split
 
 ```
-/review-ticket        Required in /handle-task Phase 1 for tracker tickets (JIRA, etc.)
-/handle-task          review-ticket ✓ → spec ✓ → plan ✓ → implement → verify
-/pull-request         Full PR template, Δ lines, verification, CI (after handle-task Phase 8)
-/code-review          User-specified PR → eight-axis rubric → draft review → post (optional)
+/review-ticket        Required in /handle-task Phase 1 for tracker issues
+/handle-task          … → implement → verify → /pull-request (draft) → /code-review ✓ → ready
+/pull-request         PR template, CI, author self-review, ready gate
+/code-review          Required in handle-task Phase 9b on the task PR (draft → user OK → fix Blockers)
 /create-ticket        Draft → create → /review-ticket → split/backfill
 ```
 
