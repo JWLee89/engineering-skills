@@ -19,7 +19,7 @@ Read during **Specify** phases of [SKILL.md](SKILL.md). Local paths from
 **Not the same as ticket approval:** `/review-ticket` validates the **tracker description**.
 This phase produces an **implementation spec** in `{local_specs}`; the user must approve
 **that document explicitly** before planning or coding — including after conversation
-summaries or a prior “looks good” on the JIRA text alone.
+summaries or a prior “looks good” on the tracker description alone.
 
 ______________________________________________________________________
 

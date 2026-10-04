@@ -1,35 +1,37 @@
 # Issue status transitions
 
-Move tickets on the issue tracker at defined workflow points. Configured in
+Move work items on the **issue tracker** at defined workflow points. Configured in
 `.handle-task/project.yaml` under `integrations.issue_tracker.status_transitions`.
 
-**Currently supported:** JIRA via Atlassian MCP (`jira_get_transitions`,
-`jira_transition_issue`). Other trackers: update status manually or extend config later.
+**Automated transitions today:** only when `issue_tracker.type` is `jira` (Atlassian MCP:
+`jira_get_transitions`, `jira_transition_issue`). Other tracker types: update status manually
+or extend config and adapters later.
 
 ______________________________________________________________________
 
 ## When transitions fire
 
-| Workflow point                                                | Config key             | Common JIRA pattern (varies)    |
-| ------------------------------------------------------------- | ---------------------- | ------------------------------- |
-| Start of **implement** (Phase 7, branch checked out)          | `implementation_start` | e.g. `Assign` → **In Progress** |
-| **PR merge-ready** (`gh pr ready`, pull-request Phase 7) | `pr_ready`             | e.g. `Review` → **In Review**   |
+| Workflow point                                                | Config key             | Example pattern (varies by workflow) |
+| ------------------------------------------------------------- | ---------------------- | ------------------------------------ |
+| Start of **implement** (Phase 7, branch checked out)          | `implementation_start` | e.g. `Assign` → **In Progress**      |
+| **PR merge-ready** (`gh pr ready`, pull-request Phase 7) | `pr_ready`             | e.g. `Review` → **In Review**        |
 
 Do **not** transition on spec/plan approval — only when coding starts and when PR is ready.
 
 ______________________________________________________________________
 
-## Unassigned tickets (JIRA)
+## Unassigned tickets
 
-When fetching a JIRA issue during **intake** (`/handle-task` Phase 1) or before
-**implementation_start**, if the issue has **no assignee**, assign it to the **authenticated
-JIRA user** — the person whose credentials the Atlassian MCP session is using (the person
-running the skill). They picked up the ticket; they should own it on the board.
+When fetching a tracker issue during **intake** (`/handle-task` Phase 1) or before
+**implementation_start**, if the issue has **no assignee** and the adapter supports it,
+assign it to the **authenticated tracker user** — the person whose credentials the MCP
+session uses (the person running the skill). They picked up the work; they should own it on
+the board.
 
-**Why:** Unassigned tickets often block or complicate the `Assign` → In Progress transition,
+**Why:** Unassigned items often block or complicate the `Assign` → In Progress transition,
 and the board stays accurate without manual cleanup.
 
-**Algorithm:**
+**Algorithm (`type: jira` only):**
 
 1. **Fetch issue:** `jira_get_issue` → read `assignee`.
 2. **Skip** if assignee is already set (do not reassign someone else's ticket).
@@ -52,12 +54,12 @@ For each configured transition at its trigger point:
 
 1. **Skip** if `issue_tracker.type` is not `jira` or the config block is missing/disabled.
 2. **Fetch issue:** `jira_get_issue` → read current `status.name`.
-3. **Ensure assignee** — if unassigned, run [Unassigned tickets](#unassigned-tickets-jira)
+3. **Ensure assignee** — if unassigned, run [Unassigned tickets](#unassigned-tickets)
    before transitioning (required for `implementation_start` when transition is `Assign`).
 4. **Skip** if status is in `skip_if_status_in` (already at or past the target stage).
 5. **List transitions:** `jira_get_transitions` for the issue key.
 6. **Resolve transition ID:**
-   - Prefer exact match on `transition` (JIRA transition **action** name, e.g. `Assign`, `Review`).
+   - Prefer exact match on `transition` (workflow **action** name, e.g. `Assign`, `Review`).
    - If no match, try case-insensitive match.
    - If multiple matches or none, **stop and ask the user** — do not guess.
 7. **Apply:** `jira_transition_issue` with `transition_id`.
@@ -78,7 +80,7 @@ integrations:
     status_transitions:
       implementation_start:
         enabled: true
-        transition: Assign              # JIRA transition action name
+        transition: Assign              # workflow transition action name
         skip_if_status_in:
           - In Progress
           - READY FOR REVIEW
@@ -96,19 +98,19 @@ integrations:
 | Field               | Meaning                                                                            |
 | ------------------- | ---------------------------------------------------------------------------------- |
 | `enabled`           | `false` to skip this transition                                                    |
-| `transition`        | JIRA transition **name** from `jira_get_transitions` (not the target status label) |
+| `transition`        | Action **name** from `jira_get_transitions` (not the target status label)          |
 | `skip_if_status_in` | Skip when current status is any of these                                           |
 | `comment`           | For `pr_ready`: add markdown comment with PR link during transition                |
 
 **Finding transition names:** run `jira_get_transitions` on a ticket in the source status,
-or inspect workflow in JIRA admin. Target status labels (e.g. "In Progress") differ from
+or inspect the tracker's workflow admin UI. Target status labels (e.g. "In Progress") differ from
 transition action names (e.g. "Assign").
 
 ______________________________________________________________________
 
 ## Example workflow mapping
 
-Your JIRA board may use different status labels and transition action names. Discover them
+Your board may use different status labels and transition action names. Discover them
 with `jira_get_transitions` on a ticket in the source status, then set `transition` in
 config to the **action name** (not the target status label).
 
@@ -130,5 +132,5 @@ ______________________________________________________________________
 | Transition on draft PR open            | Only at `gh pr ready`                                         |
 | Silent failure                         | Log + tell user if transition fails                           |
 | Transition when already Done           | Honor `skip_if_status_in`                                     |
-| Leaving ticket unassigned              | Auto-assign to authenticated JIRA user when assignee is empty |
+| Leaving ticket unassigned              | Auto-assign to authenticated tracker user when assignee empty |
 | Reassigning an owned ticket            | Only assign when assignee is missing                          |

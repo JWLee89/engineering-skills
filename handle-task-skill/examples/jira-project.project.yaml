@@ -1,4 +1,4 @@
-# Example: JIRA-backed project — copy to .handle-task/project.yaml and edit.
+# Example: issue tracker with status transitions (type: jira) — copy to .handle-task/project.yaml and edit.
 name: my-service
 
 ticket:

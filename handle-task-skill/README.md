@@ -1,7 +1,7 @@
 # Handle-task skills (portable)
 
 Agent skills for **issue → implement → pull request**, usable in any repository and any
-JIRA (or Linear / GitHub Issues) project.
+any issue-tracker-backed project.
 
 ## How to invoke (read this first)
 
@@ -57,7 +57,7 @@ cp handle-task-skill/examples/generic.project.yaml .handle-task/project.yaml
 # edit: ticket.prefix, git.pr_target, verify.commands, issue_tracker
 ```
 
-For JIRA projects, start from [examples/jira-project.project.yaml](examples/jira-project.project.yaml).
+For issue trackers with automated status transitions, start from [examples/jira-project.project.yaml](examples/jira-project.project.yaml) (`type: jira`).
 
 Commit `.handle-task/project.yaml` so all agents share the same settings.
 
@@ -109,7 +109,7 @@ Install symlinks `handle-task`, `pull-request`, `create-ticket`, `review-ticket`
 
 ## Issue trackers
 
-Not JIRA-specific. Set in `.handle-task/project.yaml`:
+Tracker-agnostic. Set in `.handle-task/project.yaml`:
 
 ```yaml
 integrations:
@@ -118,15 +118,15 @@ integrations:
     url_template: "https://your-org.atlassian.net/browse/{key}"
 ```
 
-Agents use the matching tool (Atlassian MCP, `gh issue`, user paste, etc.).
+Agents use the matching adapter ([issue-tracker-adapters.md](issue-tracker-adapters.md)).
 
-### Status transitions (JIRA)
+### Status transitions
 
-When configured, agents move tickets automatically at implementation start and when the PR
+When configured, agents move work items automatically at implementation start and when the PR
 is marked ready for review. Transition **action names** (e.g. `Assign`, `Review`) vary by
-JIRA workflow — configure them in project.yaml. See [issue-transitions.md](issue-transitions.md).
+workflow — configure them in project.yaml. See [issue-transitions.md](issue-transitions.md).
 
-Unassigned tickets are auto-assigned to the authenticated JIRA user at intake.
+Unassigned items may be auto-assigned to the authenticated tracker user at intake when the adapter supports it.
 
 ## Updating
 

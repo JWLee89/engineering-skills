@@ -5,7 +5,7 @@ read **`.handle-task/project.yaml`** at the workspace root.
 
 **Discovery:** if the file is missing, copy
 [examples/generic.project.yaml](examples/generic.project.yaml) (or
-[examples/jira-project.project.yaml](examples/jira-project.project.yaml) for JIRA) and
+[examples/jira-project.project.yaml](examples/jira-project.project.yaml) for a Jira-style tracker) and
 ask the user to confirm — do not assume defaults from another repository.
 
 ______________________________________________________________________
@@ -98,12 +98,12 @@ Pick `{tag}` from the dominant change type (same rule as the first/primary commi
 
 | `type` | Agent behavior |
 |--------|----------------|
-| `jira` | Atlassian MCP: `jira_get_issue`, comments, links. Auto-assign unassigned issues to the authenticated JIRA user at intake ([issue-transitions.md](issue-transitions.md#unassigned-tickets-jira)) |
-| `linear` | Linear MCP if configured; else user pastes issue |
+| `jira` | Issue tracker via Atlassian MCP (`jira_get_issue`, etc.). Auto-assign unassigned issues when supported ([issue-transitions.md](issue-transitions.md#unassigned-tickets)) |
+| `linear` | Issue tracker MCP if configured; else user pastes issue |
 | `github` | `gh issue view`, `gh pr list` |
 | `none` | User describes task; no external fetch |
 
-### Status transitions (JIRA)
+### Status transitions (when `type: jira`)
 
 Configure `status_transitions.implementation_start` and `status_transitions.pr_ready`
 to move tickets at implement start and PR ready. Full algorithm:
@@ -114,7 +114,7 @@ to move tickets at implement start and PR ready. Full algorithm:
 ## Examples
 
 - [examples/generic.project.yaml](examples/generic.project.yaml) — minimal starter (any repo)
-- [examples/jira-project.project.yaml](examples/jira-project.project.yaml) — JIRA + status transitions
+- [examples/jira-project.project.yaml](examples/jira-project.project.yaml) — issue tracker + status transitions (`type: jira`)
 
 ---
 
@@ -126,7 +126,7 @@ to move tickets at implement start and PR ready. Full algorithm:
 - [ ] memory.local_specs in .gitignore
 - [ ] verify.commands aligned with CI
 - [ ] issue_tracker.type matches team's tool
-- [ ] status_transitions configured (JIRA transition action names verified)
+- [ ] status_transitions configured (workflow transition action names verified)
 - [ ] Global skills installed (install-skills.sh)
 
 ```

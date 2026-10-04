@@ -4,7 +4,7 @@ Every ticket created by `/create-ticket` uses this description. All sections are
 **required**. Expand placeholders from `.handle-task/project.yaml`:
 `{prefix}`, `{TICKET-KEY}`, `{git.default_base}`, `{git.pr_target}`, `url_template` (`{key}`).
 
-Portable across JIRA, Linear, GitHub Issues, and other trackers — apply via the adapter
+Portable across issue trackers — apply via the adapter in [../issue-tracker-adapters.md](../issue-tracker-adapters.md)
 in [../issue-tracker-adapters.md](../issue-tracker-adapters.md).
 
 ______________________________________________________________________

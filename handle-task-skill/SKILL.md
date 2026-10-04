@@ -92,7 +92,7 @@ Cross-link target for [pull-request/workflow.md](pull-request/workflow.md). Afte
 | Mistake | Fix |
 | ------- | --- |
 | Code without spec/plan approval | Gates in [specify.md](specify.md), [plan-and-tasks.md](plan-and-tasks.md) |
-| JIRA “approved” treated as spec approval | Ticket gate then **local spec** gate — [specify.md](specify.md) |
+| Tracker ticket “approved” treated as spec approval | Ticket gate then **local spec** gate — [specify.md](specify.md) |
 | Skip `/review-ticket` on tracker issues | Phase 1 |
 | Silent deferral of spec items | Report + user ack in PR ([spec-adherence.md](spec-adherence.md)) |
 | Full-stack only, no isolation proof | [feature-gating.md](feature-gating.md) in plan + slice |

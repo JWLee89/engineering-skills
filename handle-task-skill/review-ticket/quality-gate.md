@@ -66,7 +66,7 @@ Follow [../subtask-template.md](../subtask-template.md). **Approval-first — ne
 3. Create one **real** child ticket per slice via the issue tracker adapter
    ([../issue-tracker-adapters.md](../issue-tracker-adapters.md)).
    Each child keeps all required sections.
-4. Link parent ↔ children and document merge order (Blocks chain on JIRA; equivalent on other trackers).
+4. Link parent ↔ children and document merge order (dependency/blocking links per tracker — see [../issue-tracker-adapters.md](../issue-tracker-adapters.md)).
 5. Update the parent: subtask table, rollup DoD, rollup verification plan, and a note:
    "implement on child keys only."
 6. Re-run this gate on each child.

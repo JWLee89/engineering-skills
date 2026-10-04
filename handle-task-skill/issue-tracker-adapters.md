@@ -26,14 +26,14 @@ Build ticket URLs from `integrations.issue_tracker.url_template` (`{key}` → is
 
 ______________________________________________________________________
 
-## JIRA (`type: jira`)
+## Issue tracker: `type: jira`
 
-Requires Atlassian MCP (`jira_get_issue`, `jira_search`, `jira_create_issue`,
-`jira_update_issue`, `jira_add_comment`, `jira_create_issue_link`).
+Cloud issue tracker (Jira) via Atlassian MCP (`jira_get_issue`, `jira_search`,
+`jira_create_issue`, `jira_update_issue`, `jira_add_comment`, `jira_create_issue_link`).
 
 - **Project key** — from `ticket.prefix` or user input.
-- **Unassigned at intake** — auto-assign authenticated user per
-  [issue-transitions.md#unassigned-tickets-jira](issue-transitions.md#unassigned-tickets-jira).
+- **Unassigned at intake** — auto-assign authenticated user when supported per
+  [issue-transitions.md#unassigned-tickets](issue-transitions.md#unassigned-tickets).
 - **Subtasks** — issue type `Subtask`, `additional_fields: {"parent": "<PARENT-KEY>"}`.
 - **Split links** — `Work item split` + `Blocks` chain — see
   [subtask-template.md](subtask-template.md#links).
@@ -42,18 +42,18 @@ Example: [examples/jira-project.project.yaml](examples/jira-project.project.yaml
 
 ______________________________________________________________________
 
-## Linear (`type: linear`)
+## Issue tracker: `type: linear`
 
-Use Linear MCP when configured. Otherwise:
+Use the Linear MCP integration when configured. Otherwise:
 
 1. Ask the user to paste the issue (title + description).
-2. For create/update, present markdown the user can paste into Linear.
+2. For create/update, present markdown the user can paste into the tracker UI.
 
 Branch = issue identifier from config (`ticket.id_pattern`).
 
 ______________________________________________________________________
 
-## GitHub Issues (`type: github`)
+## Issue tracker: `type: github`
 
 Requires `gh` CLI authenticated for the repo.
 
@@ -104,7 +104,7 @@ ______________________________________________________________________
 
 | Mistake | Fix |
 | ------- | --- |
-| Hard-coding JIRA APIs in create/review skills | Use this adapter table |
+| Hard-coding one vendor's APIs in create/review skills | Use this adapter table |
 | Inventing ticket keys before creation | Create via adapter; use returned key |
 | Skipping update when API unavailable | Present body diff; user applies in UI |
 | Synthetic sub-task branch names (`PROJ-100-a`) | Real child tickets only |

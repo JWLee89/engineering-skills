@@ -55,7 +55,7 @@ Edit `.handle-task/project.yaml`:
 | `integrations.issue_tracker.type` | `jira` | Tracker integration |
 | `integrations.issue_tracker.url_template` | `https://org.atlassian.net/browse/{key}` | Issue links |
 
-For a JIRA-backed setup, copy
+For an issue-tracker setup with status transitions (`type: jira`), copy
 [handle-task-skill/examples/jira-project.project.yaml](handle-task-skill/examples/jira-project.project.yaml)
 instead.
 

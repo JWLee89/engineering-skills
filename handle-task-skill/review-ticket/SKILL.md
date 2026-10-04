@@ -4,7 +4,7 @@ description: >-
   Review and improve existing tracker tickets for onboarder-readability, scope,
   background, and definition of done. Runs the four-point quality gate, asks
   clarifying questions, backfills descriptions, and proposes sub-task splits when
-  work is too large. Works with JIRA, Linear, GitHub Issues, or pasted content.
+  work is too large. Works with any configured issue tracker or pasted content.
   Use when the user asks to review, improve, or quality-check a ticket, or when
   /handle-task intake finds an under-documented ticket.
 disable-model-invocation: true
@@ -46,7 +46,7 @@ This folder lives inside `handle-task-skill/`. Edits apply globally via
 
 | Caller | When |
 | ------ | ---- |
-| `/handle-task` | **Phase 1 — mandatory** for every tracker issue (JIRA/Linear/GitHub); do not substitute an inline review |
+| `/handle-task` | **Phase 1 — mandatory** for every external tracker issue; do not substitute an inline review |
 | `/create-ticket` | After creating a ticket — mandatory quality pass |
 
 When invoked standalone, the user provides a ticket key/number or pastes the full description.

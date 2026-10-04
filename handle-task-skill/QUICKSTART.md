@@ -57,4 +57,4 @@ Use **bundle delegates OR** overlapping globals (e.g. `code-review-and-quality`,
 
 `integrations.issue_tracker.type`: `jira` | `linear` | `github` | `none` — see [issue-tracker-adapters.md](issue-tracker-adapters.md).
 
-JIRA status transitions: [issue-transitions.md](issue-transitions.md). Unassigned issues → assign authenticated user at intake.
+Status transitions (when configured): [issue-transitions.md](issue-transitions.md). Unassigned work items → assign the authenticated tracker user at intake when supported.
