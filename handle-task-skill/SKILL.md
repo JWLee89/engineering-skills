@@ -79,14 +79,27 @@ Optional: `/create-ticket` → [create-ticket/workflow.md](create-ticket/workflo
 8. **Deep review** — **`/code-review`**; fix Blockers; user approves review draft.
 9. **Ready** — **`/pull-request`** CI green, author rubric pass, `gh pr ready`, issue transition.
 
+## Phase 9: Pull request (draft) + deep code review
+
+Cross-link target for [pull-request/workflow.md](pull-request/workflow.md). After Phase 8 verify:
+
+- **9a — Draft PR:** **`/pull-request`** Phases 1–4; no `gh pr ready` yet.
+- **9b — Deep review:** **`/code-review`** on the task PR; user approves draft; fix **Blockers** before ready.
+- **Phase 10 — Ready:** **`/pull-request`** CI green, [engineering-rubric.md](engineering-rubric.md) author pass, `gh pr ready`.
+
 ## Anti-patterns
 
 | Mistake | Fix |
 | ------- | --- |
 | Code without spec/plan approval | Gates in [specify.md](specify.md), [plan-and-tasks.md](plan-and-tasks.md) |
+| JIRA “approved” treated as spec approval | Ticket gate then **local spec** gate — [specify.md](specify.md) |
 | Skip `/review-ticket` on tracker issues | Phase 1 |
+| Silent deferral of spec items | Report + user ack in PR ([spec-adherence.md](spec-adherence.md)) |
+| Full-stack only, no isolation proof | [feature-gating.md](feature-gating.md) in plan + slice |
 | `gh pr create` with summary-only body | `/pull-request` + [templates.md](templates.md) |
-| `gh pr ready` without `/code-review` | Phase 9b |
+| `gh pr ready` without `/code-review` | [Phase 9b](#phase-9-pull-request-draft-deep-code-review) |
 | User asked to run tests | Agent runs verify ([verification.md](verification.md)) |
+| “Tests pass” with no command output | Evidence in [verification.md](verification.md) |
+| Author self-review only, skip `/code-review` | Phase 9b vs [engineering-rubric.md](engineering-rubric.md) |
 | Read entire skill bundle at intake | [Lazy load](#lazy-load-do-not-read-the-whole-bundle) |
 | Duplicate ticket/review criteria in this file | [quality-gate.md](review-ticket/quality-gate.md), [code-review/rubric.md](code-review/rubric.md) |

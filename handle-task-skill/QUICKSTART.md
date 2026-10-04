@@ -43,9 +43,8 @@ Install (once): `./handle-task-skill/scripts/install-skills.sh` — symlinks to 
 | Ticket quality | [review-ticket/quality-gate.md](review-ticket/quality-gate.md) |
 | Spec + gate | [specify.md](specify.md) |
 | Plan + gate | [plan-and-tasks.md](plan-and-tasks.md) |
-| Implement quality | [engineering-rubric.md](engineering-rubric.md) |
+| Implement + author quality | [engineering-rubric.md](engineering-rubric.md) |
 | Deep PR review | [code-review/rubric.md](code-review/rubric.md) |
-| Author self-review | [engineering-rubric.md](engineering-rubric.md) |
 | Verify | [verification.md](verification.md) |
 | PR phases | [pull-request/workflow.md](pull-request/workflow.md) |
 | Code review phases | [code-review/workflow.md](code-review/workflow.md) |
