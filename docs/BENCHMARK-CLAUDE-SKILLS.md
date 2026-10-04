@@ -78,7 +78,7 @@ wc -l skills/*/SKILL.md
 lazy-load `references/` ([PR #11](https://github.com/JWLee89/engineering-skills/pull/11)),
 markdown link CI ([PR #12](https://github.com/JWLee89/engineering-skills/pull/12)),
 orchestrator anti-patterns SSOT ([PR #13](https://github.com/JWLee89/engineering-skills/pull/13)).
-Follow-ups (sub-skill `references/`, delegate dedupe) remain optional in [plan-post-catalog.md](tasks/plan-post-catalog.md).
+Optional follow-ups: sub-skill `references/` / Load-when tables; delegate anti-pattern dedupe beyond handle-task orchestrator.
 
 ## License note
 
