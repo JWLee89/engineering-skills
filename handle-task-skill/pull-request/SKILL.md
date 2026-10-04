@@ -14,7 +14,8 @@ disable-model-invocation: true
 Own the **full PR lifecycle** — not only the first `gh pr create`.
 
 **Invoke:** `/pull-request`
-**Companion:** `/handle-task` (ticket → code) — run **after Phase 8**; do not replace with ad-hoc `gh pr create`.
+**Companions:** `/handle-task` (ticket → code) — run **after Phase 8**; **`/code-review`** is
+**mandatory in handle-task Phase 9b** before `gh pr ready`. Do not replace with ad-hoc `gh pr create`.
 **Agent entry:** read [workflow.md](workflow.md) in full.
 
 **Single source of truth:** `handle-task-skill/pull-request/` (symlinked globally by

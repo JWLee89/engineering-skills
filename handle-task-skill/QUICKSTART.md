@@ -8,6 +8,7 @@
 | **Pull request** | `/pull-request`  | Create/update PR → CI → review → conflicts → ready |
 | **Create ticket**     | `/create-ticket`      | Brief/context → draft + create well-documented ticket |
 | **Review ticket**     | `/review-ticket`      | Quality gate, backfill, scope check on existing ticket |
+| **Code review**       | `/code-review`        | Deep PR review: rubric → draft MD → user OK → post comments |
 
 **One name, one folder:** the skill directory is `handle-task-skill/`. Cursor invokes it as
 **`/handle-task`** (from `SKILL.md` → `name: handle-task`).
@@ -21,9 +22,10 @@
 ## Two-skill split
 
 ```
-/review-ticket        Required in /handle-task Phase 1 for tracker tickets (JIRA, etc.)
-/handle-task          review-ticket ✓ → spec ✓ → plan ✓ → implement → verify
-/pull-request         Full PR template, Δ lines, verification, CI (after handle-task Phase 8)
+/review-ticket        Required in /handle-task Phase 1 for tracker issues
+/handle-task          … → implement → verify → /pull-request (draft) → /code-review ✓ → ready
+/pull-request         PR template, CI, author self-review, ready gate
+/code-review          Required in handle-task Phase 9b on the task PR (draft → user OK → fix Blockers)
 /create-ticket        Draft → create → /review-ticket → split/backfill
 ```
 
@@ -78,6 +80,8 @@ Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-
 | [create-ticket/workflow.md](create-ticket/workflow.md) | Create well-documented tickets |
 | [review-ticket/workflow.md](review-ticket/workflow.md) | Review and backfill tickets |
 | [review-ticket/quality-gate.md](review-ticket/quality-gate.md) | Four-point ticket review |
+| [code-review/workflow.md](code-review/workflow.md) | Deep PR review workflow |
+| [code-review/rubric.md](code-review/rubric.md) | Eight-axis review criteria |
 | [issue-tracker-adapters.md](issue-tracker-adapters.md) | Fetch/create/update by tracker type |
 | [project-config.md](project-config.md)                         | Config schema                 |
 | [subtask-template.md](subtask-template.md)                       | Split work → subtasks         |

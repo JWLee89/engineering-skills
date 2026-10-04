@@ -21,6 +21,7 @@
 #   /pull-request       → handle-task-skill/pull-request/
 #   /create-ticket      → handle-task-skill/create-ticket/
 #   /review-ticket      → handle-task-skill/review-ticket/
+#   /code-review        → handle-task-skill/code-review/
 #
 # Environment:
 #   SKILLS_ROOT  Override repo root (default: parent of handle-task-skill/)
@@ -37,7 +38,7 @@ DO_INSTALL_HOOK=false
 DO_REMOVE_HOOK=false
 QUIET=false
 
-SKILL_NAMES=(handle-task pull-request create-ticket review-ticket)
+SKILL_NAMES=(handle-task pull-request create-ticket review-ticket code-review)
 LEGACY_SKILLS=(
   modelops modelops-workflow modelops-skill handle-task-workflow create-jira-ticket
   make-pull-request
@@ -103,6 +104,7 @@ HANDLE_TASK_DIR="${SKILLS_ROOT}/handle-task-skill"
 PULL_REQUEST_DIR="${SKILLS_ROOT}/handle-task-skill/pull-request"
 CREATE_TICKET_DIR="${SKILLS_ROOT}/handle-task-skill/create-ticket"
 REVIEW_TICKET_DIR="${SKILLS_ROOT}/handle-task-skill/review-ticket"
+CODE_REVIEW_DIR="${SKILLS_ROOT}/handle-task-skill/code-review"
 MANIFEST="${HOME}/.config/handle-task-skills/source"
 HOOK_MARKER="# handle-task-skills-sync (managed by install-skills.sh)"
 HOOK_SCRIPT="${HANDLE_TASK_DIR}/scripts/sync-skills-hook.sh"
@@ -131,6 +133,7 @@ skill_source_dir() {
     pull-request) printf '%s\n' "${PULL_REQUEST_DIR}" ;;
     create-ticket) printf '%s\n' "${CREATE_TICKET_DIR}" ;;
     review-ticket) printf '%s\n' "${REVIEW_TICKET_DIR}" ;;
+    code-review) printf '%s\n' "${CODE_REVIEW_DIR}" ;;
     *)
       echo "error: unknown skill: $1" >&2
       exit 1
@@ -159,6 +162,7 @@ write_manifest() {
     echo "pull_request_dir=${PULL_REQUEST_DIR}"
     echo "create_ticket_dir=${CREATE_TICKET_DIR}"
     echo "review_ticket_dir=${REVIEW_TICKET_DIR}"
+    echo "code_review_dir=${CODE_REVIEW_DIR}"
     echo "install_cursor=${INSTALL_CURSOR}"
     echo "install_claude=${INSTALL_CLAUDE}"
     echo "updated_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
@@ -317,6 +321,7 @@ if [[ "${DO_REMOVE}" == true ]]; then
     remove_one "${target_dir}" pull-request
     remove_one "${target_dir}" create-ticket
     remove_one "${target_dir}" review-ticket
+    remove_one "${target_dir}" code-review
     remove_legacy "${target_dir}"
   done
   if [[ -f "${MANIFEST}" && "${SCOPE}" == "global" ]]; then
@@ -331,6 +336,7 @@ else
     link_one "${target_dir}" pull-request "${PULL_REQUEST_DIR}"
     link_one "${target_dir}" create-ticket "${CREATE_TICKET_DIR}"
     link_one "${target_dir}" review-ticket "${REVIEW_TICKET_DIR}"
+    link_one "${target_dir}" code-review "${CODE_REVIEW_DIR}"
   done
   write_manifest
   log
@@ -345,6 +351,7 @@ else
   log "  /pull-request        — PR lifecycle (create, CI, review, ready)"
   log "  /create-ticket       — draft + create well-documented tickets"
   log "  /review-ticket       — quality gate, backfill, scope check"
+  log "  /code-review         — deep PR review (draft before post)"
   log
   log "Per repo: copy handle-task-skill/examples/generic.project.yaml → .handle-task/project.yaml"
   log "Auto-sync on commit:  ./handle-task-skill/scripts/install-skills.sh --install-hook"

@@ -3,19 +3,19 @@ name: handle-task
 description: >-
   Portable ticket-to-ship workflow: load .handle-task/project.yaml, /review-ticket on
   tracker issues, spec + plan approval gates, TDD + feature isolation gates,
-  agentic verification with evidence, then /pull-request (full PR template and CI).
+  agentic verification with evidence, /code-review on the task PR, then /pull-request to ready.
   Use for ticket IDs, handle a task, or workflow fixes.
 disable-model-invocation: true
 ---
 
 # Handle task
 
-**Invoke:** `/handle-task` · **Companion:** `/pull-request` · **Entry:** [QUICKSTART.md](QUICKSTART.md)
+**Invoke:** `/handle-task` · **Companions:** `/pull-request`, `/code-review` · **Entry:** [QUICKSTART.md](QUICKSTART.md)
 
 Load **`.handle-task/project.yaml`** first ([project-config.md](project-config.md)).
 
 ```
-INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT (+ isolation gates) → VERIFY (agentic) → /pull-request
+INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT (+ isolation gates) → VERIFY (agentic) → /pull-request (draft) → /code-review ✓ → /pull-request (ready)
 ```
 
 ## Mandatory gates (do not skip)
@@ -27,7 +27,8 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | **Plan + todo** | Before branch / code | [plan-and-tasks.md](plan-and-tasks.md) — explicit user approval |
 | **Feature isolation** | Each behavioral slice (when applicable) | [feature-gating.md](feature-gating.md) — prove behavior before full-stack wiring |
 | **Agentic verify** | Phase 8 (always) | [verification.md](verification.md) — agent runs checks and records evidence; not user-only |
-| **Pull request** | After Phase 8 verify | Invoke **`/pull-request`** ([pull-request/workflow.md](pull-request/workflow.md)) — not a bare `gh pr create` summary |
+| **Deep code review** | After draft PR exists (Phase 9) | Invoke **`/code-review`** ([code-review/workflow.md](code-review/workflow.md)) on the task PR; user approves draft; **Blockers** fixed before ready |
+| **Pull request** | Phase 9–10 | **`/pull-request`** ([pull-request/workflow.md](pull-request/workflow.md)) — draft + body first, then CI/ready after `/code-review` passes; not a bare `gh pr create` |
 
 **Tracker issues (JIRA, Linear, GitHub):** always run **`/review-ticket`** in Phase 1. Do not inline the four-point review or skip because the ticket “looks fine.”
 
@@ -46,8 +47,9 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | Spec ↔ tests | [spec-adherence.md](spec-adherence.md) |
 | Verify | [verification.md](verification.md) (agentic validation **required**) |
 | PR | [pull-request/workflow.md](pull-request/workflow.md) |
+| PR review (deep) | [code-review/workflow.md](code-review/workflow.md) → [code-review/rubric.md](code-review/rubric.md) |
 | ADRs / docs | [documentation-and-adrs.md](documentation-and-adrs.md) |
-| Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
+| Author self-review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
 | Skill fixes | [self-improvement.md](self-improvement.md) |
 | Ticket create | [create-ticket/workflow.md](create-ticket/workflow.md) |
 
@@ -69,7 +71,9 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 - [ ] Task memory + branch ({ticket.id_pattern})
 - [ ] Slices: REUSE → RED → GREEN → feature gate (when applicable) → spec adherence
 - [ ] Phase 8: agentic verify + evidence bundle + spec traceability ([verification.md](verification.md), [spec-adherence.md](spec-adherence.md))
-- [ ] /pull-request: template body, Δ lines, verification plan, CI URLs
+- [ ] Phase 9a: /pull-request draft PR (body, Δ lines, verification plan, push)
+- [ ] Phase 9b: /code-review on that PR — draft approved; no Blockers (or user-accepted deferral)
+- [ ] Phase 10: /pull-request CI green, author self-review, ready gate, CI URLs
 ```
 
 ______________________________________________________________________
@@ -112,13 +116,45 @@ Commits when user asks or for PR prep. Never commit local specs or secrets.
 
 **Always** run [verification.md](verification.md) **agentic validation** (execute commands, capture proof). Complete [spec-adherence.md](spec-adherence.md) matrix. Re-run [feature-gating.md](feature-gating.md) isolation gates for in-scope behavioral slices. Document CI-only gaps and run URLs for the PR.
 
-## Phase 9: Pull request
+## Phase 9: Pull request (draft) + deep code review
 
-Run **`/pull-request`** — do not substitute a minimal PR description.
+After Phase 8, ship reviewable code through **`/pull-request`** and **`/code-review`** — do not
+substitute a minimal PR description or skip the rubric pass.
 
-Required from [pull-request/workflow.md](pull-request/workflow.md): **Background**, **Purpose**, **Review guide** (PR `/changes#diff-…` review links, markdown `?plain=1` source links, linked commits), **Changes made (git numstat Δ)**, **Verification** (author steps + CI checkboxes + out of scope), draft until ready unless user says otherwise, JIRA transition on ready when configured.
+### 9a. Open draft PR
 
-Record spec deviations (e.g. simplified design vs original JIRA DoD) in the PR **Spec adherence** or **Notes** section.
+Run **`/pull-request`** through at least **Phases 1–4** ([pull-request/workflow.md](pull-request/workflow.md)):
+
+- Push the task branch; create or refresh a **draft** PR
+- **Background**, **Purpose**, **Review guide**, **Changes made (Δ)**, **Verification** plan
+- Record spec deviations in **Spec adherence** or **Notes**
+
+Do **not** run `gh pr ready` in this sub-step.
+
+### 9b. Deep code review (hard stop)
+
+1. Invoke **`/code-review`** on **this task’s PR** (URL or number — same branch).
+2. Complete the full workflow: fresh context → [rubric.md](code-review/rubric.md) → draft markdown.
+3. **Stop** until the user **approves** the review draft (edit severities, drop false positives).
+4. **Blockers** — fix on the branch, push, re-run **`/code-review`** until none remain (or user
+   explicitly accepts deferral with a tracked follow-up).
+5. **Major** items — fix or document in the PR with user acknowledgment before ready.
+
+Publishing review comments to the forge is **optional** (user decides after draft approval).
+Implementing fixes requires explicit user ask per [code-review/workflow.md](code-review/workflow.md).
+
+**Skip `/code-review` only** for trivial one-file fixes with no draft PR (same bar as skipping full handle-task).
+
+## Phase 10: Pull request (merge-ready)
+
+Continue **`/pull-request`** — CI fix loop, merge conflicts, review feedback, author self-review
+([code-review.md](code-review.md)), then **Phase 7 ready gate** only when:
+
+- `/code-review` gate passed (Phase 9b)
+- Required CI green with run URLs
+- Verification checkboxes have evidence
+
+Then `gh pr ready` and issue transition when configured ([issue-transitions.md](issue-transitions.md)).
 
 ## Self-improvement
 
@@ -137,3 +173,5 @@ Process gaps → [self-improvement.md](self-improvement.md); notify user.
 | Full-stack only, no isolation proof | [feature-gating.md](feature-gating.md) in plan + slice |
 | “Tests pass” with no command output | Evidence bundle in [verification.md](verification.md) |
 | Duplicating review rules in handle-task | Link [quality-gate.md](review-ticket/quality-gate.md) only |
+| `gh pr ready` without **`/code-review`** | Phase 9b gate |
+| Treating author self-review as substitute for **`/code-review`** | Phase 9b vs [code-review.md](code-review.md) |

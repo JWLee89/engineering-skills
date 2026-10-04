@@ -84,7 +84,11 @@ ______________________________________________________________________
 - [ ] No local spec files staged
 - [ ] Task memory updated
 - [ ] CI-only scenarios listed for PR skill
+- [ ] Handoff ready for Phase 9: branch pushed; evidence copied into draft PR body next
 ```
+
+After Phase 8, **`/pull-request`** opens a draft PR, then **`/code-review`** on that PR is
+**mandatory** before `gh pr ready` ([SKILL.md](SKILL.md) Phase 9b).
 
 ______________________________________________________________________
 
