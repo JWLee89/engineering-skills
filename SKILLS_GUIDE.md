@@ -91,7 +91,8 @@ Use **either** this bundle **or** overlapping globals for the same phase — not
 | Security depth | `security-and-hardening` |
 | Debug CI | `debugging-and-error-recovery` |
 
-Domain framework skills (React, Django, etc.) — install separately; see [BENCHMARK](docs/BENCHMARK-CLAUDE-SKILLS.md).
+Domain framework skills (React, Django, etc.) — install separately from catalogs such as
+[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills).
 
 ---
 
