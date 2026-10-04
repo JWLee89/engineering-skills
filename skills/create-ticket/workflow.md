@@ -74,7 +74,7 @@ Build from [ticket-template.md](ticket-template.md). Required sections:
 
 - Write **Description** so a new onboarder understands the task without prior context.
 - **Verification plan** must be executable (mirror PR verification style in
-  [../templates.md](../templates.md#verification-plan-pr-body)).
+  [../handle-task/references/templates/verification-pr-body.md](../handle-task/references/templates/verification-pr-body.md)).
 - Cite source tickets by link — do not copy entire bodies.
 - Do **not** invent ticket keys, branch names, or assignees.
 

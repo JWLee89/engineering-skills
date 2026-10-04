@@ -48,6 +48,14 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 1. Load **`.handle-task/project.yaml`** — [../project-config.md](../handle-task/project-config.md)
 2. Follow **[workflow.md](workflow.md)**
 
+## Load when
+
+| Phase | Read | Defer |
+| ----- | ---- | ----- |
+| Plan body | [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md), [references/pr-body-template.md](references/pr-body-template.md) | Full [workflow.md](workflow.md) until pre-flight done |
+| Verify checkboxes | [../handle-task/references/templates/verification-pr-body.md](../handle-task/references/templates/verification-pr-body.md) | [../handle-task/templates.md](../handle-task/templates.md) index only |
+| Author quality | [../handle-task/engineering-rubric.md](../handle-task/engineering-rubric.md) | `/code-review` rubric until Phase 9b |
+
 ## Quick map
 
 | Phase | What |

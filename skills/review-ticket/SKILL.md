@@ -33,10 +33,17 @@ Load **`.handle-task/project.yaml`** first — schema in
 LOAD CONFIG → FETCH TICKET → FOUR-POINT REVIEW → [SPLIT?] → BACKFILL → CONFIRM
 ```
 
+## Load when
+
+| Phase | Read | Defer |
+| ----- | ---- | ----- |
+| Start | [workflow.md](workflow.md), [quality-gate.md](quality-gate.md) | create-ticket, handle-task |
+| Split | [../handle-task/subtask-template.md](../handle-task/subtask-template.md) | Only when scope gate fails |
+| Backfill | [../create-ticket/ticket-template.md](../create-ticket/ticket-template.md) | Full templates index |
+
 ## Single source of truth
 
-Canonical path: `skills/review-ticket/`. Edits apply globally via
-`../scripts/install-skills.sh`.
+Canonical path: `skills/review-ticket/`. Install: repo root `./scripts/install-skills.sh`.
 
 ## What this skill does
 

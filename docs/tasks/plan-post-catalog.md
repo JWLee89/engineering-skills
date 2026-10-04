@@ -52,10 +52,10 @@ rg 'templates\.md#' skills/handle-task --count
 
 ### Todo
 
-- [ ] R1 Split spec/plan/PR template sections from `templates.md` → `references/`
-- [ ] R2 Thin `templates.md` to index + links only
-- [ ] R3 Load-when tables on code-review + review-ticket SKILL.md
-- [ ] R4 code-review/references/README or report-pointer.md
+- [x] R1 Split spec/plan/PR template sections from `templates.md` → `references/templates/`
+- [x] R2 Thin `templates.md` to index + links only (~90 lines)
+- [x] R3 Load-when tables on code-review, review-ticket, pull-request SKILL.md
+- [x] R4 code-review/references/review-guide.md
 - [x] R5 Remove `handle-task-skill/` + README migration note
 - [ ] R6 Agentic verify + draft PR (reviewer-friendly body)
 

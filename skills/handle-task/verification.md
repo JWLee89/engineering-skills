@@ -46,7 +46,7 @@ Store summaries in:
 
 1. **Committed task memory** — session log / Verify section
 2. **Chat** — concise proof table for the user
-3. **PR body** — [templates.md](templates.md#verification-plan-pr-body) checkboxes checked with evidence inline
+3. **PR body** — [references/templates/verification-pr-body.md](references/templates/verification-pr-body.md) checkboxes checked with evidence inline
 
 ### Proof strength (prefer higher when feasible)
 
