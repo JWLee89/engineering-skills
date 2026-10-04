@@ -5,7 +5,8 @@ description: >-
   fresh (no prior chat context), apply an eight-axis senior-engineer rubric, draft findings
   with links and snippets in markdown, wait for user approval, then optionally post forge
   review comments. Portable across repos and issue trackers. Does not push commits. Use when
-  the user says code review, review this PR, or /code-review with a PR link or number.
+  the user says code review, review this PR, /code-review with a PR link or number, or
+  /handle-task Phase 9b on the task PR.
 disable-model-invocation: true
 ---
 
