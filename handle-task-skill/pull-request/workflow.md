@@ -93,23 +93,41 @@ Build **clickable GitHub URLs** for the PR body (adjust host/path for other forg
 gh repo view --json nameWithOwner -q .nameWithOwner   # owner/repo
 git rev-parse HEAD                                     # full SHA for blob links
 git rev-parse --short HEAD
+gh pr view --json number,url -q .url                   # after PR exists
 ```
 
 | Target | URL pattern |
 | ------ | ----------- |
 | **Commit** | `https://github.com/{owner}/{repo}/commit/{sha}` |
-| **File + lines** | `https://github.com/{owner}/{repo}/blob/{sha}/{path}#L{start}-L{end}` |
+| **PR diff (preferred for review)** | `https://github.com/{owner}/{repo}/pull/{n}/changes#diff-{diff_id}R{start}-R{end}` |
+| **File at commit (source)** | `https://github.com/{owner}/{repo}/blob/{sha}/{path}#L{start}-L{end}` |
+| **Markdown at commit (plain source)** | same as file, but insert **`?plain=1`** before `#L` — e.g. `…/doc.md?plain=1#L90-L112` |
 
-Use the **PR tip commit** (`HEAD` after push) for `blob/{sha}/…` so links match the diff.
-Single line: `#L{n}`. Encode unusual path characters per URL rules.
+**PR diff anchor `diff_id`:** SHA-256 hex digest of the **repo-relative file path** (UTF-8):
+
+```bash
+python3 -c "import hashlib,sys; print(hashlib.sha256(sys.argv[1].encode()).hexdigest())" "path/to/file.md"
+```
+
+Use **`R{line}`** on the diff anchor for the **new** side (right column) — that is the
+change reviewers should read. Line numbers come from the file at the PR tip (same as
+`git diff` / IDE line numbers on the branch).
+
+Use the **PR tip commit** (`HEAD` after push) for `blob/{sha}/…` source links.
+After **`gh pr create`**, refresh the body with `/pull/{n}/changes#diff-…` links (they
+need the PR number). Until a PR exists, use blob links only, then update in Phase 3/4.
 
 In markdown, **link text must be human-readable** — do not leave bare backticks as the only
-navigation aid:
+navigation aid. For each focus area, prefer **two links**:
 
 ```markdown
-[postprocess.py L88–156](https://github.com/org/repo/blob/abc123…/postprocess.py#L88-L156)
+**Review:** [workflow.md L90–112 (this PR)](https://github.com/org/repo/pull/7/changes#diff-e0a158…R90-R112) ·
+**Source:** [plain L90–112](https://github.com/org/repo/blob/abc123…/workflow.md?plain=1#L90-L112)
 [abc1234](https://github.com/org/repo/commit/abc1234…)
 ```
+
+Non-markdown source (`.py`, `.yaml`, …): **Review** diff link + optional **Source** blob
+link without `?plain=1`.
 
 ```bash
 gh pr list --head "$(git branch --show-current)" --json number,state,isDraft,url,mergeable
@@ -179,6 +197,10 @@ do not duplicate the whole diff.
 - What is **risky or subtle** (edge cases, compatibility, performance)
 - What reviewers can **skip** (generated files, mechanical renames, HAC-only)
 
+When the PR is open, add a **start here** line linking the full diff, e.g.
+[Review all changes on this PR](https://github.com/org/repo/pull/7/changes) — focus
+areas below jump into specific hunks.
+
 #### Commits
 
 Table mapping history to intent (newest last if that matches read order, or **oldest first**
@@ -199,21 +221,23 @@ Numbered list — **core logic → wiring → config → tests**. Each item **mu
 
 | Field | Rule |
 | ----- | ---- |
-| **Location** | Markdown link: `[file.py Lstart–Lend](https://github.com/…/blob/{sha}/path#Lstart-Lend)` |
+| **Review (required when PR open)** | `[label (this PR)](…/pull/{n}/changes#diff-{sha256(path)}R{start}-R{end})` |
+| **Source (optional)** | Blob at PR tip; **`?plain=1`** before `#L` for `.md` / `.mdx` / `.markdown` |
 | **Why read** | One sentence: behavior, contract, or invariant at stake |
 | **Commit** | Link: `[shortsha](https://github.com/…/commit/{sha})` when multi-commit |
-| **Tests** | Optional: link to test file line `[test_name](…/blob/{sha}/tests/…py#Lnn)` or pytest node id in plain text if no line anchor |
+| **Tests** | PR diff or blob link to test file lines; pytest node id in plain text if no anchor |
 
 Example entry:
 
 ```markdown
-1. [postprocess.py L88–156](https://github.com/org/repo/blob/a1b2c3d…/insight_engine/breast/ngiq/tasks/postprocess.py#L88-L156) —
+1. **Review:** [postprocess.py L88–156 (this PR)](https://github.com/org/repo/pull/42/changes#diff-abc…R88-R156) ·
+   **Source:** [L88–156](https://github.com/org/repo/blob/a1b2c3d…/insight_engine/…/postprocess.py#L88-L156) —
    MLO vs CC view gating for PEC; main behavioral change. Commit
    [a1b2c3d](https://github.com/org/repo/commit/a1b2c3d…). Test:
-   [test_execute_view_gating_for_pec_mlo](https://github.com/org/repo/blob/a1b2c3d…/tests/unit/breast/ngiq/tasks/test_postprocess.py#L120-L145).
-2. [NGIQ_100.yaml L12–18](https://github.com/org/repo/blob/d4e5f6a…/insight_engine/configs/breast/ngiq/NGIQ_100.yaml#L12-L18) —
-   DAG wiring only; confirm task order matches spec. Commit
-   [d4e5f6a](https://github.com/org/repo/commit/d4e5f6a…).
+   [test_execute_view_gating (this PR)](https://github.com/org/repo/pull/42/changes#diff-def…R120-R145).
+2. **Review:** [workflow.md L90–112 (this PR)](https://github.com/org/repo/pull/7/changes#diff-e0a158…R90-R112) ·
+   **Source:** [plain L90–112](https://github.com/org/repo/blob/sha…/doc/workflow.md?plain=1#L90-L112) —
+   URL rules for reviewers. Commit [3285cf2](https://github.com/org/repo/commit/3285cf2…).
 ```
 
 **How to pick line ranges:** use `git diff origin/<base>...HEAD -U0 -- <path>` or read
@@ -251,6 +275,7 @@ ______________________________________________________________________
 2. **Create** if none: `gh pr create --draft` with Phase 2 body
 3. **Update** if exists: `gh pr edit <num> --body-file …`, title/labels as needed
 4. **Labels:** from `pr.labels` (`gh label list` — never invent labels)
+5. **After create or push:** refresh body with `/pull/{n}/changes#diff-…` focus links (needs PR number)
 
 ______________________________________________________________________
 
@@ -352,7 +377,9 @@ ______________________________________________________________________
 | ------- | --- |
 | PR body without line deltas | Run `--numstat`; fill **Changes made** table |
 | Review guide is only a file list | Add Summary + Commits + linked line-range focus areas |
-| SHAs/paths only in backticks | Use GitHub `commit/` and `blob/…#L` markdown links |
+| SHAs/paths only in backticks | Use `commit/`, `pull/…/changes#diff-…`, and blob links |
+| Markdown blob without `?plain=1` | Rendered doc view — add `?plain=1` for source lines |
+| Focus areas only link to blob | Primary link must be **this PR** `/changes#diff-…` when PR exists |
 | Stale line numbers after new pushes | Re-diff; refresh Review guide in Phase 2 / 5d / 7 |
 | Only creates PR, never updates | Re-run Phases 2–5 on every review/CI round |
 | `gh pr ready` before CI green | Phase 4–5 |

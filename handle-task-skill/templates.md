@@ -361,14 +361,17 @@ Mention constraints from committed decision log when configured.>
 | ------ | --------------- | -------------------- |
 | [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}) | `<subject>` | <plain-language delta> |
 
+**Start here:** [Review all changes on this PR](https://github.com/{owner}/{repo}/pull/{n}/changes)
+
 ### Focus areas (read in this order)
 
-1. [file.py Lstart–Lend](https://github.com/{owner}/{repo}/blob/{head_sha}/path/to/file.py#Lstart-Lend) —
-   <why a reviewer should read this>. Commit
-   [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}).
-   Test: [test_name](https://github.com/{owner}/{repo}/blob/{head_sha}/tests/…py#Lnn) (optional)
+1. **Review:** [file.py Lstart–Lend (this PR)](https://github.com/{owner}/{repo}/pull/{n}/changes#diff-{sha256_path}Rstart-Rend) ·
+   **Source:** [Lstart–Lend](https://github.com/{owner}/{repo}/blob/{head_sha}/path/to/file.py#Lstart-Lend) —
+   <why a reviewer should read this>. Commit [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}).
 
-<Core logic → wiring → config → tests. Use `gh repo view` + `git rev-parse HEAD` for URLs; refresh after each push — [pull-request/workflow.md](pull-request/workflow.md).>
+For `.md` source links use `?plain=1` before `#L`. `sha256_path` = SHA-256 hex of repo-relative path — [pull-request/workflow.md](pull-request/workflow.md).
+
+<Core logic → wiring → config → tests. Refresh diff anchors after each push — [pull-request/workflow.md](pull-request/workflow.md).>
 
 ## Changes made
 

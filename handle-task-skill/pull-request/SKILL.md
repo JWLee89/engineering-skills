@@ -51,13 +51,13 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 
 ## Core principles
 
-1. **Easy to review** — Background/Purpose, **Review guide** (summary, commit links, clickable `blob/…#L` focus areas), **Changes made with line deltas**, Out of scope
+1. **Easy to review** — Background/Purpose, **Review guide** (PR `/changes#diff-…` links primary; markdown blob uses `?plain=1`), **Changes made with line deltas**, Out of scope
 2. **Verification is executable** — every checkbox maps to a command or CI run URL
 3. **Draft until proven** — stay draft until author steps + required CI are green
 4. **Improve while iterating** — fix CI, conflicts, and review findings in focused commits; simplify complexity when it blocks review
 
 ## Boundaries
 
-- **Always:** `pr.draft_until_ready`; CI run URLs in Verification; Review guide uses GitHub commit/blob line links; labels from `pr.labels`
+- **Always:** `pr.draft_until_ready`; CI run URLs in Verification; Review guide links PR diff hunks + `?plain=1` for markdown; labels from `pr.labels`
 - **Never:** `gh pr ready` with red required CI; merge without user request
 - **Ask first:** squash, force-push, amending pushed commits
