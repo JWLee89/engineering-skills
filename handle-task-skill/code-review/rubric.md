@@ -21,11 +21,11 @@ ______________________________________________________________________
 
 | Check | What to verify |
 | ----- | -------------- |
-| Engineering best practices | Matches project conventions (`memory.agent_guide`, `CONTRIBUTING.md`, existing patterns) |
-| Right thing to build | Change aligns with stated purpose, linked tickets, and product constraints |
-| Definition of done | PR body / JIRA DoD / local spec (if referenced) — each item satisfied or explicitly deferred |
+| Engineering best practices | Matches project conventions (agent guide from config, `CONTRIBUTING.md`, existing patterns) |
+| Right thing to build | Change aligns with stated purpose, linked work items, and product constraints |
+| Definition of done | PR body / tracker DoD / local spec (if referenced) — each item satisfied or explicitly deferred |
 
-**Output:** Call out gaps between **intent** (ticket, PR Background/Purpose) and **implementation**.
+**Output:** Call out gaps between **intent** (work item, PR background/purpose) and **implementation**.
 
 ______________________________________________________________________
 
@@ -61,7 +61,7 @@ ______________________________________________________________________
 | Validates functionality | Tests assert behavior/outcomes, not implementation trivia |
 | Coverage depth | Happy path + meaningful edge cases; error paths where production handles them |
 | Missing cases | Propose edge cases that **would break** the feature; include a failing test sketch or snippet |
-| Integration | If the feature crosses boundaries (API, DAG, DB, wire format), integration tests prove end-to-end intent |
+| Integration | If the feature crosses boundaries (API, services, persistence, wire format), integration tests prove end-to-end intent |
 
 Cross-check [../spec-adherence.md](../spec-adherence.md) when the PR references a spec.
 

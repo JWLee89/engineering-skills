@@ -1,7 +1,11 @@
 # Code review — workflow
 
-**Entry:** [SKILL.md](SKILL.md). Load `.handle-task/project.yaml`
-([../project-config.md](../project-config.md)) when reviewing a repo that uses it.
+**Entry:** [SKILL.md](SKILL.md).
+
+**Project config (optional):** when the repo has `.handle-task/project.yaml`, load
+[../project-config.md](../project-config.md) for `memory.*`, `verify.*`, `ticket.prefix`, and
+issue-tracker settings. When absent, use `CONTRIBUTING.md`, `README.md`, and conventional repo
+docs paths.
 
 ```
 ISOLATE → RESOLVE PR → GATHER CONTEXT → DIFF + CODEBASE → RUBRIC PASS
@@ -14,9 +18,10 @@ ISOLATE → RESOLVE PR → GATHER CONTEXT → DIFF + CODEBASE → RUBRIC PASS
    change matters; suggest paths forward. Never belittle the author or imply incompetence.
 1. **PR required** — if the user did not give a PR URL, number, or branch, **stop and ask**.
 2. **No prior chat context** — do not rely on earlier sessions, stashed plans, or uncommitted
-   local work. Evidence = PR, tracker, docs, and repository state you fetch in **this** run.
+   local work. Evidence = PR, linked work items, docs, and repository state you fetch in
+   **this** run.
 3. **Draft before publish** — write the full review to a markdown artifact; **wait for explicit
-   user approval** before posting review comments on GitHub (or JIRA review fields).
+   user approval** before posting review comments on the forge (PR review API).
 4. **No commits / pushes** — do not push branches, open fix commits, or merge until the user
    approves the review outcome (and explicitly asks for fixes).
 
@@ -29,14 +34,15 @@ Tell the user (briefly) that this review uses **only** freshly fetched PR and re
 Do **not** use:
 
 - Summarized conversation history from other tasks
-- Assumed ticket scope from memory without re-fetching the ticket
+- Assumed work-item scope from memory without re-fetching the item
 - Local uncommitted changes unless the user explicitly ties them to the PR branch
 
 Do use:
 
-- `gh pr view`, `gh pr diff`, CI checks, linked issues
-- Issue tracker adapters for JIRA/Linear/GitHub ([../issue-tracker-adapters.md](../issue-tracker-adapters.md))
-- `memory.agent_guide`, `.hac/decisions.md`, ADRs, protocol docs **read from disk in this workspace**
+- PR host CLI/API (e.g. `gh pr view`, `gh pr diff`, checks, comments when GitHub)
+- Issue tracker adapter from project config ([../issue-tracker-adapters.md](../issue-tracker-adapters.md))
+- Paths from config when set: `memory.agent_guide`, `memory.decisions`, `memory.committed_tasks`,
+  `memory.local_specs`; otherwise repo `docs/`, decision/ADR locations, and specs linked from the PR
 
 ______________________________________________________________________
 
@@ -44,11 +50,12 @@ ______________________________________________________________________
 
 | Input | Action |
 | ----- | ------ |
-| `https://github.com/org/repo/pull/123` | Parse owner/repo/number; set context |
-| `#123` or `123` | Use current repo remote unless user named another repo |
-| Branch name | `gh pr list --head <branch> --json number,url` |
+| Full PR URL | Parse forge, owner/repo (or project), and PR id |
+| PR number (`#123`) | Resolve against current repo remote unless user named another repo |
+| Head branch name | List open PRs for that head (e.g. `gh pr list --head <branch>` on GitHub) |
 
-Record: PR number, URL, title, author, base/head, draft state, linked issues (body + `Closing` keywords).
+Record: PR number/id, URL, title, author, base/head, draft state, linked work items (body +
+closing keywords, cross-links).
 
 If ambiguous (fork, wrong repo, multiple PRs for branch) → ask once.
 
@@ -56,7 +63,9 @@ ______________________________________________________________________
 
 ## Phase 2: Gather context (parallel where possible)
 
-### From GitHub
+### From the PR host
+
+Example (GitHub):
 
 ```bash
 gh pr view <num> --json title,body,author,baseRefName,headRefName,commits,files,additions,deletions,labels,statusCheckRollup
@@ -65,23 +74,28 @@ gh pr checks <num>
 gh pr view <num> --comments
 ```
 
+Use the equivalent commands or UI for other forges when the user specifies them.
+
 ### Linked work items
 
-- Parse PR body for ticket keys (`PROJECT-123`, `[MOPS-123]`, etc.) using `ticket.prefix` from config when set
-- Fetch full ticket via adapter (JIRA MCP, `gh issue view`, or pasted content)
-- Pull **Background, Scope, DoD, Verification plan** from ticket; note acceptance criteria
+- Parse PR body for issue keys using `ticket.prefix` from config when set; otherwise common
+  `KEY-123` / `#123` patterns and URLs in the description
+- Fetch each linked item via the configured tracker adapter (or user-pasted content)
+- Pull **background, scope, definition of done, verification plan** (or the tracker’s equivalent
+  sections); note acceptance criteria
 
 ### Codebase (beyond the diff)
 
 - Read files **touched** and their **callers/callees** when behavior changes
 - Search for duplicates of new logic (`rg`, semantic search)
-- Read relevant tests and configs (YAML DAG, protocols) affected by the change
-- Skim CI workflow files if the PR changes build/test behavior
+- Read relevant tests and configuration affected by the change
+- Skim CI/build definitions if the PR changes how tests or deploys run
 
 ### Documentation
 
-- PR-linked specs, `docs/`, protocol markdown, `.hac/tasks/*` if referenced in PR
-- [../documentation-and-adrs.md](../documentation-and-adrs.md) for ADR conventions in repo
+- PR-linked specs, `docs/`, ADRs/decision logs (including `memory.decisions` when configured),
+  committed task scratchpads (`memory.committed_tasks` when configured)
+- [../documentation-and-adrs.md](../documentation-and-adrs.md) for ADR and wire-format conventions
 
 ______________________________________________________________________
 
@@ -92,8 +106,8 @@ Run every section in [rubric.md](rubric.md). For each finding:
 1. Assign **severity** (Blocker / Major / Minor / Question)
 2. Assign **rubric axis** (1–8)
 3. Include **context links** (at least one):
-   - GitHub: PR file line — prefer `/pull/<n>/files#diff-…` or commit permalink with line range
-   - Ticket: key + quoted acceptance criterion
+   - PR: diff hunk or commit permalink with line range
+   - Work item: key + quoted acceptance criterion or DoD line
    - Doc: path + section or ADR id
 4. Include a **short code excerpt** (from diff or repo) when it clarifies the issue
 5. State **PR-introduced vs pre-existing** for bugs
@@ -101,7 +115,9 @@ Run every section in [rubric.md](rubric.md). For each finding:
    "What do you think about …?" for **Question** severity; reserve firm language for
    **Blocker** items only
 
-Optional: run targeted tests locally if the user expects it and `verify.commands` exist — record commands and outcome in the draft under **Verification notes**. Do not mark PR approved on green tests alone; rubric still applies.
+Optional: run targeted tests locally when `verify.commands` exist in project config — record
+commands and outcome in the draft under **Verification notes**. Do not mark PR approved on green
+tests alone; rubric still applies.
 
 Cross-check lightweight axes in [../code-review.md](../code-review.md) but **do not** skip rubric sections.
 
@@ -121,8 +137,8 @@ Use this structure:
 
 **PR:** <url>
 **Branch:** `<head>` → `<base>`
-**Ticket(s):** <keys + links>
-**Reviewer persona:** Senior engineer — rigorous, kind, respectful (handle-task /code-review)
+**Work items:** <keys + links>
+**Reviewer persona:** Senior engineer — rigorous, kind, respectful (/code-review)
 **Verdict (draft):** Request changes | Approve with nits | Approve
 
 ## Summary
@@ -130,7 +146,7 @@ Use this structure:
 
 ## Context used
 - PR description (+ gaps)
-- Tickets: …
+- Work items: …
 - Docs: …
 - CI: <pass/fail summary + check names>
 
@@ -138,7 +154,7 @@ Use this structure:
 
 ### Blockers
 #### B1. <title> (Axis: Bugs — …)
-**Context:** [PR diff](…) · [MOPS-123 DoD: "…"]
+**Context:** [PR diff](…) · [<KEY> DoD: "…"]
 **Issue:** …
 **Evidence:**
 ```<lang>
@@ -176,7 +192,7 @@ Use this structure:
 
 Questions to ask:
 
-- Publish comments to GitHub as review (approve / comment / request changes)?
+- Publish comments on the forge as a formal review (approve / comment / request changes)?
 - Split into inline review vs single summary comment?
 - Should the author run a fix loop before re-review?
 
@@ -186,20 +202,20 @@ ______________________________________________________________________
 
 Default: **do not publish** until the user says to post (e.g. "LGTM, post review").
 
-### GitHub review comment
+### Formal PR review (example: GitHub)
 
-Map draft severity → GitHub event:
+Map draft verdict → review event:
 
-| Draft verdict | `gh pr review` |
-| ------------- | -------------- |
+| Draft verdict | GitHub `gh pr review` |
+| ------------- | --------------------- |
 | Approve | `--approve` |
 | Request changes | `--request-changes` |
 | Approve with nits / questions only | `--comment` |
 
 Post body from approved draft (trim checklist if user wants a shorter public review).
 
-For **inline** comments, use `gh api` to create review comments with `path`, `line`, `body` —
-each body must still include context links per Phase 3.
+For **inline** comments on GitHub, use `gh api` with `path`, `line`, `body` — each body must
+still include context links per Phase 3. Adapt for other forges per their API.
 
 **Never** push commits or `--force` in this skill unless the user opens a separate fix task.
 
@@ -216,7 +232,7 @@ If the user is the **author** and wants to address findings:
 
 1. Triage Blockers → Majors → Minors
 2. Implement fixes on the PR branch — **only when user explicitly asks** to implement
-3. Re-run verification from [../verification.md](../verification.md)
+3. Re-run verification from [../verification.md](../verification.md) when the project defines it
 4. Re-run `/code-review` (new draft) before merge
 
 ______________________________________________________________________
@@ -226,13 +242,14 @@ ______________________________________________________________________
 | Mistake | Fix |
 | ------- | --- |
 | Review without PR link | Phase 1 — ask |
-| Use last week's spec from chat | Phase 0 — re-fetch ticket |
-| Post GitHub review before user reads draft | Phase 4 gate |
+| Use last week's spec from chat | Phase 0 — re-fetch work items |
+| Post review before user reads draft | Phase 4 gate |
 | Push fix commits during review | Phase 5 — review only |
 | Findings without links/snippets | Phase 3 template |
 | Skip axes 4–8 on "small" PRs | Full [rubric.md](rubric.md) |
 | Duplicate rubric in PR comment | Link to draft file or summarize findings only |
 | Harsh or personal tone | [rubric.md](rubric.md) persona — critique code, encourage the author |
+| Hard-code tracker or memory paths | Read from project config or discover repo conventions |
 
 ______________________________________________________________________
 
@@ -242,3 +259,4 @@ ______________________________________________________________________
 - [../code-review.md](../code-review.md) — author pre-merge checklist (`/pull-request`)
 - [../pull-request/workflow.md](../pull-request/workflow.md) — CI, ready gate
 - [../spec-adherence.md](../spec-adherence.md) — requirement ↔ test mapping
+- [../issue-tracker-adapters.md](../issue-tracker-adapters.md) — fetch linked work items by tracker type
