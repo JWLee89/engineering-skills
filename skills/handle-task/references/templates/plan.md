@@ -20,12 +20,8 @@
 
 ## Implementation order
 
-```
-
 1. ...
 2. ...
-
-```
 
 ## Files changed (expected)
 

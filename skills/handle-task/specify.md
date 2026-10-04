@@ -37,10 +37,10 @@ Use `{local_specs}` and lowercase ticket key from config (e.g. `tasks/proj-123/`
 | Single capability | `{local_specs}/<ticket_key_lower>/SPEC-<slug>.md`                  |
 | Multi-capability  | `{local_specs}/<ticket_key_lower>/CAPABILITY-MAP.md` + per-module specs |
 
-Templates (read **one anchor**, not all of [templates.md](templates.md)):
+Templates (read **one** file — index: [templates.md](templates.md)):
 
-- [Spec template](templates.md#spec-local_specsticket_key_lowerspec-slugmd)
-- [Capability map](templates.md#capability-map-local_specsticket_key_lowercapability-mapmd)
+- [Spec template](references/templates/spec.md) · [index](templates.md#spec-local_specsticket_key_lowerspec-slugmd)
+- [Capability map](references/templates/capability-map.md) · [index](templates.md#capability-map-local_specsticket_key_lowercapability-mapmd)
 
 ### Multi-module order
 
@@ -52,7 +52,7 @@ ______________________________________________________________________
 
 ## Phase 4: Write the spec
 
-Write the spec **before** any plan or code. Use the [spec template](templates.md#spec-local_specsticket_key_lowerspec-slugmd).
+Write the spec **before** any plan or code. Use the [spec template](references/templates/spec.md).
 
 ### Spec quality bar
 

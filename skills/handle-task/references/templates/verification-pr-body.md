@@ -1,6 +1,6 @@
 ## Verification plan (PR body)
 
-Build in Phase 2 of [pull-request.md](pull-request.md). Three subsections are
+Build in Phase 2 of [pull-request.md](../../pull-request.md). Three subsections are
 **required** under `## Verification`:
 
 ### Steps run (author)
@@ -18,7 +18,7 @@ Checkboxes for commands the agent runs locally before/during PR iteration:
 
 When a step passes, check it and add evidence: command, exit code, summary line
 (e.g. `42 passed`), linked test lines or node ids, linked commit SHA, and/or CI run URL.
-See [verification.md](verification.md#agentic-validation-always-required).
+See [verification.md](../../verification.md#agentic-validation-always-required).
 
 ### Test plan (reviewer / CI)
 

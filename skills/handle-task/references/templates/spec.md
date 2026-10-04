@@ -1,4 +1,4 @@
-````markdown
+```markdown
 # Spec: <title> ({TICKET-KEY})
 
 **Issue:** [{TICKET-KEY}](<url from url_template>)
@@ -63,10 +63,10 @@ ______________________________________________________________________
 
 ## Testing strategy
 
-- Unit / isolation: `tests/unit/...` — **feature gate** per slice ([feature-gating.md](feature-gating.md))
+- Unit / isolation: `tests/unit/...` — **feature gate** per slice ([feature-gating.md](../../feature-gating.md))
 - Integration: note CI-only deps if any
 - Manual / smoke: ...
-- Phase 8: agent runs verify commands; evidence in task memory + PR ([verification.md](verification.md))
+- Phase 8: agent runs verify commands; evidence in task memory + PR ([verification.md](../../verification.md))
 
 ______________________________________________________________________
 
