@@ -71,8 +71,9 @@ point at `skills/*` (the old `handle-task-skill/` path was removed).
 
 1. Fork and branch from `main`
 2. Edit under `skills/`
-3. Open a PR using the repository template
-4. After merge: `./scripts/install-skills.sh --update`
+3. Run `python3 scripts/check-markdown-links.py` (CI runs the same on PRs)
+4. Open a PR using the repository template
+5. After merge: `./scripts/install-skills.sh --update`
 
 ## License
 

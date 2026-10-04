@@ -1,7 +1,7 @@
 # Plan — Post catalog (after PR #10)
 
-**Updated:** 2026-10-04 · **Base:** `main` @ `216ecb1`  
-**Supersedes:** `tasks/skills-benchmark/plan-skills-benchmark.md` (local) three-PR schedule — **P1–P3 shipped in one PR.**
+**Updated:** 2026-10-04 · **Base:** `main` @ post–PR #11 (`1736757`)  
+**Supersedes:** `tasks/skills-benchmark/plan-skills-benchmark.md` (local) three-PR schedule — **P1–P3 shipped in PR #10.**
 
 ## What PR #10 completed vs original plan
 
@@ -16,16 +16,16 @@
 
 | Gap | Spec ref | Priority |
 | --- | -------- | -------- |
-| `templates.md` (~450 lines) not split into `handle-task/references/` | Lazy-load / jeffallan `references/` | **P0** |
+| ~~`templates.md` split into `handle-task/references/`~~ | Lazy-load / jeffallan `references/` | Done (PR #11) |
 | Sub-skills lack `references/` (only handle-task + pull-request partial) | Each skill folder + `references/` | P1 |
 | `code-review` / `review-ticket` / `create-ticket` SKILL.md still long; no “Load when” table | Frontmatter + lazy load | P1 |
 | Anti-patterns duplicated across SKILL + workflow | Consolidate to `references/` | P2 |
-| Markdown link check in CI | Verification / BENCHMARK follow-up | P2 |
+| Markdown link check in CI | Verification / BENCHMARK follow-up | **P0 (PR #12)** |
 | ~~`handle-task-skill/` stubs~~ | **Removed** — README migration note + `./scripts/install-skills.sh --update` | Done |
 
-## PR #11 — Lazy-load references (recommended next)
+## PR #11 — Lazy-load references (merged)
 
-**Branch:** `feat/skills-references-lazy-load`  
+**Branch:** `feat/skills-references-lazy-load` · **PR:** [#11](https://github.com/JWLee89/engineering-skills/pull/11)  
 **Scope:** One reviewable PR; no gate changes.
 
 ### Objectives
@@ -57,12 +57,22 @@ rg 'templates\.md#' skills/handle-task --count
 - [x] R3 Load-when tables on code-review, review-ticket, pull-request SKILL.md
 - [x] R4 code-review/references/review-guide.md
 - [x] R5 Remove `handle-task-skill/` + README migration note
-- [ ] R6 Agentic verify + draft PR (reviewer-friendly body)
+- [x] R6 Agentic verify + draft PR (reviewer-friendly body)
 
-## PR #12 — Link hygiene CI (optional)
+## PR #12 — Link hygiene CI (in progress)
 
-- Script: verify internal markdown links under `skills/` (relative links only)
-- `.github/workflows/` or document manual run if no CI budget
+**Branch:** `feat/markdown-link-ci` · **Spec:** [SPEC-pr12-link-ci.md](SPEC-pr12-link-ci.md)
+
+- [x] L1 `scripts/check-markdown-links.py` — relative links under `skills/`
+- [x] L2 `.github/workflows/markdown-links.yml` on PR + main push
+- [ ] L3 Draft PR + `/code-review` + merge
+
+### Verify
+
+```bash
+python3 scripts/check-markdown-links.py
+./scripts/install-skills.sh --list
+```
 
 ## PR #13 — Anti-pattern dedupe (optional)
 

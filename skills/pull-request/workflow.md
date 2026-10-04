@@ -356,7 +356,7 @@ Author self-review: full pass [../engineering-rubric.md](../handle-task/engineer
 Fix blockers; note residual nits in PR comment for human reviewer.
 
 **`/handle-task`:** Phase 9b **requires** **`/code-review`** on the task PR before Phase 7
-ready gate — not optional. See [../SKILL.md](../SKILL.md#phase-9-pull-request-draft-deep-code-review) (Phase 9b).
+ready gate — not optional. See [../handle-task/SKILL.md](../handle-task/SKILL.md#phase-9-pull-request-draft-deep-code-review) (Phase 9b).
 
 For other callers, **`/code-review`** is the eight-axis rubric pass (draft markdown before
 forge review comments) — [../code-review/workflow.md](../code-review/workflow.md).
