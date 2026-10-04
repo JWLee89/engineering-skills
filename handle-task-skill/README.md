@@ -11,6 +11,7 @@ JIRA (or Linear / GitHub Issues) project.
 | **`/pull-request`** | `handle-task-skill/pull-request/` | PR lifecycle: create, CI, review, conflicts, ready |
 | **`/create-ticket`**     | `handle-task-skill/create-ticket/`     | Draft + create well-documented tickets      |
 | **`/review-ticket`**     | `handle-task-skill/review-ticket/`     | Review, backfill, and scope-check tickets   |
+| **`/code-review`**       | `handle-task-skill/code-review/`       | Deep PR review (draft → approve → post)     |
 
 Large tickets: split into **real subtasks** (branch = ticket key) — see
 [subtask-template.md](subtask-template.md).
@@ -81,6 +82,10 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 │   │   ├── SKILL.md
 │   │   ├── workflow.md
 │   │   └── quality-gate.md
+│   ├── code-review/         ← /code-review (same bundle)
+│   │   ├── SKILL.md
+│   │   ├── workflow.md
+│   │   └── rubric.md
 │   ├── issue-tracker-adapters.md
 │   ├── subtask-template.md
 │   ├── spec-driven-development.md      ┐
@@ -98,8 +103,8 @@ Add `memory.local_specs` (default `tasks/`) to `.gitignore`.
 ```
 
 Delegates are **in-repo** so PR feedback and project conventions stay with the bundle.
-Install symlinks `handle-task`, `pull-request`, `create-ticket`, and `review-ticket`
-entry skills; delegates load via relative paths inside this folder.
+Install symlinks `handle-task`, `pull-request`, `create-ticket`, `review-ticket`, and
+`code-review` entry skills; delegates load via relative paths inside this folder.
 
 ## Issue trackers
 

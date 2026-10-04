@@ -1,9 +1,14 @@
 # Code review
 
-Standalone delegate for `/handle-task` and `/pull-request` Phase 6.
+Lightweight **author self-review** delegate for `/handle-task` and `/pull-request` Phase 6.
+
+For a **full PR review** (user-specified PR, eight-axis rubric, draft markdown before posting
+comments, no reliance on prior chat context), invoke **`/code-review`** —
+[code-review/workflow.md](code-review/workflow.md) · [code-review/rubric.md](code-review/rubric.md).
 
 **Approve when** the change improves overall code health and meets the spec — not when
-it matches your personal style perfectly.
+it matches your personal style perfectly. When leaving notes for others, be **kind and
+respectful** — help the author improve while feeling empowered and encouraged.
 
 ## Five-axis review
 

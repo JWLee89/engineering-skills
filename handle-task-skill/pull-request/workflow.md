@@ -15,7 +15,8 @@ If missing, infer from `CONTRIBUTING.md`, `Makefile`, `package.json`, and ask on
 | ---- | ---- |
 | Local verify | [../verification.md](../verification.md) (agentic evidence **required**) |
 | Isolation gates | [../feature-gating.md](../feature-gating.md) |
-| Review axes | [../code-review.md](../code-review.md) |
+| Author self-review | [../code-review.md](../code-review.md) |
+| Deep PR review | [../code-review/workflow.md](../code-review/workflow.md) (`/code-review`) |
 | Performance | [../performance-optimization.md](../performance-optimization.md) |
 | ADR / why docs | [../documentation-and-adrs.md](../documentation-and-adrs.md) |
 
@@ -347,8 +348,13 @@ ______________________________________________________________________
 
 ## Phase 6: Pre-merge code review
 
-Full pass [../code-review.md](../code-review.md) before `gh pr ready`. Fix blockers; note
-residual nits in PR comment for human reviewer.
+Author self-review: full pass [../code-review.md](../code-review.md) before `gh pr ready`.
+Fix blockers; note residual nits in PR comment for human reviewer.
+
+For an **independent senior pass** (eight-axis rubric, ticket + doc context, draft markdown
+before any GitHub review comment), invoke **`/code-review`** —
+[../code-review/workflow.md](../code-review/workflow.md). Do not push fix commits until the
+user approves that review (or explicitly asks to implement findings).
 
 ______________________________________________________________________
 

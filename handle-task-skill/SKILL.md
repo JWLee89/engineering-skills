@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # Handle task
 
-**Invoke:** `/handle-task` · **Companion:** `/pull-request` · **Entry:** [QUICKSTART.md](QUICKSTART.md)
+**Invoke:** `/handle-task` · **Companions:** `/pull-request`, `/code-review` · **Entry:** [QUICKSTART.md](QUICKSTART.md)
 
 Load **`.handle-task/project.yaml`** first ([project-config.md](project-config.md)).
 
@@ -46,8 +46,9 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | Spec ↔ tests | [spec-adherence.md](spec-adherence.md) |
 | Verify | [verification.md](verification.md) (agentic validation **required**) |
 | PR | [pull-request/workflow.md](pull-request/workflow.md) |
+| PR review (deep) | [code-review/workflow.md](code-review/workflow.md) → [code-review/rubric.md](code-review/rubric.md) |
 | ADRs / docs | [documentation-and-adrs.md](documentation-and-adrs.md) |
-| Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
+| Author self-review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
 | Skill fixes | [self-improvement.md](self-improvement.md) |
 | Ticket create | [create-ticket/workflow.md](create-ticket/workflow.md) |
 
