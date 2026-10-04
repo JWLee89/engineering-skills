@@ -107,6 +107,4 @@ Domain framework skills (React, Django, etc.) — install separately; see [BENCH
 
 ---
 
-## Legacy path
-
-`handle-task-skill/` may contain stub pointers during migration. **Canonical content:** `skills/*`.
+**Install:** `./scripts/install-skills.sh` → `skills/*` only. Re-run `--update` after pulling if skills fail to load.

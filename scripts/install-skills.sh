@@ -16,9 +16,7 @@
 #   ./scripts/install-skills.sh --remove
 #   ./scripts/install-skills.sh --remove-hook
 #
-# Legacy wrapper (same behavior):
-#   ./handle-task-skill/scripts/install-skills.sh
-#   ./skills/handle-task/scripts/install-skills.sh
+# Wrapper (same behavior): ./skills/handle-task/scripts/install-skills.sh
 #
 # Installs:
 #   /handle-task        → skills/handle-task/

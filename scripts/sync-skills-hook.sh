@@ -9,6 +9,6 @@ INSTALL="${ROOT}/scripts/install-skills.sh"
 
 [[ -x "${INSTALL}" ]] || exit 0
 
-if git diff-tree --no-commit-id --name-only -r HEAD | grep -Eq '^(skills/|handle-task-skill/|scripts/install-skills\.sh)'; then
+if git diff-tree --no-commit-id --name-only -r HEAD | grep -Eq '^(skills/|scripts/install-skills\.sh)'; then
   "${INSTALL}" --update --quiet
 fi

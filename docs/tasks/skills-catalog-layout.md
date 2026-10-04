@@ -8,7 +8,7 @@
 
 - [x] `skills/*` catalog, `SKILLS_GUIDE`, `docs/BENCHMARK-CLAUDE-SKILLS.md`
 - [x] OWASP + positive feedback; code-review intent + PR-body map
-- [x] `scripts/install-skills.sh`; `handle-task-skill/**` stubs
+- [x] `scripts/install-skills.sh` (legacy `handle-task-skill/` removed post–#10)
 - [x] Frontmatter on five invokable skills; catalog-first README
 - [x] PR author UX: `pull-request/references/*`, Jeffallan-aligned `.github` template
 - [x] `docs/tasks/skills-catalog-layout.md`; legacy stub SKILL.md (M1)

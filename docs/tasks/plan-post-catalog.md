@@ -21,7 +21,7 @@
 | `code-review` / `review-ticket` / `create-ticket` SKILL.md still long; no “Load when” table | Frontmatter + lazy load | P1 |
 | Anti-patterns duplicated across SKILL + workflow | Consolidate to `references/` | P2 |
 | Markdown link check in CI | Verification / BENCHMARK follow-up | P2 |
-| Remove `handle-task-skill/` stubs after one release | Spec §6 — **decision: keep stubs** (document in README) | P3 doc-only |
+| ~~`handle-task-skill/` stubs~~ | **Removed** — README migration note + `./scripts/install-skills.sh --update` | Done |
 
 ## PR #11 — Lazy-load references (recommended next)
 
@@ -33,7 +33,7 @@
 1. Split [templates.md](../../skills/handle-task/templates.md) into anchored files under `skills/handle-task/references/templates/` (or `references/template-*.md`) — keep stub anchors at old paths or redirect headers in a thin `templates.md`.
 2. Add **Load when** tables to `skills/code-review/SKILL.md`, `skills/pull-request/SKILL.md` (pull-request: partial — extend).
 3. Add `skills/code-review/references/` with pointers to rubric + link to Jeffallan report shape (no duplicate prose).
-4. Document **stub retention policy** in root README (one paragraph).
+4. ~~Document stub retention~~ **`handle-task-skill/` removed** — migration note in README only.
 
 ### Out of scope PR #11
 
@@ -56,7 +56,7 @@ rg 'templates\.md#' skills/handle-task --count
 - [ ] R2 Thin `templates.md` to index + links only
 - [ ] R3 Load-when tables on code-review + review-ticket SKILL.md
 - [ ] R4 code-review/references/README or report-pointer.md
-- [ ] R5 README stub policy
+- [x] R5 Remove `handle-task-skill/` + README migration note
 - [ ] R6 Agentic verify + draft PR (reviewer-friendly body)
 
 ## PR #12 — Link hygiene CI (optional)
