@@ -38,8 +38,8 @@ For each proof, capture **at least one** of:
 
 Also record when applicable:
 
-- **Commit SHA(s)** that contain the tests or fix (`git rev-parse --short HEAD`)
-- **Code pointers** — test file `::test_name`, or `file:line` for harness/script entry
+- **Commit SHA(s)** — link in PR body: `[short](https://github.com/{owner}/{repo}/commit/{sha})` from `git rev-parse HEAD`
+- **Code pointers** — markdown link to `blob/{sha}/{path}#L{n}` (or test `::test_name` in text when no line anchor)
 - **Short excerpt** — 3–10 lines of terminal output proving pass (not full logs)
 
 Store summaries in:

@@ -116,7 +116,7 @@ Commits when user asks or for PR prep. Never commit local specs or secrets.
 
 Run **`/pull-request`** — do not substitute a minimal PR description.
 
-Required from [pull-request/workflow.md](pull-request/workflow.md): **Background**, **Purpose**, **Review guide** (summary for reviewers, commit table, line-range focus areas), **Changes made (git numstat Δ)**, **Verification** (author steps + CI checkboxes + out of scope), draft until ready unless user says otherwise, JIRA transition on ready when configured.
+Required from [pull-request/workflow.md](pull-request/workflow.md): **Background**, **Purpose**, **Review guide** (summary, linked commits, clickable `blob/…#L` focus areas — not backtick-only SHAs/paths), **Changes made (git numstat Δ)**, **Verification** (author steps + CI checkboxes + out of scope), draft until ready unless user says otherwise, JIRA transition on ready when configured.
 
 Record spec deviations (e.g. simplified design vs original JIRA DoD) in the PR **Spec adherence** or **Notes** section.
 

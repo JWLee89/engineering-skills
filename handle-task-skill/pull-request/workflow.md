@@ -48,7 +48,7 @@ Checklist:
 - [ ] Project config loaded
 - [ ] Pre-flight: git diff vs base; existing PR; tracker comments if configured
 - [ ] Changes made table includes Layer | Change | Δ lines (from git diff --numstat)
-- [ ] Review guide: human summary + commit map + focus areas with `path:Lstart-Lend`
+- [ ] Review guide: human summary + **clickable** commit/file line links (not backtick-only)
 - [ ] Verification plan: author steps + CI workflows (unchecked until run)
 - [ ] Draft PR created OR open PR body/branch updated
 - [ ] CI green with run URLs; conflicts resolved if any
@@ -87,6 +87,30 @@ git show --stat --oneline <sha>
 git diff origin/<base>...HEAD -U0 -- <path>
 ```
 
+Build **clickable GitHub URLs** for the PR body (adjust host/path for other forges):
+
+```bash
+gh repo view --json nameWithOwner -q .nameWithOwner   # owner/repo
+git rev-parse HEAD                                     # full SHA for blob links
+git rev-parse --short HEAD
+```
+
+| Target | URL pattern |
+| ------ | ----------- |
+| **Commit** | `https://github.com/{owner}/{repo}/commit/{sha}` |
+| **File + lines** | `https://github.com/{owner}/{repo}/blob/{sha}/{path}#L{start}-L{end}` |
+
+Use the **PR tip commit** (`HEAD` after push) for `blob/{sha}/…` so links match the diff.
+Single line: `#L{n}`. Encode unusual path characters per URL rules.
+
+In markdown, **link text must be human-readable** — do not leave bare backticks as the only
+navigation aid:
+
+```markdown
+[postprocess.py L88–156](https://github.com/org/repo/blob/abc123…/postprocess.py#L88-L156)
+[abc1234](https://github.com/org/repo/commit/abc1234…)
+```
+
 ```bash
 gh pr list --head "$(git branch --show-current)" --json number,state,isDraft,url,mergeable
 ```
@@ -110,7 +134,7 @@ review round, conflict merge).
 | ------- | ------- |
 | **Background** | Problem, ticket link, stack context |
 | **Purpose** | What this PR achieves |
-| **Review guide** | Human summary, commit map, **line-range focus areas** for reviewers ([below](#review-guide-human-readable)) |
+| **Review guide** | Human summary, commit map, **clickable** line-range focus areas ([below](#review-guide-human-readable)) |
 | **Changes made** | Table: **Layer \| Change \| Δ lines** (required) |
 | **Verification** | Author steps + CI checkboxes |
 | **Out of scope** | Non-goals, follow-up tickets |
@@ -162,11 +186,12 @@ when commits tell a story):
 
 | Commit | Message (short) | What changed (human) |
 | ------ | --------------- | -------------------- |
-| `a1b2c3d` | `[MOPS-123](feat) Add gating in postprocess` | View-gating logic + unit tests |
-| `d4e5f6a` | `[MOPS-123](test) Wire DAG config` | YAML only; no logic |
+| [a1b2c3d](https://github.com/org/repo/commit/a1b2c3d…) | `[MOPS-123](feat) Add gating in postprocess` | View-gating logic + unit tests |
+| [d4e5f6a](https://github.com/org/repo/commit/d4e5f6a…) | `[MOPS-123](test) Wire DAG config` | YAML only; no logic |
 
-Use **`git log origin/<base>..HEAD --format='%h %s'`**. Link SHAs when the PR is on GitHub
-(`https://github.com/org/repo/commit/<sha>`) if helpful.
+Use **`git log origin/<base>..HEAD --format='%h %s'`**. The **Commit** column must be a
+markdown link to `…/commit/{sha}` (short or full SHA). Never commit-only backticks in the
+published PR body.
 
 #### Focus areas (read in this order)
 
@@ -174,19 +199,21 @@ Numbered list — **core logic → wiring → config → tests**. Each item **mu
 
 | Field | Rule |
 | ----- | ---- |
-| **Location** | `` `path/to/file.py` `` with **line range** `` `Lstart–Lend` `` (from diff hunks on the PR branch; approximate is OK) |
+| **Location** | Markdown link: `[file.py Lstart–Lend](https://github.com/…/blob/{sha}/path#Lstart-Lend)` |
 | **Why read** | One sentence: behavior, contract, or invariant at stake |
-| **Commit** | Short SHA that introduced or last touched this hunk (when multi-commit) |
-| **Tests** | Optional: `` `tests/...::test_name` `` that proves this block |
+| **Commit** | Link: `[shortsha](https://github.com/…/commit/{sha})` when multi-commit |
+| **Tests** | Optional: link to test file line `[test_name](…/blob/{sha}/tests/…py#Lnn)` or pytest node id in plain text if no line anchor |
 
 Example entry:
 
 ```markdown
-1. **`insight_engine/breast/ngiq/tasks/postprocess.py` (L88–L156)** — MLO vs CC view gating
-   for PEC; this is the main behavioral change. Commit `a1b2c3d`. See
-   `tests/unit/breast/ngiq/tasks/test_postprocess.py::test_execute_view_gating_for_pec_mlo`.
-2. **`insight_engine/configs/breast/ngiq/NGIQ_100.yaml` (L12–L18)** — DAG wiring only; confirm
-   task order matches spec. Commit `d4e5f6a`.
+1. [postprocess.py L88–156](https://github.com/org/repo/blob/a1b2c3d…/insight_engine/breast/ngiq/tasks/postprocess.py#L88-L156) —
+   MLO vs CC view gating for PEC; main behavioral change. Commit
+   [a1b2c3d](https://github.com/org/repo/commit/a1b2c3d…). Test:
+   [test_execute_view_gating_for_pec_mlo](https://github.com/org/repo/blob/a1b2c3d…/tests/unit/breast/ngiq/tasks/test_postprocess.py#L120-L145).
+2. [NGIQ_100.yaml L12–18](https://github.com/org/repo/blob/d4e5f6a…/insight_engine/configs/breast/ngiq/NGIQ_100.yaml#L12-L18) —
+   DAG wiring only; confirm task order matches spec. Commit
+   [d4e5f6a](https://github.com/org/repo/commit/d4e5f6a…).
 ```
 
 **How to pick line ranges:** use `git diff origin/<base>...HEAD -U0 -- <path>` or read
@@ -324,7 +351,8 @@ ______________________________________________________________________
 | Mistake | Fix |
 | ------- | --- |
 | PR body without line deltas | Run `--numstat`; fill **Changes made** table |
-| Review guide is only a file list | Add Summary + Commits + `path:Lstart–Lend` focus areas |
+| Review guide is only a file list | Add Summary + Commits + linked line-range focus areas |
+| SHAs/paths only in backticks | Use GitHub `commit/` and `blob/…#L` markdown links |
 | Stale line numbers after new pushes | Re-diff; refresh Review guide in Phase 2 / 5d / 7 |
 | Only creates PR, never updates | Re-run Phases 2–5 on every review/CI round |
 | `gh pr ready` before CI green | Phase 4–5 |

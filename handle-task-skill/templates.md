@@ -278,13 +278,13 @@ Checkboxes for commands the agent runs locally before/during PR iteration:
 ### Steps run (author)
 
 - [ ] `<verify.hooks or scoped lint>` — exit 0; `<summary line>`
-- [ ] `<verify.commands[0]>` — exit 0; `<N passed>`; commit `<sha>`
-- [ ] Isolation — `<command>` — `tests/...::test_...`
+- [ ] `<verify.commands[0]>` — exit 0; `<N passed>`; commit [shortsha](https://github.com/{owner}/{repo}/commit/{fullsha})
+- [ ] Isolation — `<command>` — [tests/...::test_...](https://github.com/{owner}/{repo}/blob/{sha}/tests/….py#Lnn)
 - [ ] Integration / smoke — `<command>` — `<brief output proof>`
 ```
 
 When a step passes, check it and add evidence: command, exit code, summary line
-(e.g. `42 passed`), test node ids or `file::test`, commit SHA, and/or CI run link.
+(e.g. `42 passed`), linked test lines or node ids, linked commit SHA, and/or CI run URL.
 See [verification.md](verification.md#agentic-validation-always-required).
 
 ### Test plan (reviewer / CI)
@@ -359,14 +359,16 @@ Mention constraints from committed decision log when configured.>
 
 | Commit | Message (short) | What changed (human) |
 | ------ | --------------- | -------------------- |
-| `<sha>` | `<subject>` | <plain-language delta> |
+| [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}) | `<subject>` | <plain-language delta> |
 
 ### Focus areas (read in this order)
 
-1. **`<path/to/file.py>` (Lstart–Lend)** — <why a reviewer should read this>. Commit `<sha>`.
-   Tests: `<tests/...::test_name>` (optional)
+1. [file.py Lstart–Lend](https://github.com/{owner}/{repo}/blob/{head_sha}/path/to/file.py#Lstart-Lend) —
+   <why a reviewer should read this>. Commit
+   [<shortsha>](https://github.com/{owner}/{repo}/commit/{fullsha}).
+   Test: [test_name](https://github.com/{owner}/{repo}/blob/{head_sha}/tests/…py#Lnn) (optional)
 
-<Core logic → wiring → config → tests. Refresh line ranges after each push — [pull-request/workflow.md](pull-request/workflow.md).>
+<Core logic → wiring → config → tests. Use `gh repo view` + `git rev-parse HEAD` for URLs; refresh after each push — [pull-request/workflow.md](pull-request/workflow.md).>
 
 ## Changes made
 
