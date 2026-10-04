@@ -45,6 +45,7 @@ Follow [planning-and-task-breakdown.md](planning-and-task-breakdown.md):
 - Implementation order (numbered phases)
 - Expected files changed
 - Verification checkpoints with real commands ([verification.md](verification.md))
+- **Isolation gates** per behavioral slice when applicable ([feature-gating.md](feature-gating.md))
 - Out of scope (explicit deferrals to other tickets)
 
 ### Todo must include
@@ -53,8 +54,9 @@ Per task:
 
 - Acceptance criteria (testable)
 - **TDD order** — test file(s) first, then production ([test-driven-development.md](test-driven-development.md))
+- **Isolation gate** — scoped command proving slice alone ([feature-gating.md](feature-gating.md)); `—` if N/A with reason
 - **Spec link** — which success criterion / spec scenario this slice satisfies ([spec-adherence.md](spec-adherence.md))
-- Verify command (after RED→GREEN→spec adhere)
+- Verify command (after RED→GREEN→feature gate→spec adhere)
 - Files expected to touch (tests before implementation for behavioral slices)
 - Phase grouping aligned with [incremental-implementation.md](incremental-implementation.md) slices
 
@@ -119,6 +121,7 @@ ______________________________________________________________________
 | Horizontal mega-tasks ("build all tests") | Vertical slices with verify per slice    |
 | Tasks too large (> ~5 files)              | Split into smaller todo items            |
 | Plan without real verify commands         | Use [verification.md](verification.md)   |
+| No isolation plan for new behavioral code | Add gates in plan/todo ([feature-gating.md](feature-gating.md)) |
 
 ______________________________________________________________________
 

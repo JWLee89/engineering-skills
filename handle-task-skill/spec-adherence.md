@@ -31,7 +31,7 @@ Catch shortcuts over core business requirements, success criteria, and **non-neg
    | **Blocker** | Core requirement or non-negotiable untested or unimplemented | Fix before next slice or PR |
    | **Gap** | Spec scenario listed but no test (e.g. mixed-push, edge case) | Add test + code; tell user |
    | **Deferred** | Explicitly out of scope in spec | Document in task memory + PR |
-   | **CI-only** | Cannot prove locally | Note in PR verification; plan CI scenario |
+   | **CI-only** | Cannot prove locally | Note in PR verification; plan CI scenario; agent still runs local subset |
 
 4. **Anti-shortcut checks** — ask explicitly:
 
@@ -64,7 +64,8 @@ Treat as **Blocker** if missing:
 ## Output artifacts
 
 - **Task session log** — brief gap/fix notes under committed task memory
-- **PR verification** — spec matrix summary or link; unchecked items need user ack
+- **PR verification** — spec matrix summary or link; tie rows to test commands and
+  evidence from [verification.md](verification.md); unchecked items need user ack
 - **Self-improvement** — if the gap was a **process** failure (skill didn't catch it), follow
   [self-improvement.md](self-improvement.md)
 

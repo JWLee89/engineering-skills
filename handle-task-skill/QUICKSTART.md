@@ -72,7 +72,8 @@ Branch names and commits use `ticket.prefix` from config (e.g. `PROJ-123`, `ENG-
 | [SKILL.md](SKILL.md)                                           | Full handle-task orchestrator |
 | [specify.md](specify.md)                                       | Spec + approval gate          |
 | [plan-and-tasks.md](plan-and-tasks.md)                         | Plan + approval gate          |
-| [verification.md](verification.md)                             | Local test/lint commands      |
+| [verification.md](verification.md)                             | Agentic verify + evidence     |
+| [feature-gating.md](feature-gating.md)                         | Isolation proof per slice     |
 | [pull-request/workflow.md](pull-request/workflow.md) | PR workflow                   |
 | [create-ticket/workflow.md](create-ticket/workflow.md) | Create well-documented tickets |
 | [review-ticket/workflow.md](review-ticket/workflow.md) | Review and backfill tickets |

@@ -2,8 +2,9 @@
 name: handle-task
 description: >-
   Portable ticket-to-ship workflow: load .handle-task/project.yaml, /review-ticket on
-  tracker issues, spec + plan approval gates, TDD implementation, then /pull-request
-  (full PR template and CI). Use for ticket IDs, handle a task, or workflow fixes.
+  tracker issues, spec + plan approval gates, TDD + feature isolation gates,
+  agentic verification with evidence, then /pull-request (full PR template and CI).
+  Use for ticket IDs, handle a task, or workflow fixes.
 disable-model-invocation: true
 ---
 
@@ -14,7 +15,7 @@ disable-model-invocation: true
 Load **`.handle-task/project.yaml`** first ([project-config.md](project-config.md)).
 
 ```
-INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT → VERIFY → /pull-request
+INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ → MEMORY → IMPLEMENT (+ isolation gates) → VERIFY (agentic) → /pull-request
 ```
 
 ## Mandatory gates (do not skip)
@@ -24,6 +25,8 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | **Ticket quality** | Before writing a spec | Invoke **`/review-ticket`** ([review-ticket/workflow.md](review-ticket/workflow.md)); user confirms ticket is ready |
 | **Implementation spec** | Before plan or code | [specify.md](specify.md) — **explicit user approval** of local spec (not ticket description alone) |
 | **Plan + todo** | Before branch / code | [plan-and-tasks.md](plan-and-tasks.md) — explicit user approval |
+| **Feature isolation** | Each behavioral slice (when applicable) | [feature-gating.md](feature-gating.md) — prove behavior before full-stack wiring |
+| **Agentic verify** | Phase 8 (always) | [verification.md](verification.md) — agent runs checks and records evidence; not user-only |
 | **Pull request** | After Phase 8 verify | Invoke **`/pull-request`** ([pull-request/workflow.md](pull-request/workflow.md)) — not a bare `gh pr create` summary |
 
 **Tracker issues (JIRA, Linear, GitHub):** always run **`/review-ticket`** in Phase 1. Do not inline the four-point review or skip because the ticket “looks fine.”
@@ -39,9 +42,9 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | Ticket review | [review-ticket/workflow.md](review-ticket/workflow.md) |
 | Spec | [specify.md](specify.md) → [spec-driven-development.md](spec-driven-development.md) |
 | Plan | [plan-and-tasks.md](plan-and-tasks.md) → [planning-and-task-breakdown.md](planning-and-task-breakdown.md) |
-| Implement | [incremental-implementation.md](incremental-implementation.md) → [test-driven-development.md](test-driven-development.md) |
+| Implement | [incremental-implementation.md](incremental-implementation.md) → [test-driven-development.md](test-driven-development.md) → [feature-gating.md](feature-gating.md) |
 | Spec ↔ tests | [spec-adherence.md](spec-adherence.md) |
-| Verify | [verification.md](verification.md) |
+| Verify | [verification.md](verification.md) (agentic validation **required**) |
 | PR | [pull-request/workflow.md](pull-request/workflow.md) |
 | ADRs / docs | [documentation-and-adrs.md](documentation-and-adrs.md) |
 | Review / perf | [code-review.md](code-review.md) · [performance-optimization.md](performance-optimization.md) |
@@ -64,8 +67,8 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 - [ ] Implementation spec written; explicit spec approval recorded
 - [ ] Plan + todo written; explicit plan approval recorded
 - [ ] Task memory + branch ({ticket.id_pattern})
-- [ ] Slices: REUSE → RED → GREEN → spec adherence
-- [ ] Phase 8 verify + spec traceability ([spec-adherence.md](spec-adherence.md))
+- [ ] Slices: REUSE → RED → GREEN → feature gate (when applicable) → spec adherence
+- [ ] Phase 8: agentic verify + evidence bundle + spec traceability ([verification.md](verification.md), [spec-adherence.md](spec-adherence.md))
 - [ ] /pull-request: template body, Δ lines, verification plan, CI URLs
 ```
 
@@ -101,19 +104,19 @@ Concise committed scratchpad; link local spec — never paste full spec.
 
 ## Phase 7: Implement
 
-Execute approved todo: [incremental-implementation.md](incremental-implementation.md), [test-driven-development.md](test-driven-development.md), [spec-adherence.md](spec-adherence.md) per slice.
+Execute approved todo: [incremental-implementation.md](incremental-implementation.md), [test-driven-development.md](test-driven-development.md), [feature-gating.md](feature-gating.md) (isolation proof when applicable), [spec-adherence.md](spec-adherence.md) per slice.
 
 Commits when user asks or for PR prep. Never commit local specs or secrets.
 
 ## Phase 8: Verify
 
-[verification.md](verification.md) + [spec-adherence.md](spec-adherence.md) matrix. Document CI-only gaps for the PR.
+**Always** run [verification.md](verification.md) **agentic validation** (execute commands, capture proof). Complete [spec-adherence.md](spec-adherence.md) matrix. Re-run [feature-gating.md](feature-gating.md) isolation gates for in-scope behavioral slices. Document CI-only gaps and run URLs for the PR.
 
 ## Phase 9: Pull request
 
 Run **`/pull-request`** — do not substitute a minimal PR description.
 
-Required from [pull-request/workflow.md](pull-request/workflow.md): **Background**, **Purpose**, **Review guide**, **Changes made (git numstat Δ)**, **Verification** (author steps + CI checkboxes + out of scope), draft until ready unless user says otherwise, JIRA transition on ready when configured.
+Required from [pull-request/workflow.md](pull-request/workflow.md): **Background**, **Purpose**, **Review guide** (PR `/changes#diff-…` review links, markdown `?plain=1` source links, linked commits), **Changes made (git numstat Δ)**, **Verification** (author steps + CI checkboxes + out of scope), draft until ready unless user says otherwise, JIRA transition on ready when configured.
 
 Record spec deviations (e.g. simplified design vs original JIRA DoD) in the PR **Spec adherence** or **Notes** section.
 
@@ -130,4 +133,7 @@ Process gaps → [self-improvement.md](self-improvement.md); notify user.
 | Skipping `/review-ticket` on JIRA tickets | Phase 1 hard stop |
 | `gh pr create` with Summary-only body | `/pull-request` + [templates.md](templates.md) |
 | Silent deferral of spec items | Report + user ack in PR |
+| User asked to run tests instead of agent | Phase 8 agentic validation — run Shell yourself |
+| Full-stack only, no isolation proof | [feature-gating.md](feature-gating.md) in plan + slice |
+| “Tests pass” with no command output | Evidence bundle in [verification.md](verification.md) |
 | Duplicating review rules in handle-task | Link [quality-gate.md](review-ticket/quality-gate.md) only |
