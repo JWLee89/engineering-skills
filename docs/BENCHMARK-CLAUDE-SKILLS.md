@@ -72,6 +72,14 @@ After migration:
 wc -l skills/*/SKILL.md
 ```
 
+## Initiative status
+
+**Closed** (2026-10-04): Catalog layout and rubric ([PR #10](https://github.com/JWLee89/engineering-skills/pull/10)),
+lazy-load `references/` ([PR #11](https://github.com/JWLee89/engineering-skills/pull/11)),
+markdown link CI ([PR #12](https://github.com/JWLee89/engineering-skills/pull/12)),
+orchestrator anti-patterns SSOT ([PR #13](https://github.com/JWLee89/engineering-skills/pull/13)).
+Follow-ups (sub-skill `references/`, delegate dedupe) remain optional in [plan-post-catalog.md](tasks/plan-post-catalog.md).
+
 ## License note
 
 Jeffallan/claude-skills is MIT. We document influenced patterns here; we do not copy proprietary
