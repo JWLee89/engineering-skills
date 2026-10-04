@@ -27,7 +27,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 **Invoke:** `/pull-request`
 **Companions:** `/handle-task` (ticket → code) — run **after Phase 8**; **`/code-review`** is
 **mandatory in handle-task Phase 9b** before `gh pr ready`. Do not replace with ad-hoc `gh pr create`.
-**Agent entry:** read [workflow.md](workflow.md) in full. **PR body format:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md) (example: [PR #8](https://github.com/JWLee89/engineering-skills/pull/8)).
+**Agent entry:** read [workflow.md](workflow.md) in full. **PR body format:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md) · [pr-body-template.md](references/pr-body-template.md) (example: [PR #8](https://github.com/JWLee89/engineering-skills/pull/8); aligned with [Jeffallan code-reviewer](https://github.com/Jeffallan/claude-skills/tree/main/skills/code-reviewer)).
 
 **Single source of truth:** `skills/pull-request/` (symlinked globally by
 `scripts/install-skills.sh`).

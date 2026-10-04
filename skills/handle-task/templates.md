@@ -300,6 +300,18 @@ Items that need GitHub Actions or branch-level proof:
 
 Use **verification commits** (Phase 5b) when behavior only shows on a follow-up push.
 
+### Test coverage (when behavior changes)
+
+Optional but recommended (aligns with [Jeffallan code-reviewer](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/report-template.md)):
+
+```markdown
+### Test coverage (when code changes)
+
+- [ ] Happy path covered
+- [ ] Error / edge paths covered
+- [ ] Spec criteria traced (see Background)
+```
+
 ### Out of scope
 
 ```markdown

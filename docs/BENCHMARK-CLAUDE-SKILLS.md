@@ -32,6 +32,8 @@ industry-familiar skills catalog layout.
 | 10 | EARS syntax as optional spec track | `skills/handle-task/references/ears-syntax.md` |
 | 11 | MUST DO / MUST NOT consolidated in skill bodies | handle-task anti-patterns + gate table |
 | 12 | Version metadata in frontmatter | `version: "1.0.0"` on invokable skills |
+| 13 | `references/` templates (report, checklist) split from SKILL | `pull-request/references/reviewer-friendly-pr-body.md`, `pr-body-template.md` (author); `/code-review` draft (reviewer) |
+| 14 | Review workflow: Context → intent checkpoint → structured output | PR body Background/Purpose/Focus areas; code-review intent + report sections |
 
 ## Rejected or deferred (≥5)
 

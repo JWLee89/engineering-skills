@@ -77,6 +77,7 @@ If the body is summary-only, note it under **Context used** (documentation gap â
 Blocker unless repo policy requires linked focus areas).
 
 See [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
+When a spec or ticket link exists in **Background**, run [Jeffallan-style Stage 1 spec compliance](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/spec-compliance-review.md) before code-quality axes.
 
 ### From the PR host
 
