@@ -97,9 +97,10 @@ ______________________________________________________________________
 
 ## Testing strategy
 
-- Unit: `tests/unit/...` or equivalent
+- Unit / isolation: `tests/unit/...` — **feature gate** per slice ([feature-gating.md](feature-gating.md))
 - Integration: note CI-only deps if any
 - Manual / smoke: ...
+- Phase 8: agent runs verify commands; evidence in task memory + PR ([verification.md](verification.md))
 
 ______________________________________________________________________
 
@@ -188,9 +189,10 @@ Written after **spec approval** — see [plan-and-tasks.md](plan-and-tasks.md).
 
 ## Verification checkpoints
 
-| After | Command |
-|-------|---------|
-| Phase 1 | `<from verify.commands>` |
+| After | Isolation gate | Integration / full verify |
+|-------|----------------|---------------------------|
+| Slice 1 | `pytest tests/unit/...::test_...` | — |
+| Before PR | Re-run slice isolation gates | `<from verify.commands>` |
 
 ## Out of scope
 
@@ -217,8 +219,9 @@ Written with the plan, before **plan approval** — see [plan-and-tasks.md](plan
   - Acceptance: ...
   - Spec: satisfies `<success criterion # or scenario>`
   - TDD: RED in `<test file>` → GREEN in `<production file(s)>`
+  - Isolation gate: `<scoped command>` ([feature-gating.md](feature-gating.md))
   - Spec adhere: matrix row ✅ for this slice
-  - Verify: `<scoped test command>`
+  - Verify: `<scoped test command>` (agent runs; record summary + commit SHA)
 
 ---
 
@@ -274,12 +277,15 @@ Checkboxes for commands the agent runs locally before/during PR iteration:
 ```markdown
 ### Steps run (author)
 
-- [ ] `<verify.hooks or scoped lint>` — ...
-- [ ] `<verify.commands[0]>` — ...
-- [ ] Scoped tests — `<command>`
+- [ ] `<verify.hooks or scoped lint>` — exit 0; `<summary line>`
+- [ ] `<verify.commands[0]>` — exit 0; `<N passed>`; commit `<sha>`
+- [ ] Isolation — `<command>` — `tests/...::test_...`
+- [ ] Integration / smoke — `<command>` — `<brief output proof>`
 ```
 
-When a step passes, check it and add evidence: *passed locally* or a CI run link.
+When a step passes, check it and add evidence: command, exit code, summary line
+(e.g. `42 passed`), test node ids or `file::test`, commit SHA, and/or CI run link.
+See [verification.md](verification.md#agentic-validation-always-required).
 
 ### Test plan (reviewer / CI)
 
@@ -342,6 +348,25 @@ Mention constraints from committed decision log when configured.>
 ## Purpose
 
 <Single clear statement of what this PR delivers and why now.>
+
+## Review guide
+
+### Summary for reviewers
+
+<2–4 sentences: approach, subtle/risky areas, what to skip.>
+
+### Commits
+
+| Commit | Message (short) | What changed (human) |
+| ------ | --------------- | -------------------- |
+| `<sha>` | `<subject>` | <plain-language delta> |
+
+### Focus areas (read in this order)
+
+1. **`<path/to/file.py>` (Lstart–Lend)** — <why a reviewer should read this>. Commit `<sha>`.
+   Tests: `<tests/...::test_name>` (optional)
+
+<Core logic → wiring → config → tests. Refresh line ranges after each push — [pull-request/workflow.md](pull-request/workflow.md).>
 
 ## Changes made
 

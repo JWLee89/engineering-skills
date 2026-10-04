@@ -27,7 +27,7 @@ When `memory.decisions` is set in config, append there (typically newest-first).
 | ADR / decision row | Context, choice, alternatives rejected, consequences |
 | Inline comment     | Non-obvious *why* only                               |
 | Spec / task memory | Links to decisions; keep scratchpad concise          |
-| PR body            | Verification evidence, not full spec paste           |
+| PR body            | Human **Review guide** (summary, commits, `path:Lstart–Lend` focus) + verification evidence — [pull-request/workflow.md](pull-request/workflow.md), [verification.md](verification.md) |
 
 ## Implementation design (document when non-obvious)
 

@@ -13,7 +13,8 @@ If missing, infer from `CONTRIBUTING.md`, `Makefile`, `package.json`, and ask on
 
 | Need | File |
 | ---- | ---- |
-| Local verify | [../verification.md](../verification.md) |
+| Local verify | [../verification.md](../verification.md) (agentic evidence **required**) |
+| Isolation gates | [../feature-gating.md](../feature-gating.md) |
 | Review axes | [../code-review.md](../code-review.md) |
 | Performance | [../performance-optimization.md](../performance-optimization.md) |
 | ADR / why docs | [../documentation-and-adrs.md](../documentation-and-adrs.md) |
@@ -47,6 +48,7 @@ Checklist:
 - [ ] Project config loaded
 - [ ] Pre-flight: git diff vs base; existing PR; tracker comments if configured
 - [ ] Changes made table includes Layer | Change | Δ lines (from git diff --numstat)
+- [ ] Review guide: human summary + commit map + focus areas with `path:Lstart-Lend`
 - [ ] Verification plan: author steps + CI workflows (unchecked until run)
 - [ ] Draft PR created OR open PR body/branch updated
 - [ ] CI green with run URLs; conflicts resolved if any
@@ -72,8 +74,17 @@ Run in parallel where possible:
 git status
 git fetch origin <base>
 git log origin/<base>..HEAD --oneline
+git log origin/<base>..HEAD --format='%h %s'
 git diff origin/<base>...HEAD --stat
 git diff origin/<base>...HEAD --numstat
+```
+
+For the **Review guide** (multi-commit PRs), map commits to files and line anchors:
+
+```bash
+git log origin/<base>..HEAD --format='%h %s' --reverse
+git show --stat --oneline <sha>
+git diff origin/<base>...HEAD -U0 -- <path>
 ```
 
 ```bash
@@ -99,7 +110,7 @@ review round, conflict merge).
 | ------- | ------- |
 | **Background** | Problem, ticket link, stack context |
 | **Purpose** | What this PR achieves |
-| **Review guide** | Numbered file paths, read order, one line each |
+| **Review guide** | Human summary, commit map, **line-range focus areas** for reviewers ([below](#review-guide-human-readable)) |
 | **Changes made** | Table: **Layer \| Change \| Δ lines** (required) |
 | **Verification** | Author steps + CI checkboxes |
 | **Out of scope** | Non-goals, follow-up tickets |
@@ -128,17 +139,82 @@ Example:
 Optional drill-down (large PRs only): second table **File \| + \| −** for top 10 paths by
 total churn from `--numstat`.
 
-### Review guide
+### Review guide (human-readable)
 
-Numbered paths: core logic → wiring → config → tests.
+The **Review guide** is the primary onboarding path for human reviewers. Write for someone
+who has **not** read the ticket thread. Pair it with **Changes made** (layer deltas) —
+do not duplicate the whole diff.
+
+**Required subsections** (use these headings):
+
+#### Summary for reviewers
+
+2–4 sentences in plain language:
+
+- What problem this PR solves and the **approach** (not a file list)
+- What is **risky or subtle** (edge cases, compatibility, performance)
+- What reviewers can **skip** (generated files, mechanical renames, HAC-only)
+
+#### Commits
+
+Table mapping history to intent (newest last if that matches read order, or **oldest first**
+when commits tell a story):
+
+| Commit | Message (short) | What changed (human) |
+| ------ | --------------- | -------------------- |
+| `a1b2c3d` | `[MOPS-123](feat) Add gating in postprocess` | View-gating logic + unit tests |
+| `d4e5f6a` | `[MOPS-123](test) Wire DAG config` | YAML only; no logic |
+
+Use **`git log origin/<base>..HEAD --format='%h %s'`**. Link SHAs when the PR is on GitHub
+(`https://github.com/org/repo/commit/<sha>`) if helpful.
+
+#### Focus areas (read in this order)
+
+Numbered list — **core logic → wiring → config → tests**. Each item **must** include:
+
+| Field | Rule |
+| ----- | ---- |
+| **Location** | `` `path/to/file.py` `` with **line range** `` `Lstart–Lend` `` (from diff hunks on the PR branch; approximate is OK) |
+| **Why read** | One sentence: behavior, contract, or invariant at stake |
+| **Commit** | Short SHA that introduced or last touched this hunk (when multi-commit) |
+| **Tests** | Optional: `` `tests/...::test_name` `` that proves this block |
+
+Example entry:
+
+```markdown
+1. **`insight_engine/breast/ngiq/tasks/postprocess.py` (L88–L156)** — MLO vs CC view gating
+   for PEC; this is the main behavioral change. Commit `a1b2c3d`. See
+   `tests/unit/breast/ngiq/tasks/test_postprocess.py::test_execute_view_gating_for_pec_mlo`.
+2. **`insight_engine/configs/breast/ngiq/NGIQ_100.yaml` (L12–L18)** — DAG wiring only; confirm
+   task order matches spec. Commit `d4e5f6a`.
+```
+
+**How to pick line ranges:** use `git diff origin/<base>...HEAD -U0 -- <path>` or read
+changed hunks in the IDE; cite the span that contains the decision logic, not the whole file.
+
+**Size limits:**
+
+- Small PR (≤ ~5 files): up to **5** focus areas
+- Medium: **3–7** focus areas; defer file laundry to optional drill-down under Changes made
+- Large: top **5–8** hotspots only + “remaining churn is tests/fixtures”
+
+Refresh focus areas and line ranges after every significant push (CI fix, review round,
+conflict merge).
 
 ### Verification plan
 
 Three subsections under `## Verification`, all `- [ ]` until executed:
 
-1. **Steps run (author)** — concrete commands from `verify.commands` / changed paths
+1. **Steps run (author)** — concrete commands from `verify.commands` / changed paths;
+   each checked item must include **evidence** (exit code, pass summary, test ids,
+   commit SHA, smoke output snippet) per [../verification.md](../verification.md).
+   Include **isolation gate** reruns from [../feature-gating.md](../feature-gating.md)
+   when the PR adds behavioral code.
 2. **Test plan (reviewer / CI)** — each required `verify.ci_workflows` entry
 3. **Out of scope** — deferred work (also usable under Verification or standalone section)
+
+The agent must have **already run** author steps during `/handle-task` Phase 8 before
+opening or refreshing the PR — do not leave author checkboxes empty with “TBD”.
 
 ______________________________________________________________________
 
@@ -153,7 +229,9 @@ ______________________________________________________________________
 
 ## Phase 4: Execute verification plan
 
-Run each author checkbox; on success, check box and add evidence. Update body with
+Run each author checkbox (agentic — Shell in session); on success, check box and add
+evidence (command, summary line, `tests/...::test`, commit SHA, coverage note, or CI
+URL). Re-run isolation gates when applicable. Update body with
 `gh pr edit <num> --body-file /tmp/pr-body.md`.
 
 Watch CI:
@@ -204,7 +282,7 @@ Before re-requesting review, apply [../code-review.md](../code-review.md):
 1. Fetch comments: `gh pr view <num> --comments`, review threads, Copilot/Bugbot if present
 2. **Triage:** must-fix (correctness, security, CI) vs nit vs optional
 3. Fix must-fix in focused commits; push; reply with commit SHA / explanation on nits
-4. Update PR body (Review guide / Changes made Δ) when behavior or scope changed
+4. Update PR body (Review guide focus areas + commit map / Changes made Δ) when behavior or scope changed
 5. Re-run failed verification steps; wait for CI
 
 Repeat until required checks green and blocking comments addressed.
@@ -226,13 +304,14 @@ ______________________________________________________________________
 
 **All required before `gh pr ready`:**
 
-- Author verification checkboxes done or CI-only with evidence
+- Author verification checkboxes done with strong evidence (not placeholders); CI-only
+  items have run URLs when available
 - Required CI workflows green (URLs in body)
 - No unresolved merge conflicts
 - Blocking review feedback addressed (or explicitly deferred with user ack)
 - Pre-merge review: no blockers
 
-Then: update body (full Verification + **Changes made** with final Δ lines) →
+Then: update body (Review guide with current line ranges, full Verification + **Changes made** with final Δ lines) →
 `gh pr ready` → issue transition per [../issue-transitions.md](../issue-transitions.md) →
 comment with PR URL + CI links.
 
@@ -245,8 +324,12 @@ ______________________________________________________________________
 | Mistake | Fix |
 | ------- | --- |
 | PR body without line deltas | Run `--numstat`; fill **Changes made** table |
+| Review guide is only a file list | Add Summary + Commits + `path:Lstart–Lend` focus areas |
+| Stale line numbers after new pushes | Re-diff; refresh Review guide in Phase 2 / 5d / 7 |
 | Only creates PR, never updates | Re-run Phases 2–5 on every review/CI round |
 | `gh pr ready` before CI green | Phase 4–5 |
+| Author verification without command output | [../verification.md](../verification.md) evidence bundle |
+| Behavioral PR with no isolation proof | [../feature-gating.md](../feature-gating.md) |
 | Huge conflict merge without re-verify | Re-run tests + CI |
 | Ignoring review comments | Phase 5d triage |
 | Duplicate skill folders | Edit only `handle-task-skill/pull-request/` |

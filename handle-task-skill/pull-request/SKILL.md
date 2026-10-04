@@ -42,7 +42,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 | ----- | ---- |
 | 0 | Load project config |
 | 1 | Pre-flight — git, existing PR, tracker comments |
-| 2 | Review-friendly plan — body + **Changes made (with Δ lines)** + verification |
+| 2 | Review-friendly plan — body + **Review guide (summary, commits, line focus)** + **Changes made (Δ lines)** + verification |
 | 3 | Create draft PR or refresh open PR |
 | 4–5 | Execute verification; CI/CD fix loop; merge conflicts |
 | 5d | Review feedback loop |
@@ -51,7 +51,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 
 ## Core principles
 
-1. **Easy to review** — Background/Purpose, file-ordered Review guide, **Changes made with line deltas**, Out of scope
+1. **Easy to review** — Background/Purpose, **Review guide** (human summary, commit map, `path:Lstart–Lend` focus areas), **Changes made with line deltas**, Out of scope
 2. **Verification is executable** — every checkbox maps to a command or CI run URL
 3. **Draft until proven** — stay draft until author steps + required CI are green
 4. **Improve while iterating** — fix CI, conflicts, and review findings in focused commits; simplify complexity when it blocks review

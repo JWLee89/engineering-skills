@@ -7,15 +7,16 @@ Delegate for `/handle-task` Phase 7. **Orchestrates** slice execution; TDD detai
 ## Slice cycle (canonical)
 
 ```
-REUSE CHECK → RED → GREEN → REFACTOR → SPEC ADHERE → Verify → (commit) → next slice
+REUSE CHECK → RED → GREEN → REFACTOR → FEATURE GATE → SPEC ADHERE → Verify → (commit) → next slice
 ```
 
 | Step | Delegate |
 | ---- | -------- |
 | REUSE CHECK | Below |
 | RED / GREEN / REFACTOR | [test-driven-development.md](test-driven-development.md) |
+| FEATURE GATE | [feature-gating.md](feature-gating.md) — isolation proof when applicable |
 | SPEC ADHERE | [spec-adherence.md](spec-adherence.md) — slice acceptance criteria → tests |
-| Verify | Scoped command from todo / [verification.md](verification.md) |
+| Verify | Scoped command from todo / [verification.md](verification.md) (agent runs + evidence) |
 
 After each slice: behavior tested (failed before GREEN), spec items for slice covered or gaps reported, build green.
 
@@ -57,8 +58,9 @@ See [planning-and-task-breakdown.md](planning-and-task-breakdown.md).
 
 - [ ] REUSE CHECK stated
 - [ ] RED → GREEN → REFACTOR ([test-driven-development.md](test-driven-development.md))
+- [ ] FEATURE GATE passed or skip documented ([feature-gating.md](feature-gating.md))
 - [ ] Spec adherence for slice — no Blocker gaps ([spec-adherence.md](spec-adherence.md))
-- [ ] Scoped verify command passed
+- [ ] Scoped verify command passed (agent executed; summary captured)
 - [ ] User notified if spec gaps found and fixed or deferred
 
 ## Anti-patterns
