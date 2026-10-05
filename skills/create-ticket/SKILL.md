@@ -23,7 +23,7 @@ disable-model-invocation: true
 # Create ticket
 
 **Invoke:** `/create-ticket` · **Companions:** `/review-ticket`, `/handle-task` ·
-**Entry:** read [workflow.md](workflow.md) in full.
+**Entry:** [workflow.md](workflow.md) by phase ([Load when](#load-when)).
 
 Load **`.handle-task/project.yaml`** first — schema in
 [../project-config.md](../handle-task/project-config.md).
@@ -31,6 +31,14 @@ Load **`.handle-task/project.yaml`** first — schema in
 ```
 INTAKE CONTEXT → DRAFT → CREATE → /review-ticket → [SPLIT?] → CONFIRM
 ```
+
+## Load when
+
+| Phase | Read | Defer |
+| ----- | ---- | ----- |
+| Start | This file, [ticket-template.md](ticket-template.md) | workflow until drafting |
+| Draft / create | [workflow.md](workflow.md) Phases 1–3 | review-ticket until ticket exists |
+| Quality pass | [../review-ticket/quality-gate.md](../review-ticket/quality-gate.md) or `/review-ticket` | handle-task |
 
 ## Single source of truth
 

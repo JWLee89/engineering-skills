@@ -2,6 +2,8 @@
 
 Quick reference for agents and humans. **Install:** [README.md](README.md) · **Agent entry:** [skills/handle-task/QUICKSTART.md](skills/handle-task/QUICKSTART.md)
 
+**Token discipline:** each invokable skill’s `SKILL.md` has a **Load when** table — read delegates for the **current phase only**; do not load full workflow files up front.
+
 ---
 
 ## Invokable skills (this repo)

@@ -25,7 +25,7 @@ disable-model-invocation: true
 # Code review
 
 **Invoke:** `/code-review` · **Companions:** `/pull-request`, `/handle-task`, `/review-ticket` ·
-**Entry:** read [workflow.md](workflow.md) in full.
+**Entry:** [workflow.md](workflow.md) by phase ([Load when](#load-when-do-not-read-the-whole-folder)).
 
 **Project config (optional):** load `.handle-task/project.yaml` when present — schema in
 [../project-config.md](../handle-task/project-config.md). The skill works without it; infer conventions
@@ -42,7 +42,7 @@ RESOLVE PR → GATHER CONTEXT → RUBRIC → DRAFT MD → USER APPROVAL → [POS
 | Start | This file, [workflow.md](workflow.md) Phase 0–1 | [rubric.md](rubric.md) until intent checkpoint |
 | Context | workflow Phase 2, PR Focus areas if present | Full handle-task bundle |
 | Rubric | [rubric.md](rubric.md) | [references/review-guide.md](references/review-guide.md) unless tracing spec/Jeffallan |
-| Draft | workflow Phase 4 template | Publish rules until user approves draft |
+| Draft | [references/report-template.md](references/report-template.md), workflow Phase 4 | Publish rules until user approves draft |
 
 Reference map: [references/review-guide.md](references/review-guide.md).
 
@@ -73,7 +73,7 @@ main. Be **kind and respectful** — reviews should improve the code while the a
 1. **Resolve** the target PR (or ask).
 2. **Gather** PR body, diff, checks, comments, linked work items, docs, and surrounding code.
 3. **Review** using the eight-axis rubric in [rubric.md](rubric.md).
-4. **Draft** all findings in markdown ([workflow.md](workflow.md) template) with severity,
+4. **Draft** all findings in markdown ([references/report-template.md](references/report-template.md)) with severity,
    context links (PR lines, work items, documentation), and code excerpts.
 5. **Wait** for explicit user approval of the draft.
 6. **Optionally publish** forge review comments after approval — never before.
@@ -94,7 +94,8 @@ main. Be **kind and respectful** — reviews should improve the code while the a
 
 ## See also
 
-- [workflow.md](workflow.md) — phases, commands, draft template, publish rules
+- [workflow.md](workflow.md) — phases, commands, publish rules
+- [references/report-template.md](references/report-template.md) — draft review structure (Phase 4)
 - [rubric.md](rubric.md) — review criteria (single source of truth)
 - [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md) — linked work items by tracker type
 - [../documentation-and-adrs.md](../handle-task/documentation-and-adrs.md) — ADRs and wire-format conventions

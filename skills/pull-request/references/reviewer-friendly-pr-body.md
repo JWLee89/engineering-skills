@@ -7,19 +7,9 @@
 
 **Copy-paste skeleton:** [pr-body-template.md](pr-body-template.md)
 
-Mechanics (diff anchors, `?plain=1`, SHA-256 path): [workflow.md Phase 2](../workflow.md#phase-2-review-friendly-pr-plan--verification-plan).
+Mechanics (diff anchors, `?plain=1`, SHA-256 path): [pr-diff-links.md](pr-diff-links.md).
 
-### Industry alignment ([Jeffallan claude-skills](https://github.com/Jeffallan/claude-skills))
-
-| Jeffallan pattern | Our PR body mapping |
-| ----------------- | ------------------- |
-| [code-reviewer](https://github.com/Jeffallan/claude-skills/tree/main/skills/code-reviewer) **Context** step (read PR, intent checkpoint) | **Background** + **Purpose** + **Summary for reviewers** |
-| [spec-compliance-review.md](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/spec-compliance-review.md) Stage 1 | **Background** links (issue, spec/ADR); **Test coverage** checkboxes under Verification |
-| [review-checklist.md](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/review-checklist.md) categories | Reviewer uses **Focus areas** + `/code-review` rubric (not duplicated in author template) |
-| [report-template.md](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/report-template.md) (review **output**) | Author enables review via linked hunks; reviewer report stays in `/code-review` draft |
-| `references/*.md` lazy-load | This file + `pr-body-template.md` under `skills/pull-request/references/` |
-
-We do **not** embed Critical/Major/Minor verdict blocks in the author PR template — that is reviewer output, not description.
+**Industry alignment:** author body maps to [Jeffallan code-reviewer](https://github.com/Jeffallan/claude-skills/tree/main/skills/code-reviewer) context steps; reviewer verdict blocks stay in `/code-review` ([report-template.md](../../code-review/references/report-template.md)), not in the PR description.
 
 ______________________________________________________________________
 

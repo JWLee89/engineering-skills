@@ -27,7 +27,7 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 **Invoke:** `/pull-request`
 **Companions:** `/handle-task` (ticket → code) — run **after Phase 8**; **`/code-review`** is
 **mandatory in handle-task Phase 9b** before `gh pr ready`. Do not replace with ad-hoc `gh pr create`.
-**Agent entry:** read [workflow.md](workflow.md) in full. **PR body format:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md) · [pr-body-template.md](references/pr-body-template.md) (example: [PR #8](https://github.com/JWLee89/engineering-skills/pull/8); aligned with [Jeffallan code-reviewer](https://github.com/Jeffallan/claude-skills/tree/main/skills/code-reviewer)).
+**Agent entry:** [workflow.md](workflow.md) by phase ([Load when](#load-when) — do not read the whole file up front).
 
 **Single source of truth:** `skills/pull-request/` (symlinked globally by
 `scripts/install-skills.sh`).
@@ -52,7 +52,9 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 
 | Phase | Read | Defer |
 | ----- | ---- | ----- |
-| Plan body | [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md), [references/pr-body-template.md](references/pr-body-template.md) | Full [workflow.md](workflow.md) until pre-flight done |
+| Pre-flight | [workflow.md](workflow.md) Phases 0–1 | Phase 2 references until git/gh pre-flight done |
+| Plan body | [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md), [references/pr-body-template.md](references/pr-body-template.md), [references/pr-diff-links.md](references/pr-diff-links.md) | Later workflow phases |
+| Create / CI / ready | [workflow.md](workflow.md) Phases 3–7 | — |
 | Verify checkboxes | [../handle-task/references/templates/verification-pr-body.md](../handle-task/references/templates/verification-pr-body.md) | [../handle-task/templates.md](../handle-task/templates.md) index only |
 | Author quality | [../handle-task/engineering-rubric.md](../handle-task/engineering-rubric.md) | `/code-review` rubric until Phase 9b |
 
@@ -68,13 +70,6 @@ Own the **full PR lifecycle** — not only the first `gh pr create`.
 | 5d | Review feedback loop |
 | 6 | Author self-review → [../engineering-rubric.md](../handle-task/engineering-rubric.md) |
 | 7 | Ready gate → `gh pr ready` → issue transition |
-
-## Core principles
-
-1. **Easy to review** — follow [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md): Background/Purpose, **Review guide** (Summary, Commits, **Start here**, linked **Focus areas**), **Changes made (Δ lines)**, Verification + Out of scope. PR `/changes#diff-…` links primary; markdown blob uses `?plain=1`.
-2. **Verification is executable** — every checkbox maps to a command or CI run URL
-3. **Draft until proven** — stay draft until author steps + required CI are green
-4. **Improve while iterating** — fix CI, conflicts, and review findings in focused commits; simplify complexity when it blocks review
 
 ## Boundaries
 

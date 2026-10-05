@@ -55,7 +55,7 @@ Tracker issues: always **`/review-ticket`** in Phase 1. **Skip** full flow only 
 | Plan | [plan-and-tasks.md](plan-and-tasks.md) + plan/todo template anchors | PR/code-review until Phase 9 |
 | Implement | [incremental-implementation.md](incremental-implementation.md), [engineering-rubric.md](engineering-rubric.md), slice delegates from todo | Full [code-review/workflow.md](../code-review/workflow.md) |
 | Verify | [verification.md](verification.md), [spec-adherence.md](spec-adherence.md) | — |
-| Draft PR | [pull-request/workflow.md](../pull-request/workflow.md) through Phase 4 | Full rubric until `/code-review` |
+| Draft PR | [pull-request/workflow.md](../pull-request/workflow.md) Phases 0–4 + [pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md) | Later PR phases until ready; full rubric until `/code-review` |
 | Deep review | [code-review/workflow.md](../code-review/workflow.md), [code-review/rubric.md](../code-review/rubric.md) | — |
 
 Optional: `/create-ticket` → [create-ticket/workflow.md](../create-ticket/workflow.md).
@@ -90,17 +90,9 @@ Optional: `/create-ticket` → [create-ticket/workflow.md](../create-ticket/work
 4. **Memory** — concise scratchpad; link spec path.
 5. **Implement** — todo slices + [engineering-rubric.md](engineering-rubric.md).
 6. **Verify** — agent runs checks; evidence + spec matrix.
-7. **Draft PR** — **`/pull-request`** Phases 1–4; no `gh pr ready` yet.
-8. **Deep review** — **`/code-review`**; fix Blockers; user approves review draft.
-9. **Ready** — **`/pull-request`** CI green, author rubric pass, `gh pr ready`, issue transition.
-
-## Phase 9: Pull request (draft) + deep code review
-
-Cross-link target for [pull-request/workflow.md](../pull-request/workflow.md). After Phase 8 verify:
-
-- **9a — Draft PR:** **`/pull-request`** Phases 1–4; no `gh pr ready` yet.
-- **9b — Deep review:** **`/code-review`** on the task PR; user approves draft; fix **Blockers** before ready.
-- **Phase 10 — Ready:** **`/pull-request`** CI green, [engineering-rubric.md](engineering-rubric.md) author pass, `gh pr ready`.
+7. **Draft PR (9a)** — **`/pull-request`** Phases 1–4; no `gh pr ready` yet ([pull-request/workflow.md](../pull-request/workflow.md)).
+8. **Deep review (9b)** — **`/code-review`** on the task PR; user approves draft; fix **Blockers** before ready.
+9. **Ready (10)** — **`/pull-request`** CI green, [engineering-rubric.md](engineering-rubric.md) author pass, `gh pr ready`, issue transition.
 
 ## Anti-patterns
 

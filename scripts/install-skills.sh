@@ -328,6 +328,7 @@ if [[ "${DO_REMOVE}" == true ]]; then
     remove_one "${target_dir}" create-ticket
     remove_one "${target_dir}" review-ticket
     remove_one "${target_dir}" code-review
+    remove_one "${target_dir}" update-skills
     remove_legacy "${target_dir}"
   done
   if [[ -f "${MANIFEST}" && "${SCOPE}" == "global" ]]; then
@@ -343,6 +344,7 @@ else
     link_one "${target_dir}" create-ticket "${CREATE_TICKET_DIR}"
     link_one "${target_dir}" review-ticket "${REVIEW_TICKET_DIR}"
     link_one "${target_dir}" code-review "${CODE_REVIEW_DIR}"
+    link_one "${target_dir}" update-skills "${UPDATE_SKILLS_DIR}"
   done
   write_manifest
   log
@@ -358,6 +360,7 @@ else
   log "  /create-ticket       — draft + create well-documented tickets"
   log "  /review-ticket       — quality gate, backfill, scope check"
   log "  /code-review         — deep PR review (draft before post)"
+  log "  /update-skills       — catalog changes, rubrics, installer updates"
   log
   log "Per repo: copy skills/handle-task/examples/generic.project.yaml → .handle-task/project.yaml"
   log "Auto-sync on commit:  ./scripts/install-skills.sh --install-hook"

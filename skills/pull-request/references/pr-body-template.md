@@ -65,4 +65,4 @@ Replace `{owner}`, `{repo}`, `{n}`, `{sha}`, `{TICKET}` before posting.
 - <deferred item>
 ```
 
-Mechanics for `#diff-{sha256_path}`: [workflow.md Phase 2](../workflow.md#phase-2-review-friendly-pr-plan--verification-plan).
+Mechanics for `#diff-{sha256_path}`: [pr-diff-links.md](pr-diff-links.md).
