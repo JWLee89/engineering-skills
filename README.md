@@ -11,14 +11,7 @@ Per-project settings go in your target repo as **`.handle-task/project.yaml`**.
 
 ## Available skills
 
-| Skill | Invoke | Path | Purpose |
-| ----- | ------ | ---- | ------- |
-| Handle task | `/handle-task` | [skills/handle-task/](skills/handle-task/) | Ticket → spec → plan → implement → verify |
-| Pull request | `/pull-request` | [skills/pull-request/](skills/pull-request/) | PR lifecycle → CI → review → merge-ready |
-| Create ticket | `/create-ticket` | [skills/create-ticket/](skills/create-ticket/) | Draft + create well-documented tickets |
-| Review ticket | `/review-ticket` | [skills/review-ticket/](skills/review-ticket/) | Four-point quality gate, backfill, scope |
-| Code review | `/code-review` | [skills/code-review/](skills/code-review/) | Deep PR rubric, draft review before post |
-| Update skills | `/update-skills` | [skills/update-skills/](skills/update-skills/) | Add/modify catalog skills with rubric gates |
+Invokable skills, decision tree, and SSOT map: **[SKILLS_GUIDE.md](SKILLS_GUIDE.md)**.
 
 ## Quick start
 

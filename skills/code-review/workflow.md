@@ -77,7 +77,7 @@ If the body is summary-only, note it under **Context used** (documentation gap �
 Blocker unless repo policy requires linked focus areas).
 
 See [../pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md).
-When a spec or ticket link exists in **Background**, run [Jeffallan-style Stage 1 spec compliance](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/spec-compliance-review.md) before code-quality axes.
+When **Background** links a spec or ticket, run [spec compliance (Stage 1)](https://github.com/Jeffallan/claude-skills/blob/main/skills/code-reviewer/references/spec-compliance-review.md) before code-quality axes.
 
 ### From the PR host
 
@@ -141,74 +141,9 @@ ______________________________________________________________________
 
 ## Phase 4: Draft markdown review (mandatory)
 
-Write the review to a file the user can edit:
+Write the review using [references/report-template.md](references/report-template.md) (repo root `code-review-PR-<num>.md`, `/tmp/`, or chat if user asked).
 
-- Default path: `code-review-PR-<num>.md` in repo root or `/tmp/` if repo policy prefers
-- Or paste in chat if the user asked for chat-only draft
-
-Use this structure:
-
-```markdown
-# Code review: PR #<num> — <title>
-
-**PR:** <url>
-**Branch:** `<head>` → `<base>`
-**Work items:** <keys + links>
-**Reviewer persona:** Senior engineer — rigorous, kind, respectful (/code-review)
-**Verdict (draft):** Request changes | Approve with nits | Approve
-
-## PR intent (checkpoint)
-<One sentence — what this PR is meant to accomplish>
-
-## Summary
-<2–4 sentences: what the PR does well, overall quality, merge recommendation — lead with strengths where genuine>
-
-## Positive feedback
-<Required: specific patterns, tests, or design choices worth keeping — at least one item when anything is merge-worthy>
-
-## Context used
-- PR description (+ gaps)
-- Work items: …
-- Docs: …
-- CI: n/a (no workflows) / pending (run URL) / pass/fail summary + check names
-
-## Findings
-
-### Blockers
-#### B1. <title> (Axis: Bugs — …)
-**Context:** [PR diff](…) · [<KEY> DoD: "…"]
-**Issue:** …
-**Evidence:**
-```<lang>
-<snippet>
-```
-**Suggestion:** …
-
-### Major
-…
-
-### Minor
-…
-
-### Questions
-…
-
-## Rubric checklist
-| # | Axis        | Status | Notes |
-|---|-------------|--------|-------|
-| 1 | Question    | OK/…   | …     |
-…
-
-## Test traceability
-| Requirement | Test(s) | Gap? |
-|-------------|---------|------|
-
-## Verification notes
-<commands run, or "not run — reason">
-
-## Pre-existing issues noticed (not blocking unless PR regresses)
-…
-```
+Apply Phase 3 rules (severity, axis, links, snippets) inside the template sections.
 
 **Stop.** Ask the user to review the draft: edit severity, drop false positives, add context.
 

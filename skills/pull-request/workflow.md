@@ -88,47 +88,14 @@ git show --stat --oneline <sha>
 git diff origin/<base>...HEAD -U0 -- <path>
 ```
 
-Build **clickable GitHub URLs** for the PR body (adjust host/path for other forges):
+**Focus-area URLs:** [references/pr-diff-links.md](references/pr-diff-links.md) (after PR exists, refresh `/pull/{n}/changes#diff-…` in Phase 3/4).
 
 ```bash
-gh repo view --json nameWithOwner -q .nameWithOwner   # owner/repo
-git rev-parse HEAD                                     # full SHA for blob links
+gh repo view --json nameWithOwner -q .nameWithOwner
+git rev-parse HEAD
 git rev-parse --short HEAD
-gh pr view --json number,url -q .url                   # after PR exists
+gh pr view --json number,url -q .url
 ```
-
-| Target | URL pattern |
-| ------ | ----------- |
-| **Commit** | `https://github.com/{owner}/{repo}/commit/{sha}` |
-| **PR diff (preferred for review)** | `https://github.com/{owner}/{repo}/pull/{n}/changes#diff-{diff_id}R{start}-R{end}` |
-| **File at commit (source)** | `https://github.com/{owner}/{repo}/blob/{sha}/{path}#L{start}-L{end}` |
-| **Markdown at commit (plain source)** | same as file, but insert **`?plain=1`** before `#L` — e.g. `…/doc.md?plain=1#L90-L112` |
-
-**PR diff anchor `diff_id`:** SHA-256 hex digest of the **repo-relative file path** (UTF-8):
-
-```bash
-python3 -c "import hashlib,sys; print(hashlib.sha256(sys.argv[1].encode()).hexdigest())" "path/to/file.md"
-```
-
-Use **`R{line}`** on the diff anchor for the **new** side (right column) — that is the
-change reviewers should read. Line numbers come from the file at the PR tip (same as
-`git diff` / IDE line numbers on the branch).
-
-Use the **PR tip commit** (`HEAD` after push) for `blob/{sha}/…` source links.
-After **`gh pr create`**, refresh the body with `/pull/{n}/changes#diff-…` links (they
-need the PR number). Until a PR exists, use blob links only, then update in Phase 3/4.
-
-In markdown, **link text must be human-readable** — do not leave bare backticks as the only
-navigation aid. For each focus area, prefer **two links**:
-
-```markdown
-**Review:** [workflow.md L90–112 (this PR)](https://github.com/org/repo/pull/7/changes#diff-e0a158…R90-R112) ·
-**Source:** [plain L90–112](https://github.com/org/repo/blob/abc123…/workflow.md?plain=1#L90-L112)
-[abc1234](https://github.com/org/repo/commit/abc1234…)
-```
-
-Non-markdown source (`.py`, `.yaml`, …): **Review** diff link + optional **Source** blob
-link without `?plain=1`.
 
 ```bash
 gh pr list --head "$(git branch --show-current)" --json number,state,isDraft,url,mergeable
@@ -144,133 +111,21 @@ ______________________________________________________________________
 
 ## Phase 2: Review-friendly PR plan + verification plan
 
-Build **before** `gh pr create` and **refresh** after every significant push (CI fix,
-review round, conflict merge).
+Build **before** `gh pr create`; **refresh** after every significant push (CI fix, review round, conflict merge).
 
-**Format SSOT:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md).
-**Example PR (this repo):** [#8](https://github.com/JWLee89/engineering-skills/pull/8) — summary,
-commit map, **Start here**, focus areas with PR diff + source links, Changes made Δ table.
+**Body format SSOT:** [references/reviewer-friendly-pr-body.md](references/reviewer-friendly-pr-body.md) · skeleton [references/pr-body-template.md](references/pr-body-template.md) · example [PR #8](https://github.com/JWLee89/engineering-skills/pull/8) · diff links [references/pr-diff-links.md](references/pr-diff-links.md).
 
-### Required body sections
+Checklist:
 
-| Section | Purpose |
-| ------- | ------- |
-| **Background** | Problem, ticket link, stack context |
-| **Purpose** | What this PR achieves |
-| **Review guide** | Human summary, commit map, **clickable** line-range focus areas ([below](#review-guide-human-readable)) |
-| **Changes made** | Table: **Layer \| Change \| Δ lines** (required) |
-| **Verification** | Author steps + CI checkboxes |
-| **Out of scope** | Non-goals, follow-up tickets |
-
-### Changes made — line deltas (required)
-
-Summarize **`git diff origin/<base>...HEAD --numstat`** into the table. Group files into
-layers (e.g. `tests/`, product code, `config/`, `.hac/`, CI). Per row:
-
-- **Δ lines:** `+adds / −dels` with optional `(net ±N)` — use **bold** when \|net\| > 100 or
-  the row is the main story of the PR
-- One sentence **Change** column — no file laundry list unless the PR is tiny
-
-Example:
-
-```markdown
-## Changes made
-
-| Layer | Change | Δ lines |
-| ----- | ------ | ------- |
-| Tests | NGIQ e2e: DeepDiff, case1-only; drop contour + separate positioning module | **+223 / −345** (net −122) |
-| Fixtures | Positioning helpers; export.json metadata enrichment for smoke scripts | +58 / −144 |
-| HAC | Task scratchpad + status row | +35 / −0 |
+```
+- [ ] Sections: Background, Purpose, Review guide, Changes made (Δ), Verification, Out of scope
+- [ ] Review guide: Summary, Commits (linked SHAs), Start here, Focus areas (PR diff primary)
+- [ ] Changes made: Layer | Change | Δ from git diff --numstat (group by layer, not file laundry)
+- [ ] Verification: author evidence ([../verification.md](../handle-task/verification.md)); CI plan; isolation gates if behavioral ([../feature-gating.md](../handle-task/feature-gating.md))
+- [ ] Author steps already run in `/handle-task` Phase 8 — no "TBD" checkboxes
 ```
 
-Optional drill-down (large PRs only): second table **File \| + \| −** for top 10 paths by
-total churn from `--numstat`.
-
-### Review guide (human-readable)
-
-The **Review guide** is the primary onboarding path for human reviewers. Write for someone
-who has **not** read the ticket thread. Pair it with **Changes made** (layer deltas) —
-do not duplicate the whole diff.
-
-**Required subsections** (use these headings):
-
-#### Summary for reviewers
-
-2–4 sentences in plain language:
-
-- What problem this PR solves and the **approach** (not a file list)
-- What is **risky or subtle** (edge cases, compatibility, performance)
-- What reviewers can **skip** (generated files, mechanical renames, HAC-only)
-
-When the PR is open, add a **start here** line linking the full diff, e.g.
-[Review all changes on this PR](https://github.com/org/repo/pull/7/changes) — focus
-areas below jump into specific hunks.
-
-#### Commits
-
-Table mapping history to intent (newest last if that matches read order, or **oldest first**
-when commits tell a story):
-
-| Commit | Message (short) | What changed (human) |
-| ------ | --------------- | -------------------- |
-| [a1b2c3d](https://github.com/org/repo/commit/a1b2c3d…) | `[MOPS-123](feat) Add gating in postprocess` | View-gating logic + unit tests |
-| [d4e5f6a](https://github.com/org/repo/commit/d4e5f6a…) | `[MOPS-123](test) Wire DAG config` | YAML only; no logic |
-
-Use **`git log origin/<base>..HEAD --format='%h %s'`**. The **Commit** column must be a
-markdown link to `…/commit/{sha}` (short or full SHA). Never commit-only backticks in the
-published PR body.
-
-#### Focus areas (read in this order)
-
-Numbered list — **core logic → wiring → config → tests**. Each item **must** include:
-
-| Field | Rule |
-| ----- | ---- |
-| **Review (required when PR open)** | `[label (this PR)](…/pull/{n}/changes#diff-{sha256(path)}R{start}-R{end})` |
-| **Source (optional)** | Blob at PR tip; **`?plain=1`** before `#L` for `.md` / `.mdx` / `.markdown` |
-| **Why read** | One sentence: behavior, contract, or invariant at stake |
-| **Commit** | Link: `[shortsha](https://github.com/…/commit/{sha})` when multi-commit |
-| **Tests** | PR diff or blob link to test file lines; pytest node id in plain text if no anchor |
-
-Example entry:
-
-```markdown
-1. **Review:** [postprocess.py L88–156 (this PR)](https://github.com/org/repo/pull/42/changes#diff-abc…R88-R156) ·
-   **Source:** [L88–156](https://github.com/org/repo/blob/a1b2c3d…/insight_engine/…/postprocess.py#L88-L156) —
-   MLO vs CC view gating for PEC; main behavioral change. Commit
-   [a1b2c3d](https://github.com/org/repo/commit/a1b2c3d…). Test:
-   [test_execute_view_gating (this PR)](https://github.com/org/repo/pull/42/changes#diff-def…R120-R145).
-2. **Review:** [workflow.md L90–112 (this PR)](https://github.com/org/repo/pull/7/changes#diff-e0a158…R90-R112) ·
-   **Source:** [plain L90–112](https://github.com/org/repo/blob/sha…/doc/workflow.md?plain=1#L90-L112) —
-   URL rules for reviewers. Commit [3285cf2](https://github.com/org/repo/commit/3285cf2…).
-```
-
-**How to pick line ranges:** use `git diff origin/<base>...HEAD -U0 -- <path>` or read
-changed hunks in the IDE; cite the span that contains the decision logic, not the whole file.
-
-**Size limits:**
-
-- Small PR (≤ ~5 files): up to **5** focus areas
-- Medium: **3–7** focus areas; defer file laundry to optional drill-down under Changes made
-- Large: top **5–8** hotspots only + “remaining churn is tests/fixtures”
-
-Refresh focus areas and line ranges after every significant push (CI fix, review round,
-conflict merge).
-
-### Verification plan
-
-Three subsections under `## Verification`, all `- [ ]` until executed:
-
-1. **Steps run (author)** — concrete commands from `verify.commands` / changed paths;
-   each checked item must include **evidence** (exit code, pass summary, test ids,
-   commit SHA, smoke output snippet) per [../verification.md](../handle-task/verification.md).
-   Include **isolation gate** reruns from [../feature-gating.md](../handle-task/feature-gating.md)
-   when the PR adds behavioral code.
-2. **Test plan (reviewer / CI)** — each required `verify.ci_workflows` entry
-3. **Out of scope** — deferred work (also usable under Verification or standalone section)
-
-The agent must have **already run** author steps during `/handle-task` Phase 8 before
-opening or refreshing the PR — do not leave author checkboxes empty with “TBD”.
+Verification subsection blocks: [../handle-task/references/templates/verification-pr-body.md](../handle-task/references/templates/verification-pr-body.md).
 
 ______________________________________________________________________
 
@@ -356,7 +211,7 @@ Author self-review: full pass [../engineering-rubric.md](../handle-task/engineer
 Fix blockers; note residual nits in PR comment for human reviewer.
 
 **`/handle-task`:** Phase 9b **requires** **`/code-review`** on the task PR before Phase 7
-ready gate — not optional. See [../handle-task/SKILL.md](../handle-task/SKILL.md#phase-9-pull-request-draft-deep-code-review) (Phase 9b).
+ready gate — not optional. See [../handle-task/SKILL.md](../handle-task/SKILL.md#phases-detail-in-linked-files) (deep review / 9b).
 
 For other callers, **`/code-review`** is the eight-axis rubric pass (draft markdown before
 forge review comments) — [../code-review/workflow.md](../code-review/workflow.md).

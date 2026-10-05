@@ -10,7 +10,7 @@
 | Silent deferral of spec items | Report + user ack in PR ([spec-adherence.md](../spec-adherence.md)) |
 | Full-stack only, no isolation proof | [feature-gating.md](../feature-gating.md) in plan + slice |
 | `gh pr create` with summary-only body | `/pull-request` + [reviewer-friendly PR body](../../pull-request/references/reviewer-friendly-pr-body.md) |
-| `gh pr ready` without `/code-review` | [Phase 9b](../SKILL.md#phase-9-pull-request-draft-deep-code-review) |
+| `gh pr ready` without `/code-review` | [Phase 9b](../SKILL.md#phases-detail-in-linked-files) (item 8) |
 | User asked to run tests | Agent runs verify ([verification.md](../verification.md)) |
 | “Tests pass” with no command output | Evidence in [verification.md](../verification.md) |
 | Author self-review only, skip `/code-review` | Phase 9b vs [engineering-rubric.md](../engineering-rubric.md) |

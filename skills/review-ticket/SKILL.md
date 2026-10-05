@@ -24,7 +24,7 @@ disable-model-invocation: true
 # Review ticket
 
 **Invoke:** `/review-ticket` · **Companions:** `/handle-task`, `/create-ticket` ·
-**Entry:** read [workflow.md](workflow.md) in full.
+**Entry:** [workflow.md](workflow.md) by phase ([Load when](#load-when)).
 
 Load **`.handle-task/project.yaml`** first — schema in
 [../project-config.md](../handle-task/project-config.md).
@@ -37,7 +37,9 @@ LOAD CONFIG → FETCH TICKET → FOUR-POINT REVIEW → [SPLIT?] → BACKFILL →
 
 | Phase | Read | Defer |
 | ----- | ---- | ----- |
-| Start | [workflow.md](workflow.md), [quality-gate.md](quality-gate.md) | create-ticket, handle-task |
+| Start | This file, [quality-gate.md](quality-gate.md) | create-ticket, handle-task |
+| Review | [workflow.md](workflow.md) Phases 1–2 | Backfill template until split/backfill phase |
+| Backfill / split | workflow Phases 3–5 | handle-task implement docs |
 | Split | [../handle-task/subtask-template.md](../handle-task/subtask-template.md) | Only when scope gate fails |
 | Backfill | [../create-ticket/ticket-template.md](../create-ticket/ticket-template.md) | Full templates index |
 
