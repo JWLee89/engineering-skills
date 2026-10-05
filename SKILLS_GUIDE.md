@@ -13,6 +13,7 @@ Quick reference for agents and humans. **Install:** [README.md](README.md) · **
 | Review ticket | `/review-ticket` | [skills/review-ticket/](skills/review-ticket/) | Four-point ticket quality gate |
 | Create ticket | `/create-ticket` | [skills/create-ticket/](skills/create-ticket/) | Draft + create tracker issues |
 | Code review | `/code-review` | [skills/code-review/](skills/code-review/) | Deep PR rubric; draft before post |
+| Update skills | `/update-skills` | [skills/update-skills/](skills/update-skills/) | Rubric-gated add/change skills; PR feedback → SSOT |
 
 **Config (every target repo):** `.handle-task/project.yaml` — see [project-config.md](skills/handle-task/project-config.md).
 
@@ -36,6 +37,9 @@ PR exists and needs deep review?
 
 Trivial one-file fix, no tracker?
   └─ Skip full handle-task; optional light self-review
+
+Add or change a catalog skill?
+  └─ /update-skills (intent approval before edits)
 ```
 
 ---

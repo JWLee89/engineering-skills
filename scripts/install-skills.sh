@@ -24,6 +24,7 @@
 #   /create-ticket      → skills/create-ticket/
 #   /review-ticket      → skills/review-ticket/
 #   /code-review        → skills/code-review/
+#   /update-skills      → skills/update-skills/
 #
 # Environment:
 #   SKILLS_ROOT  Override repo root (default: parent of scripts/)
@@ -40,7 +41,7 @@ DO_INSTALL_HOOK=false
 DO_REMOVE_HOOK=false
 QUIET=false
 
-SKILL_NAMES=(handle-task pull-request create-ticket review-ticket code-review)
+SKILL_NAMES=(handle-task pull-request create-ticket review-ticket code-review update-skills)
 LEGACY_SKILLS=(
   modelops modelops-workflow modelops-skill handle-task-workflow create-jira-ticket
   make-pull-request
@@ -107,6 +108,7 @@ PULL_REQUEST_DIR="${SKILLS_ROOT}/skills/pull-request"
 CREATE_TICKET_DIR="${SKILLS_ROOT}/skills/create-ticket"
 REVIEW_TICKET_DIR="${SKILLS_ROOT}/skills/review-ticket"
 CODE_REVIEW_DIR="${SKILLS_ROOT}/skills/code-review"
+UPDATE_SKILLS_DIR="${SKILLS_ROOT}/skills/update-skills"
 MANIFEST="${HOME}/.config/handle-task-skills/source"
 HOOK_MARKER="# handle-task-skills-sync (managed by install-skills.sh)"
 HOOK_SCRIPT="${SKILLS_ROOT}/scripts/sync-skills-hook.sh"
@@ -136,6 +138,7 @@ skill_source_dir() {
     create-ticket) printf '%s\n' "${CREATE_TICKET_DIR}" ;;
     review-ticket) printf '%s\n' "${REVIEW_TICKET_DIR}" ;;
     code-review) printf '%s\n' "${CODE_REVIEW_DIR}" ;;
+    update-skills) printf '%s\n' "${UPDATE_SKILLS_DIR}" ;;
     *)
       echo "error: unknown skill: $1" >&2
       exit 1
@@ -165,6 +168,7 @@ write_manifest() {
     echo "create_ticket_dir=${CREATE_TICKET_DIR}"
     echo "review_ticket_dir=${REVIEW_TICKET_DIR}"
     echo "code_review_dir=${CODE_REVIEW_DIR}"
+    echo "update_skills_dir=${UPDATE_SKILLS_DIR}"
     echo "install_cursor=${INSTALL_CURSOR}"
     echo "install_claude=${INSTALL_CLAUDE}"
     echo "updated_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")"

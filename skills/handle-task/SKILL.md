@@ -70,7 +70,8 @@ Optional: `/create-ticket` → [create-ticket/workflow.md](../create-ticket/work
 | ADRs / wire formats | [documentation-and-adrs.md](documentation-and-adrs.md) |
 | Author self-review | [engineering-rubric.md](engineering-rubric.md) ([code-review.md](code-review.md) pointer) |
 | Perf | [performance-optimization.md](performance-optimization.md) |
-| Skill fixes | [self-improvement.md](self-improvement.md) |
+| Skill fixes (reactive) | [self-improvement.md](self-improvement.md) |
+| Skillbase add/change | [update-skills/SKILL.md](../update-skills/SKILL.md) |
 | Orchestrator anti-patterns | [references/anti-patterns.md](references/anti-patterns.md) |
 
 ## Artifacts
