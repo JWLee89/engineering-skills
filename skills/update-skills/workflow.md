@@ -34,7 +34,7 @@ Before proposing edits:
 
 1. Read **`SKILL.md`** for each affected skill (orchestrator only).
 2. Read **only** delegates the change touches (workflow, rubric, templates).
-3. Skim [SKILLS_GUIDE.md](../../SKILLS_GUIDE.md) and [README.md](../../README.md) if adding/renameing an invokable skill.
+3. Skim [SKILLS_GUIDE.md](../../SKILLS_GUIDE.md) and [README.md](../../README.md) if adding/renaming an invokable skill.
 4. Summarize in **≤10 bullets**: purpose, SSOT files, triggers, overlaps with other skills.
 
 Do **not** load the full handle-task bundle unless the change is inside `skills/handle-task/`.

@@ -4,6 +4,8 @@ Run **before** drafting patches. If **any** row applies, do **not** add the prop
 
 Answer each question **yes/no** with one line of evidence.
 
+**Pass:** all six answers are **no** (nothing triggers exclusion). **Blocked:** any **yes** — do not add unless the user explicitly overrides after you explain the risk.
+
 | # | Question | If **yes** → action |
 | - | -------- | ------------------- |
 | 1 | **Does the agent already do this?** (default behavior, system rules, or existing skill phase) | Do not duplicate; link SSOT or skip |
