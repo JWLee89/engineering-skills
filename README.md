@@ -18,6 +18,7 @@ Per-project settings go in your target repo as **`.handle-task/project.yaml`**.
 | Create ticket | `/create-ticket` | [skills/create-ticket/](skills/create-ticket/) | Draft + create well-documented tickets |
 | Review ticket | `/review-ticket` | [skills/review-ticket/](skills/review-ticket/) | Four-point quality gate, backfill, scope |
 | Code review | `/code-review` | [skills/code-review/](skills/code-review/) | Deep PR rubric, draft review before post |
+| Update skills | `/update-skills` | [skills/update-skills/](skills/update-skills/) | Add/modify catalog skills with rubric gates |
 
 ## Quick start
 

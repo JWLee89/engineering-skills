@@ -25,6 +25,7 @@
 | `/create-ticket` | Draft + create tracker issue |
 | `/review-ticket` | Four-point ticket gate, backfill, split |
 | `/code-review` | Deep PR review (mandatory handle-task Phase 9b before ready) |
+| `/update-skills` | Add or modify catalog skills (intent gate before edits) |
 
 **Folder:** `skills/handle-task/` · **Name:** `handle-task` from [SKILL.md](SKILL.md) frontmatter.
 

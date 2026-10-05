@@ -4,6 +4,8 @@ Standalone delegate for `/handle-task` and `/pull-request`. Keeps the skill bund
 **accurate, concise, and effective** over time. Implementation/review criteria live in
 [engineering-rubric.md](engineering-rubric.md) and [code-review/rubric.md](../code-review/rubric.md) — patch those SSOTs when process gaps are rubric gaps.
 
+For **deliberate** new skills or catalog-wide edits (rubrics, PR feedback mining, installer/catalog updates), use **`/update-skills`** — [../update-skills/SKILL.md](../update-skills/SKILL.md).
+
 ## When to run
 
 | Trigger | Example |
