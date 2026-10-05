@@ -2,7 +2,7 @@
 
 Copy for Phase 4 of [workflow.md](../workflow.md). Default path: `code-review-PR-<num>.md` (repo root or `/tmp/`).
 
-```markdown
+````markdown
 # Code review: PR #<num> — <title>
 
 **PR:** <url>
@@ -61,6 +61,6 @@ Copy for Phase 4 of [workflow.md](../workflow.md). Default path: `code-review-PR
 
 ## Pre-existing issues noticed (not blocking unless PR regresses)
 …
-```
+````
 
 After draft: **stop** for user approval before forge publish ([workflow.md Phase 5](../workflow.md#phase-5-publish-only-after-user-approval)).

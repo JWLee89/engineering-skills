@@ -38,10 +38,9 @@ LOAD CONFIG → FETCH TICKET → FOUR-POINT REVIEW → [SPLIT?] → BACKFILL →
 | Phase | Read | Defer |
 | ----- | ---- | ----- |
 | Start | This file, [quality-gate.md](quality-gate.md) | create-ticket, handle-task |
-| Review | [workflow.md](workflow.md) Phases 1–2 | Backfill template until split/backfill phase |
-| Backfill / split | workflow Phases 3–5 | handle-task implement docs |
-| Split | [../handle-task/subtask-template.md](../handle-task/subtask-template.md) | Only when scope gate fails |
-| Backfill | [../create-ticket/ticket-template.md](../create-ticket/ticket-template.md) | Full templates index |
+| Review | [workflow.md](workflow.md) Phases 1–2 | Split/backfill templates until scope fails |
+| Split | [workflow.md](workflow.md) Phase 3 + [../handle-task/subtask-template.md](../handle-task/subtask-template.md) | handle-task implement docs |
+| Backfill | [workflow.md](workflow.md) Phases 4–5 + [../create-ticket/ticket-template.md](../create-ticket/ticket-template.md) | Full templates index |
 
 ## Single source of truth
 

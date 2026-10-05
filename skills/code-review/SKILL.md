@@ -94,7 +94,8 @@ main. Be **kind and respectful** — reviews should improve the code while the a
 
 ## See also
 
-- [workflow.md](workflow.md) — phases, commands, draft template, publish rules
+- [workflow.md](workflow.md) — phases, commands, publish rules
+- [references/report-template.md](references/report-template.md) — draft review structure (Phase 4)
 - [rubric.md](rubric.md) — review criteria (single source of truth)
 - [../issue-tracker-adapters.md](../handle-task/issue-tracker-adapters.md) — linked work items by tracker type
 - [../documentation-and-adrs.md](../handle-task/documentation-and-adrs.md) — ADRs and wire-format conventions

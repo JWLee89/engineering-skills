@@ -215,7 +215,7 @@ ______________________________________________________________________
 | Use last week's spec from chat | Phase 0 — re-fetch work items |
 | Post review before user reads draft | Phase 4 gate |
 | Push fix commits during review | Phase 5 — review only |
-| Findings without links/snippets | Phase 3 template |
+| Findings without links/snippets | [report-template.md](references/report-template.md) + Phase 3 rules |
 | Skip axes 4–8 on "small" PRs | Full [rubric.md](rubric.md) |
 | Duplicate rubric in PR comment | Link to draft file or summarize findings only |
 | Harsh or personal tone | [rubric.md](rubric.md) persona — critique code, encourage the author |
