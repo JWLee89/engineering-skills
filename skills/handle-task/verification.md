@@ -94,11 +94,28 @@ ______________________________________________________________________
 
 ## Test robustness
 
-- **Constants once** — shapes, keys, profiles at module top; fixtures and asserts use same names
-- **Parametrize** variant behavior
-- **Wire keys** — derive from `fields(Model)` / shared enums, not duplicated literals
+- **Constants once** — shared literals at module or fixture scope; tests reuse the same names
+- **Table-driven cases** for variant behavior (one test, many inputs)
+- **Wire keys** — derive from shared enums or schema constants, not duplicated literals
 
 Details: [engineering-rubric.md](engineering-rubric.md).
+
+## Patch coverage (PR diff)
+
+Many repos report **patch coverage** (lines touched in the PR that tests execute). Treat a low patch percentage as a gate before `/pull-request` ready.
+
+```
+- [ ] Run the same coverage command CI uses (see verify.commands / Makefile / CI workflow)
+- [ ] Every new/changed production module in the PR has tests that run in the default fast CI job
+- [ ] Optional dependencies: stub or mock at the test boundary — do not skip entire modules for core PR paths
+- [ ] Cover production failure modes: validation errors, skip paths, missing inputs, per-item loops
+- [ ] Avoid duplicate tests for the same behavior; prefer table-driven cases or one end-to-end chain
+- [ ] Prefer one strong test over several shallow copies of the same assertion
+```
+
+When tests are **skipped** because an optional dependency is absent, patch coverage for that
+production code often stays at 0% in the fast job — use shared test doubles, scoped mocks, or
+heavier-environment tests in the job that installs the real dependency.
 
 ______________________________________________________________________
 

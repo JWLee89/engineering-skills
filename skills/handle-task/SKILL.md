@@ -38,7 +38,7 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | Implementation spec | Before plan/code | [specify.md](specify.md) — explicit user approval |
 | Plan + todo | Before branch/code | [plan-and-tasks.md](plan-and-tasks.md) — explicit approval |
 | Feature isolation | Behavioral slices | [feature-gating.md](feature-gating.md) |
-| Agentic verify | Phase 8 | [verification.md](verification.md) |
+| Agentic verify | Phase 8 | [verification.md](verification.md) — incl. **patch coverage** on PR diff |
 | Deep code review | After draft PR | **`/code-review`** — [code-review/workflow.md](../code-review/workflow.md) |
 | Pull request | Phases 9–10 | **`/pull-request`** — [pull-request/workflow.md](../pull-request/workflow.md) |
 
