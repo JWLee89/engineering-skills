@@ -21,8 +21,10 @@ ______________________________________________________________________
 | TDD order | Behavioral changes: failing test first or co-evolved ([test-driven-development.md](test-driven-development.md)) |
 | Behavior vs implementation | Tests assert outcomes, not internal trivia |
 | Edge / error paths | Cover null, empty, boundaries, and handled failure modes |
+| Comprehensive coverage | Parametrize input classes so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
+| DRY test structure | Shared fixtures, table loops, `@pytest.mark.parametrize` — not duplicate test modules re-asserting the same contract |
 
-**Red flags:** production logic without tests for new behavior; "green" without spec traceability.
+**Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic.
 
 ### 2. Clarity & maintainability
 
@@ -31,10 +33,14 @@ ______________________________________________________________________
 | Naming | Matches project conventions (`memory.agent_guide`, existing modules) |
 | Simplicity | Prefer boring code; no unnecessary cleverness |
 | Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); extend before rewrite |
-| Minimal diff | Only what the task requires |
+| Minimal diff | Only what the task requires — no “nice to have” helpers, abstractions, or tests outside product boundary |
+| No unnecessary code | If logic exists upstream (merged PR / lib), call it; do not duplicate tables, skip wiring, or validation layers |
+| Simple production code | Prefer boring implementations; minimalism applies to **production** code, not to skipping edge-case tests |
 
 **Structural remedies:** dispatcher vs conditional chains; move feature logic to owning package;
 reuse canonical helper; split oversized files (~1000+ lines).
+
+**Reference shape:** thin library + immutable data + one exported function + tests that iterate the data and parametrize edge inputs.
 
 ### 3. Design & boundaries
 
