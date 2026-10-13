@@ -21,8 +21,8 @@ ______________________________________________________________________
 | TDD order | Behavioral changes: failing test first or co-evolved ([test-driven-development.md](test-driven-development.md)) |
 | Behavior vs implementation | Tests assert outcomes, not internal trivia |
 | Edge / error paths | Cover null, empty, boundaries, and handled failure modes |
-| Comprehensive coverage | Parametrize input classes so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
-| DRY test structure | Shared fixtures, table loops, `@pytest.mark.parametrize` — not duplicate test modules re-asserting the same contract |
+| Comprehensive coverage | Exercise each class of input (table-driven or parameterized cases) so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
+| DRY test structure | Shared fixtures, data tables, loops over case rows — not duplicate test modules re-asserting the same contract |
 
 **Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic.
 
@@ -40,7 +40,7 @@ ______________________________________________________________________
 **Structural remedies:** dispatcher vs conditional chains; move feature logic to owning package;
 reuse canonical helper; split oversized files (~1000+ lines).
 
-**Reference shape:** thin library + immutable data + one exported function + tests that iterate the data and parametrize edge inputs.
+**Reference shape:** thin library + immutable data + one exported function + tests that iterate the data and cover edge inputs via tables or parameterized cases.
 
 ### 3. Design & boundaries
 
@@ -93,7 +93,7 @@ When tests or APIs use structured records:
 | Problem | Remedy |
 | ------- | ------ |
 | Magic numbers in fixtures **and** separate asserts | Named constants; same names in fixture and assert |
-| Copy-pasted tests differing only by input | `@pytest.mark.parametrize` |
+| Copy-pasted tests differing only by input | One parameterized or table-driven test over case rows |
 | Wire keys repeated in fixture, assert, production | Derive from `fields(Model)` / `asdict()`; keys defined once in model module |
 
 Legacy aliases → **named constants** on the type or module. Details:

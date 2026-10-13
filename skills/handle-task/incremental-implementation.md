@@ -51,7 +51,7 @@ Keep **production** patches as small and boring as the spec allows. Prefer one p
 
 After REFACTOR, ask: **Can a reviewer understand this in one pass?** If not, delete or merge before opening the PR.
 
-**Tests are not “minimal” in coverage** — they should be **rigorous and comprehensive** for the slice (see below and [test-driven-development.md](test-driven-development.md)). Minimalism applies to **how** tests are written (DRY, parametrized), not **how much** behavior is exercised.
+**Tests are not “minimal” in coverage** — they should be **rigorous and comprehensive** for the slice (see below and [test-driven-development.md](test-driven-development.md)). Minimalism applies to **how** tests are written (DRY, table-driven, parameterized), not **how much** behavior is exercised.
 
 ## Rigorous tests (same slice)
 
@@ -62,7 +62,7 @@ Before GREEN is done for a logic slice:
 | Spec → test map | Every acceptance criterion has at least one test (or explicit deferral in spec) |
 | Happy path | At least one test per public outcome |
 | Edge / failure paths | Missing, empty, invalid, boundary values; mixed valid/invalid batches when applicable |
-| Regression guard | `@pytest.mark.parametrize` (or equivalent) for classes of inputs — avoid copy-paste cases that drift |
+| Regression guard | Table-driven or parameterized cases for each input class — avoid copy-paste cases that drift |
 | Table / data as SSOT | Loop over alias tables or golden rows where the data **is** the contract |
 | Stable assertions | Error messages via enums/constants shared with production when user-facing |
 
@@ -96,4 +96,4 @@ See [plan-and-tasks.md](plan-and-tasks.md).
 - Drive-by refactors outside scope
 - Duplicating fixtures or validation already owned by another module/ticket
 - Product-specific tests under shared packages (`common/`) when only one product needs the behavior
-- Skipping parametrized edge cases to “keep tests small”
+- Skipping parameterized edge cases to “keep tests small”
