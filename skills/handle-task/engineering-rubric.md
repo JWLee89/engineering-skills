@@ -34,6 +34,7 @@ ______________________________________________________________________
 | Simplicity | Prefer readable, boring code over clever or nested complexity |
 | Single purpose | Each function and object does or represents one job; split when responsibilities mix |
 | Small functions | Aim for ~15 lines per function body when feasible; extract helpers when a block is hard to follow |
+| Pure by default | Prefer functions that return results from inputs without hidden side effects; mutation only when OOP ownership makes in-place update clearer and **simplifies** data flow for the reader |
 | Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); call, extend, or refactor existing code before adding parallel implementations |
 | Minimal diff | Only what the task requires — no “nice to have” helpers, abstractions, or tests outside product boundary |
 | Shrink when safe | Delete unused code, flags, and dead paths in the same change when behavior is superseded |

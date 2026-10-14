@@ -44,8 +44,12 @@ Prefer **simplicity, readability, and maintainability** over clever or layered d
 
 Each function or type should **do or represent one thing**. When possible, keep function bodies **under ~15 lines** (excluding docstrings and blank lines); split or extract when logic branches or mixed concerns make a block hard to read — not to hit a number.
 
+Prefer **pure functions**: given the same inputs, return the same result without hidden side effects on shared state. Use **mutation** only when it clearly fits object-oriented design **and** a reader can see why in-place update is simpler than returning new values — it must **reduce** complexity in the system or data flow, not add surprise. When the codebase already favors immutability or copy-on-write, follow that pattern.
+
 | Prefer | Avoid |
 | ------ | ----- |
+| Pure transforms and explicit return values | Mutating arguments or globals for convenience |
+| Mutation on a well-named object lifecycle (e.g. build → calculate → read results) | In-place tweaks scattered across call chains |
 | One public entry point per slice | Frameworks, validator classes, or indirection for one call site |
 | Call or lightly extend an existing function | Re-implementing or renaming the same logic under a new symbol |
 | Reuse existing helpers (enums, wire keys, shared parsers) | Duplicate tables, validation, or skip wiring owned elsewhere |
@@ -104,3 +108,4 @@ See [plan-and-tasks.md](plan-and-tasks.md).
 - Skipping parameterized edge cases to “keep tests small”
 - Long functions mixing validation, I/O, and formatting — split by responsibility
 - Adding new modules when an existing function could be extended without breaking single-purpose design
+- Hidden mutation (inputs or shared state changed without obvious naming or ownership)

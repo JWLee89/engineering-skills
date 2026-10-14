@@ -25,7 +25,7 @@ Confirm the test **failed** (or would fail) before production code.
 ## GREEN — minimal code
 
 Only what makes RED pass. **Reuse** an existing function when a small extension fits single-purpose design; do not copy logic under a new name.
-Keep new functions short and focused; narrow public APIs; inject dependencies at edges.
+Keep new functions short and focused; prefer pure transforms unless mutation is the idiomatic, reader-obvious choice for that type; narrow public APIs; inject dependencies at edges.
 
 ## REFACTOR — with green tests
 
@@ -48,6 +48,7 @@ Discover from repo config (`verify.commands`, CI workflows, package scripts) —
 | Skip REFACTOR | Duplication compounds |
 | New code when extend would do | Extend or refactor the existing function |
 | Growing the codebase without deleting obsolete code | Remove superseded paths in the same slice |
+| Side-effect-heavy helpers | Return new values or use explicit object methods whose name signals mutation |
 | Same contract in unit + common + integration | One behavioral home per product boundary |
 
 After REFACTOR → [spec-adherence.md](spec-adherence.md) for the slice.
