@@ -92,6 +92,18 @@ After Phase 8, **`/pull-request`** opens a draft PR, then **`/code-review`** on 
 
 ______________________________________________________________________
 
+## Boundary moves (refactor slices)
+
+When symbols move between modules (layer consolidation, rename, or split):
+
+```
+- [ ] Searched repo for old import paths / package references; updated or removed stale callers
+- [ ] Scoped tests cover both validation and assembly paths that share extracted logic
+- [ ] Evidence notes import-layer check when the slice is refactor-only (no behavior change)
+```
+
+______________________________________________________________________
+
 ## Test robustness
 
 - **Constants once** — shared literals at module or fixture scope; tests reuse the same names

@@ -28,8 +28,8 @@ Search codebase first — **do not reinvent the wheel.**
 | --------- | ------ |
 | Existing code fits | Call it |
 | Close fit | Extend or parameterize |
-| Close fit but **stricter semantics** (e.g. “positive int” vs bare `int()`) | Add a **new named helper** (`_optional_positive_int`); do not silently change the old helper’s contract |
-| Value-level vs dict-level parsing | Share **value coercion** (`_positive_int_value`); keep dict/key helpers separate when callers need different missing vs invalid errors |
+| Close fit but **stricter semantics** (e.g. bounded positive number vs generic parse) | Add a **new named helper**; do not silently change the old helper’s contract |
+| Value-level vs record-level parsing | Share **value coercion**; keep record/key helpers separate when callers need different missing vs invalid errors |
 | Nothing fits | Add new — log what you searched |
 | Duplicate logic emerging | Refactor existing function for reuse, or extract — only if clarity improves |
 | Superseded by new behavior | Delete dead paths, flags, and helpers in the same slice when safe |
@@ -61,6 +61,24 @@ Prefer **pure functions**: given the same inputs, return the same result without
 | 1–2 focused commits before `/pull-request` | Many incremental “feat/test/docs” commits for one behavior |
 
 After REFACTOR, ask: **Can a reviewer understand this in one pass?** If not, delete, merge, or split before opening the PR.
+
+## Layer ownership (REFACTOR)
+
+When one module mixes **source/input modeling** with **output assembly** or **external serialization**, consolidate in REFACTOR (prefer the same slice as the behavior change):
+
+| Concern | Belongs in | Typical responsibilities |
+| ------- | ---------- | ------------------------ |
+| Domain / source model | Module that owns the raw input contract | Schema keys, typed fragments, parse, coerce, validate |
+| Assembly / adapter | Module that owns the handoff to the next system | Map pipeline entities → output records; serialize wire/API shape |
+
+| Rule | Action |
+| ---- | ------ |
+| Dependency direction | Assembly imports domain; domain must not import assembly (no cycles). |
+| One resolution path | If validation and mapping read the same field (including aliases), extract one shared resolver — do not duplicate branches. |
+| Move completely | Relocate symbols to the owning module; search the repo for old import paths and update callers in the same change. |
+| Public surface | Prefer canonical imports over re-export shims unless a stable API must outlive a deprecation window. |
+
+Log non-obvious boundary moves in `memory.decisions`.
 
 **Tests are not “minimal” in coverage** — they should be **rigorous and comprehensive** for the slice (see below and [test-driven-development.md](test-driven-development.md)). Minimalism applies to **how** tests are written (DRY, table-driven, parameterized), not **how much** behavior is exercised.
 
@@ -95,6 +113,7 @@ See [plan-and-tasks.md](plan-and-tasks.md).
 - [ ] FEATURE GATE passed or skip documented ([feature-gating.md](feature-gating.md))
 - [ ] Spec adherence for slice — no Blocker gaps ([spec-adherence.md](spec-adherence.md))
 - [ ] Scoped verify command passed (agent executed; summary captured)
+- [ ] After module moves: dependency direction respected; old import paths grep-clean; tests use canonical modules
 - [ ] User notified if spec gaps found and fixed or deferred
 
 ## Anti-patterns
