@@ -52,7 +52,10 @@ Prefer **pure functions**: given the same inputs, return the same result without
 | ------ | ----- |
 | Pure transforms and explicit return values | Mutating arguments or globals for convenience |
 | Mutation on a well-named object lifecycle (e.g. build → calculate → read results) | In-place tweaks scattered across call chains |
-| One public entry point per slice | Frameworks, validator classes, or indirection for one call site |
+| One public entry point per slice | Frameworks or indirection for one call site |
+| Explicit validation steps per group | Registry-driven loops when rules still differ per field ([design-tradeoffs.md](design-tradeoffs.md)) |
+| Named resolver for legacy alias | Generic callback readers that hide which field is read |
+| Production shipping shape | Milestone-only flags or RC placeholders in code ([design-tradeoffs.md](design-tradeoffs.md#production-vs-milestone-wording)) |
 | Call or lightly extend an existing function | Re-implementing or renaming the same logic under a new symbol |
 | Reuse existing helpers (enums, wire keys, shared parsers) | Duplicate tables, validation, or skip wiring owned elsewhere |
 | Shared test fixtures (one definition in test helpers) | Same valid-input dict copied in unit + integration files |
@@ -91,6 +94,7 @@ Before GREEN is done for a logic slice:
 | Spec → test map | Every acceptance criterion has at least one test (or explicit deferral in spec) |
 | Happy path | At least one test per public outcome |
 | Edge / failure paths | Missing, empty, invalid, boundary values; mixed valid/invalid batches when applicable |
+| Realistic / stress rows | Parameterized cases mirror real payloads and robustness scenarios — not trivial permutations |
 | Regression guard | Table-driven or parameterized cases for each input class — avoid copy-paste cases that drift |
 | Table / data as SSOT | Loop over alias tables or golden rows where the data **is** the contract |
 | Stable assertions | Error messages via enums/constants shared with production when user-facing |
@@ -130,3 +134,6 @@ See [plan-and-tasks.md](plan-and-tasks.md).
 - Long functions mixing validation, I/O, and formatting — split by responsibility
 - Adding new modules when an existing function could be extended without breaking single-purpose design
 - Hidden mutation (inputs or shared state changed without obvious naming or ownership)
+- Over-abstracting validation to “derive everything from the registry” when humans must read the handler to see behavior
+- Registry constant mistaken for a default value on missing payload fields
+- Coding to milestone/RC gates instead of production behavior ([design-tradeoffs.md](design-tradeoffs.md))

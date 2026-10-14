@@ -100,6 +100,19 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
+## Safe description updates (Jira / GitHub body)
+
+Ticket **description** updates are destructive if sent as a full replace without the current text.
+
+| Step | Action |
+| ---- | ------ |
+| 1 | **Fetch** current description (`jira_get_issue` / `gh issue view --json body`) |
+| 2 | **Merge** — append new sections or edit targeted paragraphs; preserve existing DoD, links, and history |
+| 3 | **Show diff** to the user when the change is non-trivial |
+| 4 | **Update** only after merge; if overwrite happened, restore from changelog/history then append |
+
+Prefer **`jira_add_comment`** for push/PR status when the description is already complete.
+
 ## Anti-patterns
 
 | Mistake | Fix |
@@ -108,3 +121,4 @@ ______________________________________________________________________
 | Inventing ticket keys before creation | Create via adapter; use returned key |
 | Skipping update when API unavailable | Present body diff; user applies in UI |
 | Synthetic sub-task branch names (`PROJ-100-a`) | Real child tickets only |
+| Blanket `jira_update_issue` description replace | Fetch → merge → append ([Safe description updates](#safe-description-updates-jira--github-body)) |

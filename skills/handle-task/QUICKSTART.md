@@ -45,6 +45,8 @@ Install (once): `./scripts/install-skills.sh` — symlinks to `~/.cursor/skills/
 | Spec + gate | [specify.md](specify.md) |
 | Plan + gate | [plan-and-tasks.md](plan-and-tasks.md) |
 | Implement + author quality | [engineering-rubric.md](engineering-rubric.md) |
+| Schema registry vs validation | [design-tradeoffs.md](design-tradeoffs.md) |
+| External schemas / ADRs | [documentation-and-adrs.md](documentation-and-adrs.md) |
 | Deep PR review | [code-review/rubric.md](../code-review/rubric.md) |
 | Verify | [verification.md](verification.md) |
 | PR phases | [pull-request/workflow.md](../pull-request/workflow.md) |

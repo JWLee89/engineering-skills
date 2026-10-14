@@ -107,10 +107,11 @@ ______________________________________________________________________
 ## Test robustness
 
 - **Constants once** — shared literals at module or fixture scope; tests reuse the same names
-- **Table-driven cases** for variant behavior (one test, many inputs)
-- **Wire keys** — derive from shared enums or schema constants, not duplicated literals
+- **Table-driven cases** — one test, many inputs; each row must target a distinct branch, error, or realistic scenario ([test-driven-development.md](test-driven-development.md))
+- **External keys** — import from schema registry or shared constants, not duplicated literals
+- **Real-world shape** — fixtures resemble integrator/client payloads; include partial/invalid mixes when validation is in scope
 
-Details: [engineering-rubric.md](engineering-rubric.md).
+Details: [engineering-rubric.md](engineering-rubric.md) · [design-tradeoffs.md](design-tradeoffs.md).
 
 ## Patch coverage (PR diff)
 

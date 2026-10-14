@@ -21,10 +21,11 @@ ______________________________________________________________________
 | TDD order | Behavioral changes: failing test first or co-evolved ([test-driven-development.md](test-driven-development.md)) |
 | Behavior vs implementation | Tests assert outcomes, not internal trivia |
 | Edge / error paths | Cover null, empty, boundaries, and handled failure modes |
-| Comprehensive coverage | Exercise each class of input (table-driven or parameterized cases) so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
+| Realistic & stress cases | Parameterized/table suites use **domain-realistic** inputs and **robustness** cases (partial records, messy types, batch mixes, boundary magnitudes) — not cosmetic variants of the happy path ([test-driven-development.md](test-driven-development.md)) |
+| Comprehensive coverage | Exercise each class of input so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
 | DRY test structure | Shared fixtures, data tables, loops over case rows — not duplicate test modules re-asserting the same contract |
 
-**Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic.
+**Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic; parameterized rows that only tweak trivial literals with no new branch or risk.
 
 ### 2. Clarity & maintainability
 
@@ -58,14 +59,18 @@ Pragmatic [SOLID](https://www.designgurus.io/course-play/grokking-solid-design-p
 | **I** | Narrow public APIs |
 | **D** | Inject abstractions at boundaries; test with fakes |
 
-New abstraction only when duplication removal **and** clarity both improve. Single source of truth
-for constants and wire keys.
+Introduce abstractions when they improve maintainability and reasoning — document benefits when
+complexity is justified ([design-tradeoffs.md](design-tradeoffs.md)). Single source of truth for
+external field names and shared constants.
 
 | Check | Action |
 | ----- | ------ |
 | Layer separation | Keep domain parse/validate/constants separate from record assembly and external serialization |
 | Shared field logic | One resolver when validation and mapping read the same source field (including aliases) |
 | Import graph | Assembly → domain only; update all callers when symbols move; avoid permanent re-export shims |
+| Registry vs rules | Field registry for SSOT and introspection; **validation explicit** when rules diverge ([design-tradeoffs.md](design-tradeoffs.md)) |
+| Indirection | Avoid generic callbacks/readers where the signature hides which field or alias is read — prefer named helpers |
+| Ship for production | No milestone-only placeholders in code/API; tracker may describe phases ([design-tradeoffs.md](design-tradeoffs.md#production-vs-milestone-wording)) |
 
 ### 4. Security & data
 
@@ -96,17 +101,17 @@ Not every PR needs every row — skip rows clearly out of scope and say so in th
 
 ______________________________________________________________________
 
-## Testing & wire formats (Python / typed models)
+## Testing & structured contracts
 
 When tests or APIs use structured records:
 
 | Problem | Remedy |
 | ------- | ------ |
-| Magic numbers in fixtures **and** separate asserts | Named constants; same names in fixture and assert |
-| Copy-pasted tests differing only by input | One parameterized or table-driven test over case rows |
-| Wire keys repeated in fixture, assert, production | Derive from `fields(Model)` / `asdict()`; keys defined once in model module |
+| Magic literals in fixtures **and** separate asserts | Named constants; same names in fixture and assert |
+| Copy-pasted tests differing only by input | One parameterized or table-driven test — rows must be **meaningful** (see axis 1) |
+| External keys repeated in fixture, assert, production | Import from the schema registry or shared constants module |
 
-Legacy aliases → **named constants** on the type or module. Details:
+Legacy aliases → **named resolver** shared by tests and production. Details:
 [documentation-and-adrs.md](documentation-and-adrs.md) · [verification.md](verification.md#test-robustness).
 
 ______________________________________________________________________

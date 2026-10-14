@@ -75,14 +75,19 @@ the user-level `documentation-and-adrs` skill; this file is the handle-task dele
 
 ## Schema and external formats
 
-- Prefer model or type field names as the canonical key list; derive serializers and tests from them
-- Named mapping tables only when internal and external names intentionally differ
-- One canonical list for path rules, constants, or enums — generate consumers when needed
+- One canonical registry for external field names (and optional metadata: required, deprecated, group)
+- Internal names may differ — use explicit mapping tables only when intentional
+- **Derive introspection** from the registry (required-field lists, OpenAPI fragments, contract tests) when that stays in sync without hiding behavior
+- **Validation logic** may stay explicit per group when rules differ — see [design-tradeoffs.md](design-tradeoffs.md#schema-registry-vs-validation-rules)
+
+Registry field values are usually **external key strings**, not default payload values for missing data.
 
 ## Anti-patterns
 
 - Comments that narrate obvious code
 - Duplicated field lists in model, serializer, and tests
+- Type-tag dispatch that still branches per field — prefer explicit validators or justify the abstraction ([design-tradeoffs.md](design-tradeoffs.md))
+- Generic callback readers when a named resolver or inline read is clearer at the call site
 - Retroactive task files for completed work
 - Committing local `tasks/` specs
 - New modules when extending existing code would suffice
