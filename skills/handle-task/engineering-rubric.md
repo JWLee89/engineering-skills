@@ -21,20 +21,30 @@ ______________________________________________________________________
 | TDD order | Behavioral changes: failing test first or co-evolved ([test-driven-development.md](test-driven-development.md)) |
 | Behavior vs implementation | Tests assert outcomes, not internal trivia |
 | Edge / error paths | Cover null, empty, boundaries, and handled failure modes |
+| Comprehensive coverage | Exercise each class of input (table-driven or parameterized cases) so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
+| DRY test structure | Shared fixtures, data tables, loops over case rows — not duplicate test modules re-asserting the same contract |
 
-**Red flags:** production logic without tests for new behavior; "green" without spec traceability.
+**Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic.
 
 ### 2. Clarity & maintainability
 
 | Check | Action |
 | ----- | ------ |
 | Naming | Matches project conventions (`memory.agent_guide`, existing modules) |
-| Simplicity | Prefer boring code; no unnecessary cleverness |
-| Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); extend before rewrite |
-| Minimal diff | Only what the task requires |
+| Simplicity | Prefer readable, boring code over clever or nested complexity |
+| Single purpose | Each function and object does or represents one job; split when responsibilities mix |
+| Small functions | Aim for ~15 lines per function body when feasible; extract helpers when a block is hard to follow |
+| Pure by default | Prefer functions that return results from inputs without hidden side effects; mutation only when OOP ownership makes in-place update clearer and **simplifies** data flow for the reader |
+| Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); call, extend, or refactor existing code before adding parallel implementations |
+| Minimal diff | Only what the task requires — no “nice to have” helpers, abstractions, or tests outside product boundary |
+| Shrink when safe | Delete unused code, flags, and dead paths in the same change when behavior is superseded |
+| No unnecessary code | If logic exists upstream (merged PR / lib), call it; do not duplicate tables, skip wiring, or validation layers |
+| Simple production code | Minimalism applies to **production** code, not to skipping edge-case tests |
 
 **Structural remedies:** dispatcher vs conditional chains; move feature logic to owning package;
 reuse canonical helper; split oversized files (~1000+ lines).
+
+**Reference shape:** thin library + immutable data + one exported function + tests that iterate the data and cover edge inputs via tables or parameterized cases.
 
 ### 3. Design & boundaries
 
@@ -42,7 +52,7 @@ Pragmatic [SOLID](https://www.designgurus.io/course-play/grokking-solid-design-p
 
 | Principle | Practice |
 | --------- | -------- |
-| **S** | One reason to change per unit |
+| **S** | One reason to change per unit — one function, one outcome |
 | **O** | Extend via types/composition, not editing stable core for every variant |
 | **L** | Subtypes honor contracts |
 | **I** | Narrow public APIs |
@@ -87,7 +97,7 @@ When tests or APIs use structured records:
 | Problem | Remedy |
 | ------- | ------ |
 | Magic numbers in fixtures **and** separate asserts | Named constants; same names in fixture and assert |
-| Copy-pasted tests differing only by input | `@pytest.mark.parametrize` |
+| Copy-pasted tests differing only by input | One parameterized or table-driven test over case rows |
 | Wire keys repeated in fixture, assert, production | Derive from `fields(Model)` / `asdict()`; keys defined once in model module |
 
 Legacy aliases → **named constants** on the type or module. Details:
