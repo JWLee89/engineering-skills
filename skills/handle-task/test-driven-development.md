@@ -11,14 +11,16 @@ Derive tests from todo **acceptance criteria** and spec scenarios:
 
 1. Match neighboring test layout and fixtures
 2. **Happy path** plus **edge and failure paths** (missing, empty, invalid, boundary, mixed batches)
-3. **Table-driven or parameterized cases** for every class of input (loop over rows or the project’s equivalent) — prevents copy-paste drift and guards against breaking changes
-4. Named constants / enums / shared loaders — no duplicated magic strings ([verification.md](verification.md))
-5. Reuse fixtures; one shared valid-input builder in the repo’s test helpers — extend before parallel inventing
-6. When data **is** the contract (alias maps, golden rows), **iterate the source table** in at least one test
+3. **Table-driven or parameterized cases** for every class of input — each row must exercise a **distinct outcome or risk**, not a cosmetic tweak
+4. **Realistic inputs** — shapes, sizes, and combinations that mirror production or integrator payloads (including partially filled records and sloppy types where the boundary allows)
+5. **Stress / robustness** — where spec implies it: large batches, repeated failures, alias vs canonical keys, concurrent or ordered edge sequences the domain cares about
+6. Named constants / enums / shared loaders — no duplicated magic strings ([verification.md](verification.md))
+7. Reuse fixtures; one shared valid-input builder in test helpers — extend before parallel inventing
+8. When data **is** the contract (alias maps, golden rows), **iterate the source table** in at least one test
 
 Confirm the test **failed** (or would fail) before production code.
 
-**Coverage bar:** non-trivial logic needs more than one test case — parameterized or table-driven suites count as rigorous coverage when they exercise distinct branches/outcomes.
+**Coverage bar:** non-trivial logic needs more than one meaningful case. Parameterized suites count as rigorous when rows map to **branches, error codes, or real-world scenarios** — not three obvious permutations of the same success path.
 
 **Bugs:** failing repro test before fix (Prove-It).
 
@@ -41,8 +43,9 @@ Discover from repo config (`verify.commands`, CI workflows, package scripts) —
 | Mistake | Fix |
 | ------- | --- |
 | Code before test | Stop at RED |
-| Happy path only | Add parameterized edge/failure cases from spec |
-| Copy-paste test cases | Table-driven or parameterized suite over case rows |
+| Happy path only | Add realistic edge/failure/stress cases from spec |
+| Copy-paste test cases | Table-driven suite — each row must justify its existence |
+| Trivial parameterized rows | Replace with domain-realistic fixtures and boundaries ([design-tradeoffs.md](design-tradeoffs.md#test-design-vs-production-design)) |
 | Tests assert internals not spec behavior | Assert outcomes from acceptance criteria |
 | Mock everything | Prefer production path where feasible |
 | Skip REFACTOR | Duplication compounds |

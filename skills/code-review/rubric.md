@@ -73,7 +73,7 @@ Apply **Clarity & maintainability** from [../engineering-rubric.md](../handle-ta
 
 **Reviewer focus:** Missing **why** comments on non-obvious rules; error-prone patterns (bare except, unchecked casts).
 
-Wire formats: [../documentation-and-adrs.md](../handle-task/documentation-and-adrs.md).
+External schemas & abstractions: [../handle-task/documentation-and-adrs.md](../handle-task/documentation-and-adrs.md) · [../handle-task/design-tradeoffs.md](../handle-task/design-tradeoffs.md).
 
 ______________________________________________________________________
 

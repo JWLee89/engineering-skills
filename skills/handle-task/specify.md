@@ -61,7 +61,9 @@ Write the spec **before** any plan or code. Use the [spec template](references/t
 | Testable acceptance criteria | Vague "make it work" |
 | Explicit out of scope | Scope creep by omission |
 | Links to existing code patterns | Greenfield assumptions without reading repo |
-| Wire keys from models ([engineering-rubric.md](engineering-rubric.md)) | Duplicated field-name lists |
+| External field names from schema SSOT ([design-tradeoffs.md](design-tradeoffs.md)) | Duplicated field-name lists |
+| In-scope behavior = **production shipping** shape; deferred work = separate ticket ([design-tradeoffs.md](design-tradeoffs.md#production-vs-milestone-wording)) | RC/milestone-only code paths in spec |
+| Test scenarios include realistic + stress cases ([test-driven-development.md](test-driven-development.md)) | Acceptance criteria with only happy-path checks |
 
 ### Naming convention
 
@@ -90,8 +92,9 @@ Every spec must include:
 Before writing, read relevant modules and adjacent patterns in the repo. Record
 **current state** and **expected file changes** in the spec — do not guess from the tracker alone.
 
-Wire formats and test patterns: [engineering-rubric.md](engineering-rubric.md) ·
-[documentation-and-adrs.md](documentation-and-adrs.md) · [verification.md](verification.md#test-robustness).
+External schemas, abstractions, and test patterns: [design-tradeoffs.md](design-tradeoffs.md) ·
+[engineering-rubric.md](engineering-rubric.md) · [documentation-and-adrs.md](documentation-and-adrs.md) ·
+[verification.md](verification.md#test-robustness).
 
 **Optional formal requirements:** when the user asks for EARS or numbered functional requirements,
 use [references/ears-syntax.md](references/ears-syntax.md) — default templates in

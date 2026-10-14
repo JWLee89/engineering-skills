@@ -1,6 +1,6 @@
 ---
 name: handle-task
-version: "1.0.0"
+version: "1.1.0"
 domain: workflow
 role: orchestrator
 scope: ticket-to-ship
@@ -53,7 +53,7 @@ Tracker issues: always **`/review-ticket`** in Phase 1. **Skip** full flow only 
 | Intake | This file, [review-ticket/workflow.md](../review-ticket/workflow.md) | `specify.md`, implement/PR/review workflows |
 | Specify | [specify.md](specify.md) + one [templates.md](templates.md) anchor | Plan, rubric, PR workflows |
 | Plan | [plan-and-tasks.md](plan-and-tasks.md) + plan/todo template anchors | PR/code-review until Phase 9 |
-| Implement | [incremental-implementation.md](incremental-implementation.md), [engineering-rubric.md](engineering-rubric.md), slice delegates from todo | Full [code-review/workflow.md](../code-review/workflow.md) |
+| Implement | [incremental-implementation.md](incremental-implementation.md), [engineering-rubric.md](engineering-rubric.md), [design-tradeoffs.md](design-tradeoffs.md), slice delegates from todo | Full [code-review/workflow.md](../code-review/workflow.md) |
 | Verify | [verification.md](verification.md), [spec-adherence.md](spec-adherence.md) | — |
 | Draft PR | [pull-request/workflow.md](../pull-request/workflow.md) Phases 0–4 + [pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md) | Later PR phases until ready; full rubric until `/code-review` |
 | Deep review | [code-review/workflow.md](../code-review/workflow.md), [code-review/rubric.md](../code-review/rubric.md) | — |
@@ -67,7 +67,9 @@ Optional: `/create-ticket` → [create-ticket/workflow.md](../create-ticket/work
 | Issue fetch | [issue-tracker-adapters.md](issue-tracker-adapters.md) · [issue-transitions.md](issue-transitions.md) |
 | Split / subtasks | [pr-splitting.md](pr-splitting.md) · [subtask-template.md](subtask-template.md) |
 | TDD | [test-driven-development.md](test-driven-development.md) |
-| ADRs / wire formats | [documentation-and-adrs.md](documentation-and-adrs.md) |
+| ADRs / external schemas | [documentation-and-adrs.md](documentation-and-adrs.md) |
+| Abstractions & tensions | [design-tradeoffs.md](design-tradeoffs.md) |
+| Tracker body updates | [issue-tracker-adapters.md](issue-tracker-adapters.md#safe-description-updates-jira--github-body) |
 | Author self-review | [engineering-rubric.md](engineering-rubric.md) ([code-review.md](code-review.md) pointer) |
 | Perf | [performance-optimization.md](performance-optimization.md) |
 | Skill fixes (reactive) | [self-improvement.md](self-improvement.md) |

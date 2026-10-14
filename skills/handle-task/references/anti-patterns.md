@@ -16,3 +16,7 @@
 | Author self-review only, skip `/code-review` | Phase 9b vs [engineering-rubric.md](../engineering-rubric.md) |
 | Read entire skill bundle at intake | [Lazy load](../SKILL.md#lazy-load-do-not-read-the-whole-bundle) |
 | Duplicate ticket/review criteria in SKILL | [quality-gate.md](../../review-ticket/quality-gate.md), [code-review/rubric.md](../../code-review/rubric.md) |
+| Over-abstract first pass; user asks to simplify | Simplify; patch [design-tradeoffs.md](../design-tradeoffs.md) if recurring ([self-improvement.md](../self-improvement.md)) |
+| Tracker description wiped on update | [issue-tracker-adapters.md](../issue-tracker-adapters.md#safe-description-updates-jira--github-body) |
+| RC/milestone placeholders in production code | [design-tradeoffs.md](../design-tradeoffs.md#production-vs-milestone-wording) — defer via ticket, ship production shape |
+| Parameterized tests with only obvious rows | [test-driven-development.md](../test-driven-development.md) — realistic + stress cases required |

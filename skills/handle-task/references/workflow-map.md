@@ -8,7 +8,7 @@ See [QUICKSTART.md](../QUICKSTART.md) and [SKILLS_GUIDE.md](../../../SKILLS_GUID
 3       specify.md      (local spec approved)
 4       plan-and-tasks.md (plan approved)
 5       pr-splitting.md (if oversized)
-6       implement + engineering-rubric.md
+6       implement + engineering-rubric.md + design-tradeoffs.md
 7       author rubric checklist
 8       /pull-request draft (Phases 1–4)
 9       /code-review → /pull-request ready

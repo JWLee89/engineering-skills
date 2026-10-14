@@ -13,6 +13,7 @@ For **deliberate** new skills or catalog-wide edits (rubrics, PR feedback mining
 | **Spec adherence gap** caused by missing skill guidance | Forgot to audit mixed-push scenario |
 | **User points out a flaw** | "You skipped TDD" / "Tests don't match spec" |
 | **User requests improvement** | "Add spec verification to implement phase" |
+| **User design review on branch** | "Does dynamic validation add value?" / simplify before merge |
 | **Repeated mistake** across sessions | Same anti-pattern in task logs |
 | **Post-mortem after bad PR** | CI scenario never tested though spec required it |
 
@@ -63,6 +64,8 @@ Tell the user what was wrong and what changed in the skill:
 
 > **Skill updated:** Added spec adherence audit to Phase 8 ([spec-adherence.md](spec-adherence.md)).
 > Reason: tests passed but mixed-push scenario from spec was untested.
+
+**Example:** User kept a field registry for contract tests but rejected generic validation dispatch — guidance added in [design-tradeoffs.md](design-tradeoffs.md).
 
 If the user owns `engineering-skills`, offer to open a PR (see below).
 
