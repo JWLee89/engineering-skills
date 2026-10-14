@@ -24,13 +24,13 @@ Confirm the test **failed** (or would fail) before production code.
 
 ## GREEN — minimal code
 
-Only what makes RED pass. Reuse or extend existing code — no renamed reimplementations.
-Narrow APIs; inject dependencies at edges.
+Only what makes RED pass. **Reuse** an existing function when a small extension fits single-purpose design; do not copy logic under a new name.
+Keep new functions short and focused; narrow public APIs; inject dependencies at edges.
 
 ## REFACTOR — with green tests
 
-Dedupe via reuse, not a second helper doing the same job. Log non-obvious forks in `memory.decisions`.
-After adding parameterized cases, remove redundant one-off tests that duplicate the same assertions.
+Dedupe via reuse, not a second helper doing the same job. Split or extract only when readability or single responsibility improves — prefer small functions over large blocks.
+Remove redundant tests after parameterized cases land; **delete** production code that is no longer reachable. Log non-obvious forks in `memory.decisions`.
 
 ## Test stack
 
@@ -46,6 +46,8 @@ Discover from repo config (`verify.commands`, CI workflows, package scripts) —
 | Tests assert internals not spec behavior | Assert outcomes from acceptance criteria |
 | Mock everything | Prefer production path where feasible |
 | Skip REFACTOR | Duplication compounds |
+| New code when extend would do | Extend or refactor the existing function |
+| Growing the codebase without deleting obsolete code | Remove superseded paths in the same slice |
 | Same contract in unit + common + integration | One behavioral home per product boundary |
 
 After REFACTOR → [spec-adherence.md](spec-adherence.md) for the slice.

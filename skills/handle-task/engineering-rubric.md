@@ -31,11 +31,14 @@ ______________________________________________________________________
 | Check | Action |
 | ----- | ------ |
 | Naming | Matches project conventions (`memory.agent_guide`, existing modules) |
-| Simplicity | Prefer boring code; no unnecessary cleverness |
-| Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); extend before rewrite |
+| Simplicity | Prefer readable, boring code over clever or nested complexity |
+| Single purpose | Each function and object does or represents one job; split when responsibilities mix |
+| Small functions | Aim for ~15 lines per function body when feasible; extract helpers when a block is hard to follow |
+| Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); call, extend, or refactor existing code before adding parallel implementations |
 | Minimal diff | Only what the task requires — no “nice to have” helpers, abstractions, or tests outside product boundary |
+| Shrink when safe | Delete unused code, flags, and dead paths in the same change when behavior is superseded |
 | No unnecessary code | If logic exists upstream (merged PR / lib), call it; do not duplicate tables, skip wiring, or validation layers |
-| Simple production code | Prefer boring implementations; minimalism applies to **production** code, not to skipping edge-case tests |
+| Simple production code | Minimalism applies to **production** code, not to skipping edge-case tests |
 
 **Structural remedies:** dispatcher vs conditional chains; move feature logic to owning package;
 reuse canonical helper; split oversized files (~1000+ lines).
@@ -48,7 +51,7 @@ Pragmatic [SOLID](https://www.designgurus.io/course-play/grokking-solid-design-p
 
 | Principle | Practice |
 | --------- | -------- |
-| **S** | One reason to change per unit |
+| **S** | One reason to change per unit — one function, one outcome |
 | **O** | Extend via types/composition, not editing stable core for every variant |
 | **L** | Subtypes honor contracts |
 | **I** | Narrow public APIs |
