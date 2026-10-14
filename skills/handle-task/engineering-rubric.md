@@ -61,6 +61,12 @@ Pragmatic [SOLID](https://www.designgurus.io/course-play/grokking-solid-design-p
 New abstraction only when duplication removal **and** clarity both improve. Single source of truth
 for constants and wire keys.
 
+| Check | Action |
+| ----- | ------ |
+| Layer separation | Keep domain parse/validate/constants separate from record assembly and external serialization |
+| Shared field logic | One resolver when validation and mapping read the same source field (including aliases) |
+| Import graph | Assembly → domain only; update all callers when symbols move; avoid permanent re-export shims |
+
 ### 4. Security & data
 
 - Validate input at boundaries; no secrets in code or logs
