@@ -28,6 +28,8 @@ Search codebase first — **do not reinvent the wheel.**
 | --------- | ------ |
 | Existing code fits | Call it |
 | Close fit | Extend or parameterize |
+| Close fit but **stricter semantics** (e.g. “positive int” vs bare `int()`) | Add a **new named helper** (`_optional_positive_int`); do not silently change the old helper’s contract |
+| Value-level vs dict-level parsing | Share **value coercion** (`_positive_int_value`); keep dict/key helpers separate when callers need different missing vs invalid errors |
 | Nothing fits | Add new — log what you searched |
 | Duplicate logic emerging | Refactor existing function for reuse, or extract — only if clarity improves |
 | Superseded by new behavior | Delete dead paths, flags, and helpers in the same slice when safe |
