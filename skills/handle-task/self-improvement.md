@@ -67,6 +67,8 @@ Tell the user what was wrong and what changed in the skill:
 
 **Example:** User kept a field registry for contract tests but rejected generic validation dispatch — guidance added in [design-tradeoffs.md](design-tradeoffs.md).
 
+**Example:** Introspection helpers had **zero production callers** — removed helpers and test-only registry class; dead-code sweep added to [incremental-implementation.md](incremental-implementation.md#dead-code-sweep-refactor).
+
 If the user owns `engineering-skills`, offer to open a PR (see below).
 
 ### 5. PR to engineering-skills (when user wants it persisted)

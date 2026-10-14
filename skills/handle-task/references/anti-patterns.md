@@ -20,3 +20,4 @@
 | Tracker description wiped on update | [issue-tracker-adapters.md](../issue-tracker-adapters.md#safe-description-updates-jira--github-body) |
 | RC/milestone placeholders in production code | [design-tradeoffs.md](../design-tradeoffs.md#production-vs-milestone-wording) — defer via ticket, ship production shape |
 | Parameterized tests with only obvious rows | [test-driven-development.md](../test-driven-development.md) — realistic + stress cases required |
+| Production code only used from tests | [incremental-implementation.md](../incremental-implementation.md#dead-code-sweep-refactor) — delete orphan + harness |

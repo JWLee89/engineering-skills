@@ -78,6 +78,8 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 | Delete legacy vs break clients | Keep legacy reads until migration ticket; delete dead code in the same change when safe |
 | Spec mentions phased delivery | Local spec lists in-scope vs deferred; production code matches in-scope **shipping** behavior |
 | User design review asks to simplify | Simplify first; update skills only if the mistake is recurring ([self-improvement.md](self-improvement.md)) |
+| “Might need later” vs delete now | Delete when no production caller; defer re-add via ticket if product asks |
+| More lines vs fewer lines (same spec) | Fewer — explicit code paths over unused introspection helpers |
 
 ## Anti-patterns
 
@@ -86,3 +88,5 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 - Milestone-only branches in production (`if rc1: …`) instead of feature flags with clear lifecycle or ticket deferral
 - Parameterized tests that restate the happy path with cosmetic input changes
 - Removing legacy aliases without ingest/client evidence
+- Shipping production helpers consumed **only** by unit tests (registry introspection with no integrator/runtime use)
+- Leaving superseded abstractions in place after switching to explicit logic “for documentation”

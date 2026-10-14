@@ -25,7 +25,7 @@ ______________________________________________________________________
 | Comprehensive coverage | Exercise each class of input so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
 | DRY test structure | Shared fixtures, data tables, loops over case rows — not duplicate test modules re-asserting the same contract |
 
-**Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic; parameterized rows that only tweak trivial literals with no new branch or risk.
+**Red flags:** production logic without tests for new behavior; "green" without spec traceability; happy-path-only tests for non-trivial logic; parameterized rows that only tweak trivial literals with no new branch or risk; production functions/constants **only referenced from tests** (delete or wire a real caller).
 
 ### 2. Clarity & maintainability
 
@@ -39,6 +39,8 @@ ______________________________________________________________________
 | Reuse | Search first ([incremental-implementation.md](incremental-implementation.md)); call, extend, or refactor existing code before adding parallel implementations |
 | Minimal diff | Only what the task requires — no “nice to have” helpers, abstractions, or tests outside product boundary |
 | Shrink when safe | Delete unused code, flags, and dead paths in the same change when behavior is superseded |
+| No orphan APIs | Before merge: every new or touched **production** symbol has a **non-test** caller, or delete it (and tests that only existed to lock the orphan) — see [incremental-implementation.md](incremental-implementation.md#dead-code-sweep-refactor) |
+| Fewer lines, same behavior | Prefer deleting superseded code over leaving “might be useful” helpers; meet requirements with the **smallest** clear surface ([design-tradeoffs.md](design-tradeoffs.md)) |
 | No unnecessary code | If logic exists upstream (merged PR / lib), call it; do not duplicate tables, skip wiring, or validation layers |
 | Simple production code | Minimalism applies to **production** code, not to skipping edge-case tests |
 
