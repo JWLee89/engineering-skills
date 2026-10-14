@@ -65,6 +65,23 @@ Prefer **pure functions**: given the same inputs, return the same result without
 
 After REFACTOR, ask: **Can a reviewer understand this in one pass?** If not, delete, merge, or split before opening the PR.
 
+## Dead code sweep (REFACTOR)
+
+After behavior changes, design simplification, or moving validation inline, **grep the repo** for symbols you added or superseded. Senior maintainers **reduce line count** where requirements are unchanged — unused code is confusion and debt.
+
+| Finding | Action |
+| ------- | ------ |
+| Production helper **only imported in tests** | Remove the helper **and** tests whose sole job was asserting that helper (unless it is a deliberate public contract — then document + real caller) |
+| Abstraction replaced by explicit steps | Delete the old dispatcher, registry tags, and introspection-only paths in the **same PR** |
+| Duplicate SSOT (two registries, two validators) | Keep one; delete the other |
+| Feature flag / milestone branch obsolete | Remove branch and tests tied only to that path |
+
+```
+DEAD CODE SWEEP: rg [symbol]; production callers: [paths | none → removed]
+```
+
+Log intentional public surface in PR body or `memory.decisions` when something looks unused but must stay exported.
+
 ## Layer ownership (REFACTOR)
 
 When one module mixes **source/input modeling** with **output assembly** or **external serialization**, consolidate in REFACTOR (prefer the same slice as the behavior change):
@@ -113,6 +130,7 @@ See [plan-and-tasks.md](plan-and-tasks.md).
 ## Slice checklist
 
 - [ ] REUSE CHECK stated
+- [ ] Dead code sweep — no production symbols with test-only callers ([dead-code-sweep-refactor](#dead-code-sweep-refactor))
 - [ ] RED → GREEN → REFACTOR ([test-driven-development.md](test-driven-development.md))
 - [ ] FEATURE GATE passed or skip documented ([feature-gating.md](feature-gating.md))
 - [ ] Spec adherence for slice — no Blocker gaps ([spec-adherence.md](spec-adherence.md))

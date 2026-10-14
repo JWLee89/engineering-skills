@@ -1,6 +1,6 @@
 ---
 name: handle-task
-version: "1.1.0"
+version: "1.1.1"
 domain: workflow
 role: orchestrator
 scope: ticket-to-ship

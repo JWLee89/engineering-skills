@@ -102,6 +102,17 @@ When symbols move between modules (layer consolidation, rename, or split):
 - [ ] Evidence notes import-layer check when the slice is refactor-only (no behavior change)
 ```
 
+## Dead code (refactor / simplify slices)
+
+Before Phase 8 handoff when the PR removed or replaced abstractions:
+
+```
+- [ ] Ripgrep touched public symbols — each has ≥1 non-test caller, or was deleted with its test-only harness
+- [ ] PR notes net line reduction when simplification was a goal (optional Δ stat)
+```
+
+Details: [incremental-implementation.md](incremental-implementation.md#dead-code-sweep-refactor).
+
 ______________________________________________________________________
 
 ## Test robustness
