@@ -49,6 +49,23 @@ reuse canonical helper; split oversized files (~1000+ lines).
 
 **Reference shape:** thin library + immutable data + one exported function + tests that iterate the data and cover edge inputs via tables or parameterized cases.
 
+### Intent-revealing helpers (production and tests)
+
+**Goal:** Make maintenance and code review **less taxing** — readers see **what contract holds** from names and reuse, not from decoding repeated lines.
+
+| Situation | Action |
+| --------- | ------ |
+| One **behavioral rule** appears in many places (branches, asserts, setup) | Extract a **named function** whose name states the rule — production helper, test util, or small method on the type that owns the behavior |
+| Several tests share the same **post-condition** after different inputs | Reuse one assertion helper (e.g. `assert_manufacturer_remains_identical`) or a table-driven suite; pair with a named helper for the **success** path when that clarifies intent (e.g. `assert_manufacturer_normalized_to`) |
+| Reviewer or author asks “why these lines?” | Prefer a named helper over comment-only explanation when the name can carry the contract |
+| Single call site, rule obvious in context | Inline is fine — do not extract for ceremony |
+
+**Production:** conditional updates, guard clauses, and “only mutate when X” policies benefit from named functions when reused or non-obvious (e.g. overwrite a wire field only when normalization succeeds).
+
+**Tests:** assert **outcomes** ([axis 1](#1-correctness--testing)); when the outcome *is* the contract (“raw input preserved on failure”), name that contract in the helper so each test reads as scenario + expected errors + **one intent line**.
+
+**Not the same as** a thin wrapper around a single built-in with **no added semantics** — see simplicity row in axis 2.
+
 ### 3. Design & boundaries
 
 Pragmatic [SOLID](https://www.designgurus.io/course-play/grokking-solid-design-principles/doc/solid-design-principles) — not pedantry:
@@ -111,6 +128,7 @@ When tests or APIs use structured records:
 | ------- | ------ |
 | Magic literals in fixtures **and** separate asserts | Named constants; same names in fixture and assert |
 | Copy-pasted tests differing only by input | One parameterized or table-driven test — rows must be **meaningful** (see axis 1) |
+| Same behavioral post-condition asserted many ways | Shared intent-revealing helper in test utils ([Intent-revealing helpers](#intent-revealing-helpers-production-and-tests)) |
 | External keys repeated in fixture, assert, production | Import from the schema registry or shared constants module |
 
 Legacy aliases → **named resolver** shared by tests and production. Details:
@@ -136,5 +154,6 @@ Before `/pull-request` ready gate:
 - [ ] Core axes 1–5 addressed for this diff
 - [ ] No drive-by refactors outside PR scope
 - [ ] Duplicated logic calls existing helpers
+- [ ] Repeated behavioral rules use intent-revealing names (production or tests), not copy-pasted asserts/branches
 - [ ] **Positive feedback:** note at least one thing the diff does well (for PR body or self-review)
 - [ ] Invoke **`/code-review`** on the task PR before `gh pr ready` ([SKILL.md](SKILL.md) Phase 9b)
