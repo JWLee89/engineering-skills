@@ -20,7 +20,7 @@ ______________________________________________________________________
 | Spec / acceptance | Every success criterion mapped to tests or explicit deferral ([spec-adherence.md](spec-adherence.md)) |
 | TDD order | Behavioral changes: failing test first or co-evolved ([test-driven-development.md](test-driven-development.md)) |
 | Behavior vs implementation | Tests assert outcomes, not internal trivia |
-| Edge / error paths | Cover null, empty, boundaries, and handled failure modes |
+| Edge / error paths | Cover null, empty, boundaries, and handled failure modes; use **expected-failure** tests where the contract is to throw or return a typed error ([test-driven-development.md](test-driven-development.md)) |
 | Realistic & stress cases | Parameterized/table suites use **domain-realistic** inputs and **robustness** cases (partial records, messy types, batch mixes, boundary magnitudes) — not cosmetic variants of the happy path ([test-driven-development.md](test-driven-development.md)) |
 | Comprehensive coverage | Exercise each class of input so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
 | DRY test structure | Shared fixtures, data tables, loops over case rows — not duplicate test modules re-asserting the same contract |
@@ -32,7 +32,7 @@ ______________________________________________________________________
 | Check | Action |
 | ----- | ------ |
 | Naming | Matches project conventions (`memory.agent_guide`, existing modules) |
-| Simplicity | Prefer readable, boring code over clever or nested complexity |
+| Simplicity | Prefer readable, boring code over clever or nested complexity; avoid helpers that only wrap a single built-in (e.g. dictionary lookup) when semantics match the built-in |
 | Single purpose | Each function and object does or represents one job; split when responsibilities mix |
 | Small functions | Aim for ~15 lines per function body when feasible; extract helpers when a block is hard to follow |
 | Pure by default | Prefer functions that return results from inputs without hidden side effects; mutation only when OOP ownership makes in-place update clearer and **simplifies** data flow for the reader |
