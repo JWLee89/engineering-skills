@@ -33,6 +33,7 @@ Keep new functions short and focused; prefer pure transforms unless mutation is 
 ## REFACTOR — with green tests
 
 Dedupe via reuse, not a second helper doing the same job. Split or extract only when readability or single responsibility improves — prefer small functions over large blocks.
+When one **behavioral contract** drove many line changes (especially asserts or “only update when …” branches), extract **intent-revealing** helpers so readers see purpose at a glance — production and test utils ([engineering-rubric.md](engineering-rubric.md#intent-revealing-helpers-production-and-tests)).
 Remove redundant tests after parameterized cases land; **delete** production code that is no longer reachable. Log non-obvious forks in `memory.decisions`.
 
 ## Test stack
@@ -50,6 +51,7 @@ Discover from repo config (`verify.commands`, CI workflows, package scripts) —
 | Tests assert internals not spec behavior | Assert outcomes from acceptance criteria |
 | Mock everything | Prefer production path where feasible |
 | Skip REFACTOR | Duplication compounds |
+| Many tests repeat the same assert for one rule | Named test helper (e.g. preserve raw on failure) + reuse |
 | New code when extend would do | Extend or refactor the existing function |
 | Thin wrapper around one built-in (e.g. map lookup with default) | Use the native API unless semantics truly differ |
 | Growing the codebase without deleting obsolete code | Remove superseded paths in the same slice |

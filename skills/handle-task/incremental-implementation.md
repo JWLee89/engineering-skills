@@ -65,6 +65,8 @@ Prefer **pure functions**: given the same inputs, return the same result without
 
 After REFACTOR, ask: **Can a reviewer understand this in one pass?** If not, delete, merge, or split before opening the PR.
 
+When a single behavioral change touched many similar lines, extract **intent-revealing** helpers (production or `tests/utils`) so the contract is named once — [engineering-rubric.md](engineering-rubric.md#intent-revealing-helpers-production-and-tests).
+
 ## Dead code sweep (REFACTOR)
 
 After behavior changes, design simplification, or moving validation inline, **grep the repo** for symbols you added or superseded. Senior maintainers **reduce line count** where requirements are unchanged — unused code is confusion and debt.
