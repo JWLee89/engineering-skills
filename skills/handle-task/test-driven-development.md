@@ -12,11 +12,12 @@ Derive tests from todo **acceptance criteria** and spec scenarios:
 1. Match neighboring test layout and fixtures
 2. **Happy path** plus **edge and failure paths** (missing, empty, invalid, boundary, mixed batches)
 3. **Table-driven or parameterized cases** for every class of input — each row must exercise a **distinct outcome or risk**, not a cosmetic tweak
-4. **Realistic inputs** — shapes, sizes, and combinations that mirror production or integrator payloads (including partially filled records and sloppy types where the boundary allows)
-5. **Stress / robustness** — where spec implies it: large batches, repeated failures, alias vs canonical keys, concurrent or ordered edge sequences the domain cares about
-6. Named constants / enums / shared loaders — no duplicated magic strings ([verification.md](verification.md))
-7. Reuse fixtures; one shared valid-input builder in test helpers — extend before parallel inventing
-8. When data **is** the contract (alias maps, golden rows), **iterate the source table** in at least one test
+4. **Explicit failure assertions** — when the contract is “this input must fail with error *E*” (validation, parse, I/O boundary), use the test runner’s **expected-failure** mechanism (assert that the call throws or returns a typed error), not only happy-path wrappers that accumulate errors. Cover failure modes in the same table-driven suites as success paths where the API throws; use outcome assertions on error collections only when the production API is intentionally non-throwing.
+5. **Realistic inputs** — shapes, sizes, and combinations that mirror production or integrator payloads (including partially filled records and sloppy types where the boundary allows)
+6. **Stress / robustness** — where spec implies it: large batches, repeated failures, alias vs canonical keys, concurrent or ordered edge sequences the domain cares about
+7. Named constants / enums / shared loaders — no duplicated magic strings ([verification.md](verification.md))
+8. Reuse fixtures; one shared valid-input builder in test helpers — extend before parallel inventing
+9. When data **is** the contract (alias maps, golden rows), **iterate the source table** in at least one test
 
 Confirm the test **failed** (or would fail) before production code.
 
@@ -50,6 +51,7 @@ Discover from repo config (`verify.commands`, CI workflows, package scripts) —
 | Mock everything | Prefer production path where feasible |
 | Skip REFACTOR | Duplication compounds |
 | New code when extend would do | Extend or refactor the existing function |
+| Thin wrapper around one built-in (e.g. map lookup with default) | Use the native API unless semantics truly differ |
 | Growing the codebase without deleting obsolete code | Remove superseded paths in the same slice |
 | Side-effect-heavy helpers | Return new values or use explicit object methods whose name signals mutation |
 | Same contract in unit + common + integration | One behavioral home per product boundary |
