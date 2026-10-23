@@ -30,6 +30,12 @@ verify:
   ci_workflows:
     - name: CI
       required: true
+  # Optional — [mutation-testing.md](../mutation-testing.md)
+  # mutation:
+  #   commands:
+  #     - mutmut run --paths-to-mutate src/my_module
+  #   scope:
+  #     - src/my_module/**
 
 integrations:
   issue_tracker:

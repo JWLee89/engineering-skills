@@ -117,8 +117,10 @@ Before GREEN is done for a logic slice:
 | Regression guard | Table-driven or parameterized cases for each input class — avoid copy-paste cases that drift |
 | Table / data as SSOT | Loop over alias tables or golden rows where the data **is** the contract |
 | Stable assertions | Error messages via enums/constants shared with production when user-facing |
+| Effectiveness | When `verify.mutation` is set, run scoped mutation after GREEN and kill survivors with stronger outcome tests ([mutation-testing.md](mutation-testing.md)) |
 
 Anti-pattern: one happy-path test only. Anti-pattern: three test files asserting the same contract.
+Anti-pattern: green patch coverage with survivors on changed logic and no follow-up tests.
 
 ## Design & quality
 
