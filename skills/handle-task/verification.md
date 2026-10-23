@@ -32,6 +32,7 @@ For each proof, capture **at least one** of:
 | ------------- | -------------- |
 | **Test run** | Exact command, exit code, final summary line (e.g. `N passed`, `OK`, `SUCCESS`) |
 | **Coverage** | Command + relevant line/branch % or “covers `path/to/module.py`” from report |
+| **Mutation** | Scoped command + mutation score or survivor count; note tests added for survivors ([mutation-testing.md](mutation-testing.md)) |
 | **Smoke / script** | Command + stdout snippet showing success or key assertion |
 | **Integration** | Parametrized test node ids or case names that passed |
 | **CI** | Workflow name + run URL (after push); link in PR body |
@@ -51,7 +52,7 @@ Store summaries in:
 ### Proof strength (prefer higher when feasible)
 
 ```
-Strong:  failing RED → GREEN history + isolation gate + integration/smoke + lint
+Strong:  failing RED → GREEN history + isolation gate + mutation (when configured) on changed modules + integration/smoke + lint
 Good:    scoped pytest/npm with summary + spec matrix ✅
 Weak:    “looks correct” / typecheck only for behavioral change  → do not stop here
 ```
@@ -80,6 +81,7 @@ ______________________________________________________________________
 - [ ] Feature isolation gates re-run where applicable ([feature-gating.md](feature-gating.md))
 - [ ] Agentic validation bundle complete (commands run + evidence recorded)
 - [ ] Scoped tests pass
+- [ ] Mutation testing on changed production code when `verify.mutation` is configured ([mutation-testing.md](mutation-testing.md))
 - [ ] Lint / typecheck / hooks (verify.hooks)
 - [ ] No local spec files staged
 - [ ] Task memory updated
@@ -117,6 +119,10 @@ ______________________________________________________________________
 
 ## Test robustness
 
+**Goal:** tests that **detect bugs**, not only execute lines. Line and patch coverage are
+**necessary, not sufficient** — use [mutation-testing.md](mutation-testing.md) when the project
+configures it.
+
 - **Constants once** — shared literals at module or fixture scope; tests reuse the same names
 - **Table-driven cases** — one test, many inputs; each row must target a distinct branch, error, or realistic scenario ([test-driven-development.md](test-driven-development.md))
 - **External keys** — import from schema registry or shared constants, not duplicated literals
@@ -128,7 +134,8 @@ Details: [engineering-rubric.md](engineering-rubric.md) · [design-tradeoffs.md]
 
 Many repos report **patch coverage** (lines touched in the PR that tests execute). Treat a
 **Codecov (or equivalent) patch report with uncovered lines on the PR diff** as a gate before
-`gh pr ready` — not only “project coverage” green.
+`gh pr ready` — not only “project coverage” green. Patch % does **not** prove tests would fail on
+logic bugs; pair with mutation testing when configured ([mutation-testing.md](mutation-testing.md)).
 
 ```
 - [ ] Run the same coverage command CI uses (see verify.commands / Makefile / CI workflow)

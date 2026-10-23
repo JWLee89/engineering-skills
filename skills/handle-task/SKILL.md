@@ -1,6 +1,6 @@
 ---
 name: handle-task
-version: "1.1.2"
+version: "1.1.3"
 domain: workflow
 role: orchestrator
 scope: ticket-to-ship
@@ -38,7 +38,7 @@ INTAKE → /review-ticket ✓ → SPECIFY → SPEC ✓ → PLAN → PLAN ✓ →
 | Implementation spec | Before plan/code | [specify.md](specify.md) — explicit user approval |
 | Plan + todo | Before branch/code | [plan-and-tasks.md](plan-and-tasks.md) — explicit approval |
 | Feature isolation | Behavioral slices | [feature-gating.md](feature-gating.md) |
-| Agentic verify | Phase 8 | [verification.md](verification.md) — incl. **patch coverage** on PR diff |
+| Agentic verify | Phase 8 | [verification.md](verification.md) — **bug-detecting tests**; patch coverage + [mutation-testing.md](mutation-testing.md) when configured |
 | Deep code review | After draft PR | **`/code-review`** — [code-review/workflow.md](../code-review/workflow.md) |
 | Pull request | Phases 9–10 | **`/pull-request`** — [pull-request/workflow.md](../pull-request/workflow.md) |
 
@@ -54,7 +54,7 @@ Tracker issues: always **`/review-ticket`** in Phase 1. **Skip** full flow only 
 | Specify | [specify.md](specify.md) + one [templates.md](templates.md) anchor | Plan, rubric, PR workflows |
 | Plan | [plan-and-tasks.md](plan-and-tasks.md) + plan/todo template anchors | PR/code-review until Phase 9 |
 | Implement | [incremental-implementation.md](incremental-implementation.md), [engineering-rubric.md](engineering-rubric.md), [design-tradeoffs.md](design-tradeoffs.md), slice delegates from todo | Full [code-review/workflow.md](../code-review/workflow.md) |
-| Verify | [verification.md](verification.md), [spec-adherence.md](spec-adherence.md) | — |
+| Verify | [verification.md](verification.md), [spec-adherence.md](spec-adherence.md), [mutation-testing.md](mutation-testing.md) when `verify.mutation` or user asks | — |
 | Draft PR | [pull-request/workflow.md](../pull-request/workflow.md) Phases 0–4 + [pull-request/references/reviewer-friendly-pr-body.md](../pull-request/references/reviewer-friendly-pr-body.md) | Later PR phases until ready; full rubric until `/code-review` |
 | Deep review | [code-review/workflow.md](../code-review/workflow.md), [code-review/rubric.md](../code-review/rubric.md) | — |
 
@@ -67,6 +67,7 @@ Optional: `/create-ticket` → [create-ticket/workflow.md](../create-ticket/work
 | Issue fetch | [issue-tracker-adapters.md](issue-tracker-adapters.md) · [issue-transitions.md](issue-transitions.md) |
 | Split / subtasks | [pr-splitting.md](pr-splitting.md) · [subtask-template.md](subtask-template.md) |
 | TDD | [test-driven-development.md](test-driven-development.md) |
+| Mutation testing / test effectiveness | [mutation-testing.md](mutation-testing.md) |
 | ADRs / external schemas | [documentation-and-adrs.md](documentation-and-adrs.md) |
 | Abstractions & tensions | [design-tradeoffs.md](design-tradeoffs.md) |
 | Tracker body updates | [issue-tracker-adapters.md](issue-tracker-adapters.md#safe-description-updates-jira--github-body) |

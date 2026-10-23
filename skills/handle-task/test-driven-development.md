@@ -21,7 +21,7 @@ Derive tests from todo **acceptance criteria** and spec scenarios:
 
 Confirm the test **failed** (or would fail) before production code.
 
-**Coverage bar:** non-trivial logic needs more than one meaningful case. Parameterized suites count as rigorous when rows map to **branches, error codes, or real-world scenarios** — not three obvious permutations of the same success path.
+**Coverage bar:** non-trivial logic needs more than one meaningful case. Parameterized suites count as rigorous when rows map to **branches, error codes, or real-world scenarios** — not three obvious permutations of the same success path. High coverage without fault detection is not enough — see [mutation-testing.md](mutation-testing.md) in Phase 8 when configured.
 
 **Bugs:** failing repro test before fix (Prove-It).
 

@@ -58,7 +58,7 @@ Quality first — read only docs for the **current phase** ([lazy load](skills/h
 | 4 | Plan | [plan-and-tasks.md](skills/handle-task/plan-and-tasks.md) — **user approves plan** |
 | 5 | Split if too large | [pr-splitting.md](skills/handle-task/pr-splitting.md) |
 | 6 | Implement | [engineering-rubric.md](skills/handle-task/engineering-rubric.md) |
-| 7 | Verify | [verification.md](skills/handle-task/verification.md) — agent runs commands |
+| 7 | Verify | [verification.md](skills/handle-task/verification.md) — agent runs commands; [mutation-testing.md](skills/handle-task/mutation-testing.md) when configured |
 | 8 | Draft PR | `/pull-request` Phases 1–4 |
 | 9 | Review loop | `/code-review` → fix blockers → `/pull-request` ready |
 

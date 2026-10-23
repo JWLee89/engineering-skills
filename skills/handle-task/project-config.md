@@ -40,6 +40,12 @@ verify:
   by_path: {}
   ci_only_notes: []
   ci_workflows: [{ name: CI, required: true }]
+  mutation: null                  # optional — see mutation-testing.md
+  # mutation:
+  #   commands:                     # run from repo root; scope via tool flags or env
+  #     - mutmut run --paths-to-mutate src/foo
+  #   scope: ["src/foo/**"]         # hint for agent: limit to PR-touched globs
+  #   ci_only_notes: []             # e.g. "full mutation in nightly workflow X"
 
 integrations:
   issue_tracker:
