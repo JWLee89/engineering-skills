@@ -23,7 +23,7 @@ ______________________________________________________________________
 | **Unit** | Module/task tested with mocks or minimal fixtures — no full engine run |
 | **Component** | Single task or lib entrypoint with real inputs, rest stubbed |
 | **Smoke / script** | Repo smoke script or one-case CLI with fixture inputs |
-| **Feature flag / config gate** | Behavior behind flag or YAML slice; validate flag-on path before default-on |
+| **Feature flag / config gate** | Behavior behind flag or config slice; when wiring changes, prove config matches code via the repo’s wiring or integration tests |
 | **CI slice** | Targeted workflow or job that exercises only the changed path |
 
 Pick the **smallest** proof that still exercises the spec acceptance criteria for the

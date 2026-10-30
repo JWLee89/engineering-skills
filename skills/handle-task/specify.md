@@ -64,6 +64,8 @@ Write the spec **before** any plan or code. Use the [spec template](references/t
 | External field names from schema SSOT ([design-tradeoffs.md](design-tradeoffs.md)) | Duplicated field-name lists |
 | In-scope behavior = **production shipping** shape; deferred work = separate ticket ([design-tradeoffs.md](design-tradeoffs.md#production-vs-milestone-wording)) | RC/milestone-only code paths in spec |
 | Test scenarios include realistic + stress cases ([test-driven-development.md](test-driven-development.md)) | Acceptance criteria with only happy-path checks |
+| Removal / cleanup specs cite symbol audit (`rg` callers) and config keys affected | Tracker says “delete X” without verified zero production callers |
+| Numeric or mapping specs state invariant failures (ordering, out-of-range, boundary inclusivity) | Only mid-range examples in acceptance criteria |
 
 ### Naming convention
 

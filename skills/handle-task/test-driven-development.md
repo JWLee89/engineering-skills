@@ -10,7 +10,7 @@ Cycle context: [incremental-implementation.md](incremental-implementation.md).
 Derive tests from todo **acceptance criteria** and spec scenarios:
 
 1. Match neighboring test layout and fixtures
-2. **Happy path** plus **edge and failure paths** (missing, empty, invalid, boundary, mixed batches)
+2. **Happy path** plus **edge and failure paths** (missing, empty, invalid, boundary, mixed batches; **domain invariants** such as ordering, monotonicity, or out-of-range when the spec implies them)
 3. **Table-driven or parameterized cases** for every class of input — each row must exercise a **distinct outcome or risk**, not a cosmetic tweak
 4. **Explicit failure assertions** — when the contract is “this input must fail with error *E*” (validation, parse, I/O boundary), use the test runner’s **expected-failure** mechanism (assert that the call throws or returns a typed error), not only happy-path wrappers that accumulate errors. Cover failure modes in the same table-driven suites as success paths where the API throws; use outcome assertions on error collections only when the production API is intentionally non-throwing.
 5. **Realistic inputs** — shapes, sizes, and combinations that mirror production or integrator payloads (including partially filled records and sloppy types where the boundary allows)

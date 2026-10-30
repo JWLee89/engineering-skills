@@ -29,6 +29,7 @@ Items that need GitHub Actions or branch-level proof:
 
 - [ ] **CI** workflow green — <name from verify.ci_workflows>
 - [ ] <scenario> — [run ID](https://github.com/org/repo/actions/runs/...) (after verification commit)
+- [ ] **CI-authoritative** (only if local full suite blocked) — <one-line reason>; author ran hooks/scoped tests — see Steps run
 ```
 
 Use **verification commits** (Phase 5b) when behavior only shows on a follow-up push.

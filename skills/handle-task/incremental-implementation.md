@@ -71,6 +71,16 @@ When a single behavioral change touched many similar lines, extract **intent-rev
 
 After behavior changes, design simplification, or moving validation inline, **grep the repo** for symbols you added or superseded. Senior maintainers **reduce line count** where requirements are unchanged — unused code is confusion and debt.
 
+**Before opening a cleanup ticket**, prove the target is dead or superseded — do not rely on the tracker row alone:
+
+| Audit step | Action |
+| ---------- | ------ |
+| Symbol references | `rg` function/class/constant names — list **non-test** callers (zero → removal candidate) |
+| Commented or unreachable branches | Treat “never called” paths like dead code; remove branch + keys + wire helpers together |
+| Config vs code | If YAML still lists a parameter the code no longer reads, drop from config **and** test builders |
+| Test-only harness | Delete fixtures and integration cases whose **only** purpose was the removed path |
+| External change log | When the team tracks removals in a wiki or runbook, add PR + ticket links after implementation ([issue-tracker-adapters.md](issue-tracker-adapters.md)) |
+
 | Finding | Action |
 | ------- | ------ |
 | Production helper **only imported in tests** | Remove the helper **and** tests whose sole job was asserting that helper (unless it is a deliberate public contract — then document + real caller) |

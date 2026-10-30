@@ -21,3 +21,6 @@
 | RC/milestone placeholders in production code | [design-tradeoffs.md](../design-tradeoffs.md#production-vs-milestone-wording) — defer via ticket, ship production shape |
 | Parameterized tests with only obvious rows | [test-driven-development.md](../test-driven-development.md) — realistic + stress cases required |
 | Production code only used from tests | [incremental-implementation.md](../incremental-implementation.md#dead-code-sweep-refactor) — delete orphan + harness |
+| Cleanup scope without symbol audit | [incremental-implementation.md](../incremental-implementation.md#dead-code-sweep-refactor) — `rg` callers before coding |
+| Unrelated tool excludes in a feature PR to green local hooks | Revert or separate PR — [verification.md](../verification.md#local-environment-blocked) |
+| Declarative config changed but fixtures unchanged | [verification.md](../verification.md#declarative-config-and-wiring) |
