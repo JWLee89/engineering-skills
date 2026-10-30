@@ -163,4 +163,39 @@ ______________________________________________________________________
 Never skip failing tests to green a PR without user approval. Document workflow names in PR
 verification with run URLs when available.
 
+### Local environment blocked
+
+When the agent **cannot** run the full test suite locally (broken optional native libs, missing
+GPU/context, venv drift, or hooks failing only because **unrelated untracked files** pollute the
+tree):
+
+```
+- [ ] Run every command that still works: verify.hooks, scoped unit tests that avoid the broken import, lint on touched paths
+- [ ] Record the **exact** local failure (one line + stderr snippet) — not “tests didn’t run”
+- [ ] Do not treat typecheck-only or “logic review” as Strong proof for behavioral changes
+- [ ] Push and attach CI run URL when green; label evidence **CI-authoritative** in PR body
+- [ ] Do not “fix” verify by adding unrelated tool exclude lists — move WIP off the tree or commit in a separate change
+- [ ] After merge, note in task memory if the local gap is recurring (skill/config follow-up)
+```
+
+Pair with [references/templates/verification-pr-body.md](references/templates/verification-pr-body.md)
+**Test plan (reviewer / CI)** — checked items must name the workflow and link the run.
+
 Examples: [examples/generic.project.yaml](examples/generic.project.yaml), [examples/jira-project.project.yaml](examples/jira-project.project.yaml).
+
+______________________________________________________________________
+
+## Declarative config and wiring
+
+When the change edits **declarative wiring** (YAML/JSON manifests, route tables, job graphs,
+feature flags, or generated docs from config):
+
+```
+- [ ] Grep for removed keys, parameters, and old import paths — update callers and test builders in the same PR
+- [ ] Fixtures and integration tests match the shipped config (no stale fields in builders)
+- [ ] Extend existing wiring or schema tests when the repo already validates config graphs
+- [ ] Regenerate or update config-derived artifacts when CI or docs expect them
+- [ ] Evidence cites the config path and the test that locks the new wiring
+```
+
+Details: [feature-gating.md](feature-gating.md) · [incremental-implementation.md](incremental-implementation.md#dead-code-sweep-refactor).

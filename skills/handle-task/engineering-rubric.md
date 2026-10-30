@@ -22,6 +22,8 @@ ______________________________________________________________________
 | Behavior vs implementation | Tests assert outcomes, not internal trivia |
 | Edge / error paths | Cover null, empty, boundaries, and handled failure modes; use **expected-failure** tests where the contract is to throw or return a typed error ([test-driven-development.md](test-driven-development.md)) |
 | Realistic & stress cases | Parameterized/table suites use **domain-realistic** inputs and **robustness** cases (partial records, messy types, batch mixes, boundary magnitudes) — not cosmetic variants of the happy path ([test-driven-development.md](test-driven-development.md)) |
+| Domain invariants | When the spec implies ordering, monotonicity, or boundary rules, test violations and out-of-range inputs — not only mid-range success ([test-driven-development.md](test-driven-development.md)) |
+| Declarative wiring | Config or manifest changes stay aligned with fixtures and wiring tests ([verification.md](verification.md#declarative-config-and-wiring)) |
 | Comprehensive coverage | Exercise each class of input so regressions are caught; map every spec acceptance item to a test ([test-driven-development.md](test-driven-development.md)) |
 | DRY test structure | Shared fixtures, data tables, loops over case rows — not duplicate test modules re-asserting the same contract |
 
