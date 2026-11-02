@@ -49,6 +49,12 @@ Establish baseline before changing code.
 - Add or extend a test when behavior must stay bounded (timeout, max size)
 - Note remaining risk in PR if full perf validation is CI-only or manual
 
+## Business impact
+
+When the optimization changes **deploy artifact size**, **network bytes**, **memory**, or **runtime**
+cost, follow [business-impact.md](business-impact.md): absolute MB/ms measured first, smoke proof,
+then optional cost model (e.g. per 100k docker pulls) with assumptions labeled.
+
 ## Anti-patterns
 
 - Premature caching without hit-rate evidence

@@ -21,7 +21,7 @@ ______________________________________________________________________
 | **Purpose** | One clear “what this PR delivers and why now” |
 | **Review guide** | Onboarding path — summary, commits, **Start here**, numbered **Focus areas** with links |
 | **Changes made** | Layer table with **Δ lines** (not a raw file list) |
-| **Verification** | Author steps (checked + evidence), reviewer/CI plan, **Out of scope** |
+| **Verification** | Author steps (checked + evidence), reviewer/CI plan, **Business impact** when optimizing footprint/cost ([business-impact.md](../../handle-task/business-impact.md)), **Out of scope** |
 
 Do **not** ship a PR with only a “Summary” bullet list. Use `/pull-request` Phase 2.
 

@@ -73,6 +73,7 @@ Optional: `/create-ticket` → [create-ticket/workflow.md](../create-ticket/work
 | Tracker body updates | [issue-tracker-adapters.md](issue-tracker-adapters.md#safe-description-updates-jira--github-body) |
 | Author self-review | [engineering-rubric.md](engineering-rubric.md) ([code-review.md](code-review.md) pointer) |
 | Perf | [performance-optimization.md](performance-optimization.md) |
+| Business impact (optimizations) | [business-impact.md](business-impact.md) |
 | Skill fixes (reactive) | [self-improvement.md](self-improvement.md) |
 | Skillbase add/change | [update-skills/SKILL.md](../update-skills/SKILL.md) |
 | Orchestrator anti-patterns | [references/anti-patterns.md](references/anti-patterns.md) |
