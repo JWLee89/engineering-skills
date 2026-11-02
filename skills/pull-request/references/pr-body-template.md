@@ -60,6 +60,11 @@ Replace `{owner}`, `{repo}`, `{n}`, `{sha}`, `{TICKET}` before posting.
 - [ ] Error / edge paths covered
 - [ ] Spec criteria traced (see spec link in Background)
 
+### Business impact (when optimizing footprint or cost)
+
+See [business-impact.md](../../handle-task/business-impact.md). Absolute MB/ms measured, smoke proof,
+then optional cost model (e.g. per 100k docker pulls) with assumptions labeled.
+
 ### Out of scope
 
 - <deferred item>

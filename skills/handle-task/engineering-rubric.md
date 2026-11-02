@@ -119,6 +119,8 @@ Not every PR needs every row — skip rows clearly out of scope and say so in th
 
 - Hot-path changes: see [performance-optimization.md](performance-optimization.md)
 - Flag N+1, unbounded work, missing pagination — only when plausible for this change
+- Footprint or cost wins: absolute delta (MB, bytes, ms) measured and smoke-proven; link to
+  [business-impact.md](business-impact.md) when PR claims lighter/cheaper deploys
 
 ______________________________________________________________________
 
