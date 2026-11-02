@@ -64,6 +64,10 @@ Required when the PR reduces disk, network, memory, or runtime cost in productio
 - Scenario: <e.g. 100,000 docker pulls re-fetching the changed layer>
 - Transfer: <GB> at <bytes saved per event>
 - USD range: $<low>–$<high> at $<rate>/GB egress (assumption; real spend often lower)
+- Cost assumptions: [pricing doc URL](…) — rate tier cited
+
+If scenario, scale, or billing context is unclear, ask the operator before modeling (see
+[business-impact.md §0](../../business-impact.md#0-clarify-with-the-operator-when-the-metric-is-ambiguous)).
 ```
 
 ### Out of scope
