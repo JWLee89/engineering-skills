@@ -80,6 +80,24 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 | User design review asks to simplify | Simplify first; update skills only if the mistake is recurring ([self-improvement.md](self-improvement.md)) |
 | “Might need later” vs delete now | Delete when no production caller; defer re-add via ticket if product asks |
 | More lines vs fewer lines (same spec) | Fewer — explicit code paths over unused introspection helpers |
+| Integrator pins vs component-owned deps | **Component owns** versions and membership; integrator references a **stable contract** (profile, bundle ID, manifest name) |
+| Broad install profile vs minimal production | Coarse profile acceptable **interim** with a tracked TODO; prefer component-defined **production** profile when available |
+| New optional slice on integrator side | Avoid integrator-only dependency lists that assume **latest** component shape — verify **oldest supported** release still works |
+
+## Integrator vs component dependencies
+
+Your code is an **integrator** when it deploys, installs, or wires **another component** that other teams also use and that will **change its own dependencies over time** (new libraries, split modules, env-specific add-ons).
+
+| Approach | When to use | Cost |
+| -------- | ----------- | ---- |
+| **Component-defined production profile** (named bundle, preset, optional feature set the component publishes) | Default for integrators in production | One stable reference; component owns pins and churn |
+| **Coarse “install everything” profile** on the component | Interim until a lean production profile exists | Extra weight (dev/test deps in prod paths) — document TODO |
+| **Integrator-maintained list** mirroring component deps | Component has no profiles yet | Drifts when component adds or renames dependency groups |
+| **Duplicated version pins in integrator production code** | **Never** when deps are owned by the component | Brittle; breaks when component bumps; multiple integrators diverge |
+
+**Rule:** In production integrator paths, **do not copy** another component’s dependency versions or lockfile fragments. Reference what the **component publishes** (profile name, manifest, installer flag, extension point). If you must take a temporary shortcut, leave a **TODO** tied to adopting the component’s production profile — do not treat the duplicate pins as the long-term design.
+
+**Why:** Other integrators will rely on different slices of the same component tomorrow. Hard-coding dependencies in your repo fights that shared evolution; component-owned contracts stay robust when dependency graphs change.
 
 ## Anti-patterns
 
@@ -90,3 +108,5 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 - Removing legacy aliases without ingest/client evidence
 - Shipping production helpers consumed **only** by unit tests (registry introspection with no integrator/runtime use)
 - Leaving superseded abstractions in place after switching to explicit logic “for documentation”
+- Copying another component’s dependency pins into integrator production code (install scripts, Dockerfiles, Helm values, bootstrap jobs)
+- Adding integrator-side dependency lists that only match the **latest** component release without checking **oldest supported** in your environment
