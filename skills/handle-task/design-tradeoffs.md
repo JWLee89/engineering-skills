@@ -80,24 +80,24 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 | User design review asks to simplify | Simplify first; update skills only if the mistake is recurring ([self-improvement.md](self-improvement.md)) |
 | “Might need later” vs delete now | Delete when no production caller; defer re-add via ticket if product asks |
 | More lines vs fewer lines (same spec) | Fewer — explicit code paths over unused introspection helpers |
-| Install script vs upstream package pins | **Upstream owns versions** — pip extras on the publishing package; consumer scripts name extras only |
-| `[all]` vs lean production install | Interim `[all]` acceptable; long-term **composite extra** on publisher (e.g. all minus `test`) |
-| New pip extra on consumer | Avoid consumer-only extras (`transformer`, …) if **old wheels** lack them — prefer extras that existed across releases or publisher composite |
+| Integrator pins vs component-owned deps | **Component owns** versions and membership; integrator references a **stable contract** (profile, bundle ID, manifest name) |
+| Broad install profile vs minimal production | Coarse profile acceptable **interim** with a tracked TODO; prefer component-defined **production** profile when available |
+| New optional slice on integrator side | Avoid integrator-only dependency lists that assume **latest** component shape — verify **oldest supported** release still works |
 
-## Upstream Python packages (pip extras)
+## Integrator vs component dependencies
 
-When a **consumer repo** installs another package at runtime (CI job shell, Helm hook, ad-hoc container bootstrap):
+Your code is an **integrator** when it deploys, installs, or wires **another component** that other teams also use and that will **change its own dependencies over time** (new libraries, split modules, env-specific add-ons).
 
 | Approach | When to use | Cost |
 | -------- | ----------- | ---- |
-| **Publisher composite extra** (e.g. `warehouse` = all `requirements/*.txt` except `test`) | Default target for ops/install repos | One-line consumer; publisher owns membership |
-| **`[all]` on publisher** | Interim until composite exists; wheels already ship `[all]` | Pulls test-only deps in production job containers |
-| **Explicit multi-extra list** (every file extra except `test`) | Publisher won't add composite soon | Drifts when publisher adds new requirement files |
-| **Duplicate pins in consumer shell** (`opencv-python-headless>=…`) | **Never** — pins drift from publisher releases | Brittle; duplicate SSOT |
+| **Component-defined production profile** (named bundle, preset, optional feature set the component publishes) | Default for integrators in production | One stable reference; component owns pins and churn |
+| **Coarse “install everything” profile** on the component | Interim until a lean production profile exists | Extra weight (dev/test deps in prod paths) — document TODO |
+| **Integrator-maintained list** mirroring component deps | Component has no profiles yet | Drifts when component adds or renames dependency groups |
+| **Duplicated version pins in integrator production code** | **Never** when deps are owned by the component | Brittle; breaks when component bumps; multiple integrators diverge |
 
-**Rule:** Consumer install scripts declare **extra names**, not **version pins** copied from the publisher's `requirements/*.txt`.
+**Rule:** In production integrator paths, **do not copy** another component’s dependency versions or lockfile fragments. Reference what the **component publishes** (profile name, manifest, installer flag, extension point). If you must take a temporary shortcut, leave a **TODO** tied to adopting the component’s production profile — do not treat the duplicate pins as the long-term design.
 
-**Field example (MOPS-2623):** py314 base images dropped bundled OpenCV; `insight-engine-toolkit` added `requirements/transformer.txt`. Warehouse bind/validation used `insight-engine-toolkit[all]` with a TODO to adopt `[warehouse]` when toolkit ships it.
+**Why:** Other integrators will rely on different slices of the same component tomorrow. Hard-coding dependencies in your repo fights that shared evolution; component-owned contracts stay robust when dependency graphs change.
 
 ## Anti-patterns
 
@@ -108,5 +108,5 @@ When a **consumer repo** installs another package at runtime (CI job shell, Helm
 - Removing legacy aliases without ingest/client evidence
 - Shipping production helpers consumed **only** by unit tests (registry introspection with no integrator/runtime use)
 - Leaving superseded abstractions in place after switching to explicit logic “for documentation”
-- Copying publisher requirement pins into consumer install scripts (shell, Dockerfile `pip install` literals)
-- Choosing a new publisher pip extra on the consumer without verifying **oldest wheel** still in your index
+- Copying another component’s dependency pins into integrator production code (install scripts, Dockerfiles, Helm values, bootstrap jobs)
+- Adding integrator-side dependency lists that only match the **latest** component release without checking **oldest supported** in your environment
