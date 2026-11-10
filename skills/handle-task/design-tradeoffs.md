@@ -80,6 +80,24 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 | User design review asks to simplify | Simplify first; update skills only if the mistake is recurring ([self-improvement.md](self-improvement.md)) |
 | “Might need later” vs delete now | Delete when no production caller; defer re-add via ticket if product asks |
 | More lines vs fewer lines (same spec) | Fewer — explicit code paths over unused introspection helpers |
+| Install script vs upstream package pins | **Upstream owns versions** — pip extras on the publishing package; consumer scripts name extras only |
+| `[all]` vs lean production install | Interim `[all]` acceptable; long-term **composite extra** on publisher (e.g. all minus `test`) |
+| New pip extra on consumer | Avoid consumer-only extras (`transformer`, …) if **old wheels** lack them — prefer extras that existed across releases or publisher composite |
+
+## Upstream Python packages (pip extras)
+
+When a **consumer repo** installs another package at runtime (CI job shell, Helm hook, ad-hoc container bootstrap):
+
+| Approach | When to use | Cost |
+| -------- | ----------- | ---- |
+| **Publisher composite extra** (e.g. `warehouse` = all `requirements/*.txt` except `test`) | Default target for ops/install repos | One-line consumer; publisher owns membership |
+| **`[all]` on publisher** | Interim until composite exists; wheels already ship `[all]` | Pulls test-only deps in production job containers |
+| **Explicit multi-extra list** (every file extra except `test`) | Publisher won't add composite soon | Drifts when publisher adds new requirement files |
+| **Duplicate pins in consumer shell** (`opencv-python-headless>=…`) | **Never** — pins drift from publisher releases | Brittle; duplicate SSOT |
+
+**Rule:** Consumer install scripts declare **extra names**, not **version pins** copied from the publisher's `requirements/*.txt`.
+
+**Field example (MOPS-2623):** py314 base images dropped bundled OpenCV; `insight-engine-toolkit` added `requirements/transformer.txt`. Warehouse bind/validation used `insight-engine-toolkit[all]` with a TODO to adopt `[warehouse]` when toolkit ships it.
 
 ## Anti-patterns
 
@@ -90,3 +108,5 @@ Parameterized cases that only vary `1` vs `2` or `"a"` vs `"b"` without domain m
 - Removing legacy aliases without ingest/client evidence
 - Shipping production helpers consumed **only** by unit tests (registry introspection with no integrator/runtime use)
 - Leaving superseded abstractions in place after switching to explicit logic “for documentation”
+- Copying publisher requirement pins into consumer install scripts (shell, Dockerfile `pip install` literals)
+- Choosing a new publisher pip extra on the consumer without verifying **oldest wheel** still in your index
